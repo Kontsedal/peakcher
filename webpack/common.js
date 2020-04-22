@@ -15,7 +15,11 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   module: {
-    rules: [loaders.processTypescript, loaders.processSass],
+    rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
   },
-  plugins: [plugins.processPopupHtmlFile],
+  plugins: [
+    plugins.processPopupHtmlFile,
+    plugins.defineGlobalVariables,
+    plugins.copyStaticFiles,
+  ],
 };

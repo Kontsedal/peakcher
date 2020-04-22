@@ -1,10 +1,10 @@
-const processTypescript = {
+const processTypescriptFiles = {
   test: /\.tsx?$/,
   use: "ts-loader",
   exclude: /node_modules/,
-}
+};
 
-const processSass = {
+const processSassFiles = {
   test: /scss$/,
   use: [
     "style-loader",
@@ -17,10 +17,9 @@ const processSass = {
     },
     "sass-loader",
   ],
-}
-
+};
 
 module.exports = {
-  processTypescript,
-  processSass
-}
+  processTypescriptFiles,
+  processSassFiles,
+};
