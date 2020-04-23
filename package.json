@@ -51,8 +51,13 @@
     "@types/chrome": "0.0.104"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.3.5",
+    "@types/react-redux": "^7.1.7",
+    "@types/redux": "^3.6.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "husky": {
     "hooks": {

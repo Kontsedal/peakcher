@@ -1,6 +1,6 @@
 export type Event<T = object> = {
   type: string;
-  payload: T;
+  payload?: T;
 };
 
 type Sender = {
@@ -11,16 +11,22 @@ type Sender = {
 export class EventsService {
   static on<T>(
     eventName: string,
-    callback: (message: T, sender: Sender, respond: () => void) => void
+    callback: (
+      message: T,
+      sender: Sender,
+      respond: (...args: any[]) => void
+    ) => void
   ): () => void {
     const handler = (
       message: Event<T>,
       sender: Sender,
-      respond: () => void
+      respond: (...args: any[]) => void
     ): boolean => {
       if (message && message.type === eventName) {
         callback(message.payload, sender, respond);
       }
+      // eslint-disable-next-line no-unused-expressions
+      chrome.runtime.lastError;
       return true;
     };
     chrome.runtime.onMessage.addListener(handler);
