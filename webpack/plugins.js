@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const ExtensionReloader = require("webpack-extension-reloader");
 
 const PATHS = require("./paths");
 
@@ -25,8 +26,17 @@ const copyStaticFiles = new CopyPlugin([
   { from: path.join(PATHS.SRC_DIR, "_locales"), to: "./_locales" },
 ]);
 
+const enableHotReload = new ExtensionReloader({
+  entries: {
+    contentScript: "contentScript",
+    background: "background",
+    extensionPage: "popup",
+  },
+});
+
 module.exports = {
   processPopupHtmlFile,
   defineGlobalVariables,
   copyStaticFiles,
+  enableHotReload
 };
