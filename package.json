@@ -47,7 +47,8 @@
     "webpack-extension-reloader": "^1.1.4",
     "webpack-merge": "^4.2.2",
     "copy-webpack-plugin": "^5.1.1",
-    "html-webpack-plugin": "^4.2.0"
+    "html-webpack-plugin": "^4.2.0",
+    "@types/chrome": "0.0.104"
   },
   "dependencies": {
     "react": "^16.13.1",

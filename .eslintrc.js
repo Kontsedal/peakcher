@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    webextensions: true,
   },
   extends: [
     "plugin:react/recommended",
@@ -25,5 +26,23 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "import/prefer-default-export": 0,
+    "react/jsx-filename-extension": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
 };
