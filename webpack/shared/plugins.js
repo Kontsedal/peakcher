@@ -23,7 +23,9 @@ const defineGlobalVariables = new webpack.DefinePlugin({
   "process.env": JSON.stringify({
     DROPBOX_AUTH_PROXY_URL: process.env.DROPBOX_AUTH_PROXY_URL,
     DROPBOX_APP_KEY: process.env.DROPBOX_APP_KEY,
+    NODE_ENV: process.env.NODE_ENV,
   }),
+  IS_DEV: process.env.NODE_ENV === "development",
 });
 
 const copyStaticFiles = new CopyPlugin([

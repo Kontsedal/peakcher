@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { createLogger } from "redux-logger";
 import { slice } from "./slice";
 import { EventsService } from "../services/Events";
 
@@ -21,7 +22,7 @@ export const getStore = (isBackground: boolean) => {
 
   const store = configureStore({
     reducer: slice.reducer,
-    middleware: [populateAction],
+    middleware: [populateAction, IS_DEV && createLogger()],
   });
   EventsService.on<{
     senderId: number;
