@@ -7,7 +7,7 @@ export const main = async () => {
   const store = getStore(true);
   const appService = new AppService(store);
   await appService.init();
-  initEventListeners(appService);
+  initEventListeners(appService, store);
   tryToLoadState(appService).catch();
   tryToLoadUsedSpace(appService).catch();
 };

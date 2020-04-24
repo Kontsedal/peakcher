@@ -202,7 +202,7 @@ export class AppService {
     }
   }
 
-  public async getRemoteState() {
+  public async fetchRemoteState() {
     if (!this.authToken) {
       throw new Error("User is not authenticated");
     }
@@ -213,9 +213,9 @@ export class AppService {
   }
 
   public async loadRemoteState() {
-    const remoteState = await this.getRemoteState();
-    const newState = MigrationService.migrateState(remoteState);
-    this.store.dispatch(actions.setRemoteState(newState));
+    const remoteState = await this.fetchRemoteState();
+    const validState = MigrationService.migrateState(remoteState);
+    this.store.dispatch(actions.setRemoteState(validState));
     this.store.dispatch(actions.setIsAuthorized(true));
   }
 
@@ -238,21 +238,17 @@ export class AppService {
   }
 
   public async checkStateRelevance() {
-    try {
-      const state = this.store.getState();
-      if (!state.settings.protectFromDataConflicts) {
-        return;
-      }
-      if (!this.authToken) {
-        throw new Error("User is not authenticated");
-      }
-      const sessionIsRelevant = await this.isCurrentSessionRelevant();
-      if (!sessionIsRelevant) {
-        await this.loadRemoteState();
-        await this.uploadSessionToRemote();
-      }
-    } catch (error) {
-      console.info("Error while checking state relevance", error);
+    const state = this.store.getState();
+    if (!state.settings.protectFromDataConflicts) {
+      return;
+    }
+    if (!this.authToken) {
+      throw new Error("User is not authenticated");
+    }
+    const sessionIsRelevant = await this.isCurrentSessionRelevant();
+    if (!sessionIsRelevant) {
+      await this.loadRemoteState();
+      await this.uploadSessionToRemote();
     }
   }
 
