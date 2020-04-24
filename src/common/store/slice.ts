@@ -1,17 +1,127 @@
 /* eslint-disable no-param-reassign */
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  Tag,
+  File,
+  Settings,
+  RemoteSpaceInfo,
+  UploadStatus,
+  UploadFileInfo,
+} from "common/interfaces";
+import difference from "lodash/difference";
+import merge from "lodash/merge";
+import { CONFIG } from "../../config";
 
-import { createSlice } from "@reduxjs/toolkit";
+export interface RootState {
+  isAuthorized: boolean;
+  files: {
+    [key: string]: File;
+  };
+  tags: {
+    [key: string]: Tag;
+  };
+  remoteSpaceInfo: RemoteSpaceInfo;
+  uploadStatus: UploadStatus;
+  settings: Settings;
+}
+
+const initialState: RootState = {
+  isAuthorized: false,
+  files: {},
+  tags: {},
+  remoteSpaceInfo: {
+    total: 0,
+    used: 0,
+  },
+  uploadStatus: {},
+  settings: {
+    popupHeight: CONFIG.MAX_POPUP_HEIGHT,
+    popupWidth: CONFIG.MAX_POPUP_WIDTH,
+    searchColumnsCount: 3,
+    protectFromDataConflicts: false,
+  },
+};
 
 export const slice = createSlice({
   name: "counter",
-  initialState: {
-    counter: 0,
-  },
+  initialState,
   reducers: {
-    increment: (state, action) => {
-      const { payload = 1 } = action;
-      state.counter += payload;
+    setIsAuthorized: (state, action: PayloadAction<boolean>) => {
+      state.isAuthorized = action.payload;
+    },
+    addFile: (state, action: PayloadAction<File>) => {
+      const file = action.payload;
+      state.files[file.id] = file;
+    },
+    setSettings: (state, action: PayloadAction<Settings>) => {
+      state.settings = action.payload;
+    },
+    deleteFile: (state, action: PayloadAction<string>) => {
+      const fileId = action.payload;
+      if (!fileId || !state.files[fileId]) {
+        return state;
+      }
+      state.files[fileId].tags.forEach((tagName) => {
+        state.tags[tagName].files = state.tags[tagName].files.filter(
+          (item) => item !== fileId
+        );
+      });
+      delete state.files[fileId];
+      return state;
+    },
+    deleteTag: (state, action: PayloadAction<string>) => {
+      const tagName = action.payload;
+      if (!tagName || !state.tags[tagName]) {
+        return state;
+      }
+      state.tags[tagName].files.forEach((fileId) => {
+        if (!state.files[fileId]) {
+          return;
+        }
+        state.files[fileId].tags = state.files[fileId].tags.filter(
+          (item) => item !== tagName
+        );
+      });
+      delete state[tagName];
+      return state;
+    },
+    setRemoteSpaceInfo: (state, action: PayloadAction<RemoteSpaceInfo>) => {
+      state.remoteSpaceInfo = action.payload;
+    },
+    logOut: () => {
+      return initialState;
+    },
+    setFileTags: (
+      state,
+      action: PayloadAction<{ fileId: string; tags: string[] }>
+    ) => {
+      const { tags, fileId } = action.payload;
+      const removedTags = difference(state.files[fileId].tags, tags.sort());
+      removedTags.forEach((tag: string) => {
+        if (state.tags[tag]) {
+          state.tags[tag].files = state.tags[tag].files.filter(
+            (file) => file !== fileId
+          );
+        }
+      });
+      state.files[fileId].tags = [];
+      tags.forEach((tag) => {
+        if (!state.tags[tag]) {
+          state.tags[tag] = { name: tag, files: [] };
+        }
+        if (!state.tags[tag].files.includes(fileId)) {
+          state.tags[tag].files.push(fileId);
+        }
+        state.files[fileId].tags.push(tag);
+      });
     },
     setState: (state, action) => action.payload,
+    setRemoteState: (state, action) => {
+      return merge(state, action.payload);
+    },
+    setUploadFileStatus: (state, action: PayloadAction<UploadFileInfo>) => {
+      const fileInfo = action.payload;
+      state.uploadStatus[fileInfo.id] = fileInfo;
+    },
   },
 });

@@ -1,3 +1,224 @@
 {
-
+  "welcomeText": {
+    "message": "Welcome to <b>Peakcher</b>"
+  },
+  "dropboxLoginText": {
+    "message": "Log in with Dropbox"
+  },
+  "authSuccessTitle": {
+    "message": "Peakcher authentication success"
+  },
+  "authSuccessMessage": {
+    "message": "Extension is authenticated successfully"
+  },
+  "uploadFailedTitle": {
+    "message": "Failed to upload image"
+  },
+  "uploadFailedMessage": {
+    "message": "Please try again or upload image directly"
+  },
+  "uploadSuccessTitle": {
+    "message": "Peakcher: Upload success"
+  },
+  "uploadSuccessMessage": {
+    "message": "Got new image"
+  },
+  "searchTabTitle": {
+    "message": "Search"
+  },
+  "uploadTabTitle": {
+    "message": "Upload"
+  },
+  "settingsButtonTitle": {
+    "message": "Settings"
+  },
+  "settingsWindowTitle": {
+    "message": "Settings"
+  },
+  "windowWidthInputLabel": {
+    "message": "Window width"
+  },
+  "windowHeightInputLabel": {
+    "message": "Window height"
+  },
+  "imagesInRowInputLabel": {
+    "message": "Images per search row"
+  },
+  "syncAppButtonText": {
+    "message": "Synchronize app"
+  },
+  "syncAppButtonInfo": {
+    "message": "Click it if you just switched from other browser or computer with this extension installed and utilized. It will prevent data loss in this case."
+  },
+  "logOutButtonText": {
+    "message": "Log Out"
+  },
+  "removeTagDialogTitle": {
+    "message": "Tag removal confirm"
+  },
+  "removeTagDialogContent": {
+    "message": "Are you sure you want to remove tag \"$tag$\"?\nAmount of affected files: $amount$",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      },
+      "amount": {
+        "content": "$2"
+      }
+    }
+  },
+  "removeTagDialogConfirmButtonText": {
+    "message": "Confirm"
+  },
+  "removeTagDialogCloseButtonText": {
+    "message": "Close"
+  },
+  "usedSpaceBarText": {
+    "message": "Used space: $used$MB of $total$MB",
+    "placeholders": {
+      "used": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "dropFileContainerText": {
+    "message": "Click here or drag&drop your files to upload"
+  },
+  "uploadFilesButton": {
+    "message": "Upload"
+  },
+  "clearUploadFilesButton": {
+    "message": "Clear"
+  },
+  "removeFileToUploadButtonTitle": {
+    "message": "Remove"
+  },
+  "fileToUploadError": {
+    "message": "Error"
+  },
+  "notEnoughSpaceError": {
+    "message": "Not enough space for uploading. Need $space$MB",
+    "placeholders": {
+      "space": {
+        "content": "$1"
+      }
+    }
+  },
+  "noTagsInSelect": {
+    "message": "No tags"
+  },
+  "createTag": {
+    "message": "Create \"$tag$\"",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteTagButtonTitle": {
+    "message": "Delete"
+  },
+  "searchBarPlaceholder": {
+    "message": "Search by tags"
+  },
+  "searchSettingsButtonTitle": {
+    "message": "Search settings"
+  },
+  "imagesWithoutTagsSelectLabel": {
+    "message": "Show only images without tags"
+  },
+  "sortByRadioLabel": {
+    "message": "Sort by"
+  },
+  "creationTimeOption": {
+    "message": "Creation time"
+  },
+  "usageFrequencyOption": {
+    "message": "Usage frequency"
+  },
+  "orderRadioLabel": {
+    "message": "Order"
+  },
+  "ascendingOption": {
+    "message": "Ascending"
+  },
+  "descendingOption": {
+    "message": "Descending"
+  },
+  "noImagesMessage": {
+    "message": "No images found. Try to upload some"
+  },
+  "searchImageTitle": {
+    "message": "Tags: $tags$\r\nUploaded at: $date$\r\nUsed times: $used$",
+    "placeholders": {
+      "tags": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "used": {
+        "content": "$3"
+      }
+    }
+  },
+  "imageLoadErrorText": {
+    "message": "Failed to load"
+  },
+  "copyImageUrlButtonTitle": {
+    "message": "Copy URL"
+  },
+  "copyImageBase64UrlButtonTitle": {
+    "message": "Copy data-URL"
+  },
+  "deleteImageButtonTitle": {
+    "message": "Delete"
+  },
+  "editImageButtonTitle": {
+    "message": "Edit"
+  },
+  "imageTagsInputPlaceholder": {
+    "message": "Image tags"
+  },
+  "exitImageEditText": {
+    "message": "Back to search"
+  },
+  "allFilesUploadSuccessMessage": {
+    "message": "All files uploaded successfully"
+  },
+  "someFilesFailedToUploadMessage": {
+    "message": "Failed to upload some files"
+  },
+  "fileDeleteSuccessMessage": {
+    "message": "File is deleted"
+  },
+  "fileDeleteErrorMessage": {
+    "message": "Failed to delete file"
+  },
+  "urlCopySuccessMessage": {
+    "message": "Url is copied"
+  },
+  "removeTagSuccessMessage": {
+    "message": "Tag \"$tag$\" was removed successfully",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "appSyncSuccess": {
+    "message": "App is synchronized successfully"
+  },
+  "appSyncError": {
+    "message": "Failed to synchronize app"
+  },
+  "dataLossProtectLabel": {
+    "message": "Protect from data loss"
+  },
+  "dataLossProtectDetails": {
+    "message": "Protects you from data loss when you use the extension on different devices. It will slow down the extension."
+  }
 }

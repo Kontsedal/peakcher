@@ -7,6 +7,7 @@ let OUTPUT_PATH = path.join(__dirname, "../dist");
 
 module.exports = merge(commonConfig, {
   mode: "development",
+  devtool: "inline-source-map",
   output: {
     path: OUTPUT_PATH,
     chunkFilename: "[name].bundle.js",

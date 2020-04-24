@@ -1,13 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppView } from "./view";
-import { RootState, actions } from "../common/store";
+import { RootState } from "../common/store";
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const counter = useSelector((state: RootState) => state.counter);
-  const increment = React.useCallback(() => {
-    dispatch(actions.increment(100));
-  }, []);
-  return <AppView counter={counter} increment={increment} />;
+  const state = useSelector((currentState: RootState) => currentState);
+  return <AppView state={state} />;
 };

@@ -1,11 +1,8 @@
+import MessageSender = chrome.runtime.MessageSender;
+
 export type Event<T = object> = {
   type: string;
   payload?: T;
-};
-
-type Sender = {
-  id: string;
-  url: string;
 };
 
 export class EventsService {
@@ -13,19 +10,19 @@ export class EventsService {
     eventName: string,
     callback: (
       message: T,
-      sender: Sender,
+      sender: MessageSender,
       respond: (...args: any[]) => void
     ) => void
   ): () => void {
     const handler = (
       message: Event<T>,
-      sender: Sender,
+      sender: MessageSender,
       respond: (...args: any[]) => void
     ): boolean => {
       if (message && message.type === eventName) {
         callback(message.payload, sender, respond);
       }
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line no-unused-expressions,@typescript-eslint/no-unused-expressions
       chrome.runtime.lastError;
       return true;
     };

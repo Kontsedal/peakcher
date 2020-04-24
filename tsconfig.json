@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -11,7 +12,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": true,
-    "lib": ["dom", "es5", "scripthost", "es2015"],
+    "lib": ["dom", "es5", "scripthost", "es2015"]
   },
-  "exclude": ["**/__tests__/**/*", "../node_modules"]
+  "exclude": ["**/__tests__/**/*", "../node_modules"],
+  "include": ["src"]
 }

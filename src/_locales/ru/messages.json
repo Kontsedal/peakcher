@@ -1,0 +1,224 @@
+{
+  "welcomeText": {
+    "message": "Добро пожаловать в <b>Peakcher</b>"
+  },
+  "dropboxLoginText": {
+    "message": "Войти с помощью Dropbox"
+  },
+  "authSuccessTitle": {
+    "message": "Peakcher аутентификация"
+  },
+  "authSuccessMessage": {
+    "message": "Вы успешно вошли в систему"
+  },
+  "uploadFailedTitle": {
+    "message": "Ошибка загрузки изображения"
+  },
+  "uploadFailedMessage": {
+    "message": "Пожалуйста попробуйте снова или загрузите изображение на прямую"
+  },
+  "uploadSuccessTitle": {
+    "message": "Peakcher: Загрузка прошла успешно"
+  },
+  "uploadSuccessMessage": {
+    "message": "Изображение теперь в вашей коллекции"
+  },
+  "searchTabTitle": {
+    "message": "Поиск"
+  },
+  "uploadTabTitle": {
+    "message": "Загрузка"
+  },
+  "settingsButtonTitle": {
+    "message": "Настройки"
+  },
+  "settingsWindowTitle": {
+    "message": "Настройки"
+  },
+  "windowWidthInputLabel": {
+    "message": "Ширина окна"
+  },
+  "windowHeightInputLabel": {
+    "message": "Высота окна"
+  },
+  "imagesInRowInputLabel": {
+    "message": "Колличество изображений в ряду"
+  },
+  "syncAppButtonText": {
+    "message": "Синхронизировать"
+  },
+  "syncAppButtonInfo": {
+    "message": "Нажмите здесь если вы переключились с другого компьютера или браузера где использовали это расширение. Это предотвратит возможную потерю данных."
+  },
+  "logOutButtonText": {
+    "message": "Выйти"
+  },
+  "removeTagDialogTitle": {
+    "message": "Подтверждение удаления тега"
+  },
+  "removeTagDialogContent": {
+    "message": "Вы уверены что хотите удалить тег \"$tag$\"? Колличество изображений с этим тегом: $amount$",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      },
+      "amount": {
+        "content": "$2"
+      }
+    }
+  },
+  "removeTagDialogConfirmButtonText": {
+    "message": "Подтвердить"
+  },
+  "removeTagDialogCloseButtonText": {
+    "message": "Закрыть"
+  },
+  "usedSpaceBarText": {
+    "message": "Использовано места: $used$MB из $total$MB",
+    "placeholders": {
+      "used": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "dropFileContainerText": {
+    "message": "Нажмите здесь или перетащите ваши файлы чтобы начать загрузку"
+  },
+  "uploadFilesButton": {
+    "message": "Загрузить"
+  },
+  "clearUploadFilesButton": {
+    "message": "Очистить"
+  },
+  "removeFileToUploadButtonTitle": {
+    "message": "Убрать"
+  },
+  "fileToUploadError": {
+    "message": "Ошибка"
+  },
+  "notEnoughSpaceError": {
+    "message": "Недостаточно места для загрузки. Нужно дополнительно $space$MB",
+    "placeholders": {
+      "space": {
+        "content": "$1"
+      }
+    }
+  },
+  "noTagsInSelect": {
+    "message": "Нет тегов"
+  },
+  "createTag": {
+    "message": "Создать \"$tag$\"",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteTagButtonTitle": {
+    "message": "Удалить"
+  },
+  "searchBarPlaceholder": {
+    "message": "Поиск по тегам"
+  },
+  "searchSettingsButtonTitle": {
+    "message": "Настройки поиска"
+  },
+  "imagesWithoutTagsSelectLabel": {
+    "message": "Показывать только изображения без тегов"
+  },
+  "sortByRadioLabel": {
+    "message": "Сортировать по"
+  },
+  "creationTimeOption": {
+    "message": "Время создания"
+  },
+  "usageFrequencyOption": {
+    "message": "Частота использования"
+  },
+  "orderRadioLabel": {
+    "message": "Порядок сортировки"
+  },
+  "ascendingOption": {
+    "message": "По возрастанию"
+  },
+  "descendingOption": {
+    "message": "По убыванию"
+  },
+  "noImagesMessage": {
+    "message": "Изображения не найдены. Попробуйте загрузить их"
+  },
+  "searchImageTitle": {
+    "message": "Теги: $tags$\r\nВремя загрузки: $date$\r\nИспользовано раз: $used$",
+    "placeholders": {
+      "tags": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "used": {
+        "content": "$3"
+      }
+    }
+  },
+  "imageLoadErrorText": {
+    "message": "Ошибка загрузки"
+  },
+  "copyImageUrlButtonTitle": {
+    "message": "Скопировать ссылку"
+  },
+  "copyImageBase64UrlButtonTitle": {
+    "message": "Скопировать ссылку на данные"
+  },
+  "deleteImageButtonTitle": {
+    "message": "Удалить"
+  },
+  "editImageButtonTitle": {
+    "message": "Изменить"
+  },
+  "imageTagsInputPlaceholder": {
+    "message": "Теги изображения"
+  },
+  "exitImageEditText": {
+    "message": "Назад к поиску"
+  },
+  "allFilesUploadSuccessMessage": {
+    "message": "Все файлы успешно загружены"
+  },
+  "someFilesFailedToUploadMessage": {
+    "message": "Не удалось загрузить некоторые файлы"
+  },
+  "fileDeleteSuccessMessage": {
+    "message": "Файл удален"
+  },
+  "fileDeleteErrorMessage": {
+    "message": "Не удалось удалить файл"
+  },
+  "urlCopySuccessMessage": {
+    "message": "Ссылка скопирована"
+  },
+  "removeTagSuccessMessage": {
+    "message": "Тег \"$tag$\" был удален успешно",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "appSyncSuccess": {
+    "message": "Приложение синхронизировано успешно"
+  },
+  "appSyncError": {
+    "message": "Ошибка синхронизации приложения"
+  },
+  "dataLossProtectLabel": {
+    "message": "Защита от потери данных"
+  },
+  "dataLossProtectDetails": {
+    "message": "Защишает вас от потери данных когда расширение используется на нескольких компьютерах. Замедляет работу расширения."
+  }
+}

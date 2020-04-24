@@ -1,0 +1,224 @@
+{
+  "welcomeText": {
+    "message": "Ласкаво просимо до <b>Peakcher</b>"
+  },
+  "dropboxLoginText": {
+    "message": "Увійти за допомогою Dropbox"
+  },
+  "authSuccessTitle": {
+    "message": "Peakcher аутентифікація"
+  },
+  "authSuccessMessage": {
+    "message": "Ви успішно увійшли до системи"
+  },
+  "uploadFailedTitle": {
+    "message": "Помилка завантаження зображення"
+  },
+  "uploadFailedMessage": {
+    "message": "Будь ласка спробуйте знову або завантежте зображення на пряму"
+  },
+  "uploadSuccessTitle": {
+    "message": "Peakcher: Завантаження пройшло успішно"
+  },
+  "uploadSuccessMessage": {
+    "message": "Зображення тепер у вашій колекції"
+  },
+  "searchTabTitle": {
+    "message": "Пошук"
+  },
+  "uploadTabTitle": {
+    "message": "Завантаження"
+  },
+  "settingsButtonTitle": {
+    "message": "Налаштування"
+  },
+  "settingsWindowTitle": {
+    "message": "Налаштування"
+  },
+  "windowWidthInputLabel": {
+    "message": "Ширина вікна"
+  },
+  "windowHeightInputLabel": {
+    "message": "Висота вікна"
+  },
+  "imagesInRowInputLabel": {
+    "message": "Кількість зображень у ряді"
+  },
+  "syncAppButtonText": {
+    "message": "Синхронізувати"
+  },
+  "syncAppButtonInfo": {
+    "message": "Натисніть тут якщо ви переключилися з іншого комп'ютера чи браузера де використовували цей додаток. Це дозволить запобігти можливій втраті даних."
+  },
+  "logOutButtonText": {
+    "message": "Вийти"
+  },
+  "removeTagDialogTitle": {
+    "message": "Підтвердження видалення тега"
+  },
+  "removeTagDialogContent": {
+    "message": "Ви впевнені що хочете видалити тег \"$tag$\"? Кількість зображень з цим тегом: $amount$",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      },
+      "amount": {
+        "content": "$2"
+      }
+    }
+  },
+  "removeTagDialogConfirmButtonText": {
+    "message": "Підтвердити"
+  },
+  "removeTagDialogCloseButtonText": {
+    "message": "Закрити"
+  },
+  "usedSpaceBarText": {
+    "message": "Використано місця: $used$MB з $total$MB",
+    "placeholders": {
+      "used": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "dropFileContainerText": {
+    "message": "Натисніть тут або перетягніть ваші файли щоб почати завантаження"
+  },
+  "uploadFilesButton": {
+    "message": "Завантажити"
+  },
+  "clearUploadFilesButton": {
+    "message": "Очистити"
+  },
+  "removeFileToUploadButtonTitle": {
+    "message": "Прибрати"
+  },
+  "fileToUploadError": {
+    "message": "Помилка"
+  },
+  "notEnoughSpaceError": {
+    "message": "Недостатньо місця для завантаження. Потрібно додатково $space$MB",
+    "placeholders": {
+      "space": {
+        "content": "$1"
+      }
+    }
+  },
+  "noTagsInSelect": {
+    "message": "Немає тегів"
+  },
+  "createTag": {
+    "message": "Створити \"$tag$\"",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteTagButtonTitle": {
+    "message": "Видалити"
+  },
+  "searchBarPlaceholder": {
+    "message": "Пошук по тегам"
+  },
+  "searchSettingsButtonTitle": {
+    "message": "Налаштування пошуку"
+  },
+  "imagesWithoutTagsSelectLabel": {
+    "message": "Показувати тільки зображення без тегів"
+  },
+  "sortByRadioLabel": {
+    "message": "Сортувати за"
+  },
+  "creationTimeOption": {
+    "message": "Час створення"
+  },
+  "usageFrequencyOption": {
+    "message": "Частота використання"
+  },
+  "orderRadioLabel": {
+    "message": "Порядок сортування"
+  },
+  "ascendingOption": {
+    "message": "По зростанню"
+  },
+  "descendingOption": {
+    "message": "За зменшенням"
+  },
+  "noImagesMessage": {
+    "message": "Зображення не знайдені. Спробуйте завантажити їх"
+  },
+  "searchImageTitle": {
+    "message": "Теги: $tags$\r\nЧас завантаження: $date$\r\nВикористано разів: $used$",
+    "placeholders": {
+      "tags": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "used": {
+        "content": "$3"
+      }
+    }
+  },
+  "imageLoadErrorText": {
+    "message": "Помилка завантаження"
+  },
+  "copyImageUrlButtonTitle": {
+    "message": "Копіювати посилання"
+  },
+  "copyImageBase64UrlButtonTitle": {
+    "message": "Копіювати посилання на дані"
+  },
+  "deleteImageButtonTitle": {
+    "message": "Видалити"
+  },
+  "editImageButtonTitle": {
+    "message": "Змінити"
+  },
+  "imageTagsInputPlaceholder": {
+    "message": "Теги забраження"
+  },
+  "exitImageEditText": {
+    "message": "Назад до пошуку"
+  },
+  "allFilesUploadSuccessMessage": {
+    "message": "Всі файли успішно завантажені"
+  },
+  "someFilesFailedToUploadMessage": {
+    "message": "Не вдалося завантажити деякі файли"
+  },
+  "fileDeleteSuccessMessage": {
+    "message": "Файл видалений"
+  },
+  "fileDeleteErrorMessage": {
+    "message": "Помилка видалення файлу"
+  },
+  "urlCopySuccessMessage": {
+    "message": "Посилання скопійовано"
+  },
+  "removeTagSuccessMessage": {
+    "message": "Тег \"$tag$\" було видалено успішно",
+    "placeholders": {
+      "tag": {
+        "content": "$1"
+      }
+    }
+  },
+  "appSyncSuccess": {
+    "message": "Додаток синхронізовано успішно"
+  },
+  "appSyncError": {
+    "message": "Помилка синхронізації додатка"
+  },
+  "dataLossProtectLabel": {
+    "message": "Захист від втрати даних"
+  },
+  "dataLossProtectDetails": {
+    "message": "Захищає вас від втрати даних коли розширення використовується на декількох комп'ютерах. Уповільнює роботу розширення."
+  }
+}

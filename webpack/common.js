@@ -13,6 +13,7 @@ module.exports = {
   entry: ENTRY_POINTS,
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    modules: ["node_modules", PATHS.SRC_DIR],
   },
   module: {
     rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
