@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  Tag,
   File,
   Settings,
   RemoteSpaceInfo,
@@ -13,12 +12,13 @@ import merge from "lodash/merge";
 import { CONFIG } from "../../config";
 
 export interface RootState {
+  stateVersion: string | undefined;
   isAuthorized: boolean;
   files: {
     [key: string]: File;
   };
   tags: {
-    [key: string]: Tag;
+    [key: string]: string[];
   };
   remoteSpaceInfo: RemoteSpaceInfo;
   uploadStatus: UploadStatus;
@@ -26,6 +26,7 @@ export interface RootState {
 }
 
 const initialState: RootState = {
+  stateVersion: undefined,
   isAuthorized: false,
   files: {},
   tags: {},
@@ -62,7 +63,7 @@ export const slice = createSlice({
         return state;
       }
       state.files[fileId].tags.forEach((tagName) => {
-        state.tags[tagName].files = state.tags[tagName].files.filter(
+        state.tags[tagName] = state.tags[tagName].filter(
           (item) => item !== fileId
         );
       });
@@ -74,7 +75,7 @@ export const slice = createSlice({
       if (!tagName || !state.tags[tagName]) {
         return state;
       }
-      state.tags[tagName].files.forEach((fileId) => {
+      state.tags[tagName].forEach((fileId) => {
         if (!state.files[fileId]) {
           return;
         }
@@ -99,18 +100,16 @@ export const slice = createSlice({
       const removedTags = difference(state.files[fileId].tags, tags.sort());
       removedTags.forEach((tag: string) => {
         if (state.tags[tag]) {
-          state.tags[tag].files = state.tags[tag].files.filter(
-            (file) => file !== fileId
-          );
+          state.tags[tag] = state.tags[tag].filter((file) => file !== fileId);
         }
       });
       state.files[fileId].tags = [];
       tags.forEach((tag) => {
         if (!state.tags[tag]) {
-          state.tags[tag] = { name: tag, files: [] };
+          state.tags[tag] = [];
         }
-        if (!state.tags[tag].files.includes(fileId)) {
-          state.tags[tag].files.push(fileId);
+        if (!state.tags[tag].includes(fileId)) {
+          state.tags[tag].push(fileId);
         }
         state.files[fileId].tags.push(tag);
       });

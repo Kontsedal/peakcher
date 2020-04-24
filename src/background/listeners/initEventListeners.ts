@@ -1,5 +1,5 @@
-import { BackgroundService } from "../common/services/Background";
-import { AppService } from "./services/App";
+import { BackgroundService } from "../../common/services/Background";
+import { AppService } from "../services/App";
 
 export const initEventListeners = (appService: AppService) => {
   BackgroundService.onAuthenticate(({ code, tabId }) => {

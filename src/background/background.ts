@@ -1,7 +1,7 @@
 import { getStore } from "../common/store";
 import { AppService } from "./services/App";
 import { CONFIG } from "../config";
-import { initEventListeners } from "./initEventListeners";
+import { initEventListeners } from "./listeners/initEventListeners";
 
 export const main = async () => {
   const store = getStore(true);

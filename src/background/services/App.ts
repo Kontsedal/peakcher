@@ -10,6 +10,7 @@ import { Queue } from "../../common/utils/queue";
 import { DropboxService } from "./Dropdox";
 import { RootState, actions } from "../../common/store";
 import { NotificationsService } from "./Notifications";
+import { MigrationService } from "./Migration";
 
 export interface RemoteSession {
   sessionId: string;
@@ -213,7 +214,8 @@ export class AppService {
 
   public async loadRemoteState() {
     const remoteState = await this.getRemoteState();
-    this.store.dispatch(actions.setRemoteState(remoteState));
+    const newState = MigrationService.migrateState(remoteState);
+    this.store.dispatch(actions.setRemoteState(newState));
     this.store.dispatch(actions.setIsAuthorized(true));
   }
 
