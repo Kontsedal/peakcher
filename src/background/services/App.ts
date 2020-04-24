@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import mime from "mime";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import { Store } from "redux";
 import { CONFIG } from "../../config";
 

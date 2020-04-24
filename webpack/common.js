@@ -1,7 +1,7 @@
 const path = require("path");
-const PATHS = require("./paths");
-const loaders = require("./loaders");
-const plugins = require("./plugins");
+const PATHS = require("./shared/paths");
+const loaders = require("./shared/loaders");
+const plugins = require("./shared/plugins");
 
 const ENTRY_POINTS = {
   popup: path.join(PATHS.SRC_DIR, "popup/index.tsx"),
@@ -15,11 +15,17 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     modules: ["node_modules", PATHS.SRC_DIR],
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
   module: {
     rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
   },
   plugins: [
     plugins.processPopupHtmlFile,
+    plugins.processBackgroundHtmlFile,
     plugins.defineGlobalVariables,
     plugins.copyStaticFiles,
   ],

@@ -12,6 +12,12 @@ const processPopupHtmlFile = new HtmlWebpackPlugin({
   chunks: ["popup"],
 });
 
+const processBackgroundHtmlFile = new HtmlWebpackPlugin({
+  filename: "background.html",
+  template: path.join(PATHS.SRC_DIR, "background/index.html"),
+  chunks: ["background"],
+});
+
 require("dotenv").config();
 const defineGlobalVariables = new webpack.DefinePlugin({
   "process.env": JSON.stringify({
@@ -36,7 +42,8 @@ const enableHotReload = new ExtensionReloader({
 
 module.exports = {
   processPopupHtmlFile,
+  processBackgroundHtmlFile,
   defineGlobalVariables,
   copyStaticFiles,
-  enableHotReload
+  enableHotReload,
 };
