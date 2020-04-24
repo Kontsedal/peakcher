@@ -20,7 +20,7 @@ export const initEventListeners = (
   });
 
   BackgroundService.onSaveDispatch(async (action) => {
-    // await appService.checkStateRelevance();
+    await appService.checkStateRelevance();
     store.dispatch(action);
   });
 };
