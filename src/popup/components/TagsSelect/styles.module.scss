@@ -1,3 +1,61 @@
+$box-height: 30px;
+$input-height: $box-height - 5;
+
 .root {
+  position: relative;
+}
+
+.box {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  height: $box-height;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.input {
   font-size: 1.6rem;
+  border: none;
+  background: transparent;
+  outline: none;
+  height: $input-height;
+  line-height: $input-height;
+  width:100%;
+}
+
+.autocompleteBox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  border: 1px solid #eee;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.autocompleteItem {
+  padding: 5px 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #eee;
+  }
+}
+.autocompleteItemText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectedOption {
+  padding: 2px 5px;
+  background-color: #eee;
+  font-size: 1.5rem;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20%;
+  flex-shrink: 0;
 }
