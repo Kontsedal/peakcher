@@ -6,7 +6,10 @@ const plugins = require("./shared/plugins");
 const ENTRY_POINTS = {
   popup: path.join(PATHS.SRC_DIR, "popup/index.tsx"),
   background: path.join(PATHS.SRC_DIR, "background/index.ts"),
-  contentScript: path.join(PATHS.SRC_DIR, "contentScript/index.ts"),
+  dropboxCodeExtractor: path.join(
+    PATHS.SRC_DIR,
+    "contentScript/dropboxCodeExtractor.ts"
+  ),
 };
 
 module.exports = {
@@ -24,6 +27,8 @@ module.exports = {
     rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
   },
   plugins: [
+    plugins.cleanDistFolder,
+    plugins.createManifestFile,
     plugins.processPopupHtmlFile,
     plugins.processBackgroundHtmlFile,
     plugins.defineGlobalVariables,

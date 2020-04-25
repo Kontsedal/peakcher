@@ -3,6 +3,9 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ExtensionReloader = require("webpack-extension-reloader");
+const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
+const getManifest = require("../../src/manifest");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const PATHS = require("./paths");
 
@@ -30,7 +33,6 @@ const defineGlobalVariables = new webpack.DefinePlugin({
 
 const copyStaticFiles = new CopyPlugin([
   { from: path.join(PATHS.SRC_DIR, "assets"), to: "assets" },
-  { from: path.join(PATHS.SRC_DIR, "manifest.json"), to: "./" },
   { from: path.join(PATHS.SRC_DIR, "_locales"), to: "./_locales" },
 ]);
 
@@ -42,10 +44,20 @@ const enableHotReload = new ExtensionReloader({
   },
 });
 
+const createManifestFile = new WebpackExtensionManifestPlugin({
+  config: {
+    base: getManifest({ authProxyUrl: process.env.DROPBOX_AUTH_PROXY_URL }),
+  },
+});
+
+const cleanDistFolder = new CleanWebpackPlugin();
+
 module.exports = {
   processPopupHtmlFile,
   processBackgroundHtmlFile,
   defineGlobalVariables,
   copyStaticFiles,
   enableHotReload,
+  createManifestFile,
+  cleanDistFolder,
 };
