@@ -1,9 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppView } from "./view";
-import { RootState } from "../common/store";
+import { RootState, actions } from "../common/store";
 
 export const App = () => {
+  const dispatch = useDispatch();
   const state = useSelector((currentState: RootState) => currentState);
-  return <AppView state={state} />;
+  const increaseWidth = React.useCallback(() => {
+    dispatch(
+      actions.setSettings({
+        ...state.settings,
+        popupWidth: state.settings.popupWidth + 10,
+      })
+    );
+  }, [state.settings.popupWidth]);
+  return <AppView state={state} increaseWidth={increaseWidth} />;
 };

@@ -30,7 +30,25 @@ export class EventsService {
     return () => chrome.runtime.onMessage.removeListener(handler);
   }
 
-  static emit<T>(message: Event, callback?: (T) => void): void {
+  /**
+   * emits event to internal extension scripts (background, popup etc.) but
+   * not to the content scripts
+   */
+  static emit<T>(message: Event, callback?: (T) => void, tabId?: number): void {
+    if (tabId) {
+      chrome.tabs.sendMessage(tabId, message, callback);
+      return;
+    }
+    chrome.runtime.sendMessage(message, callback);
+  }
+
+  /**
+   * Emits event to all extension scripts including content scripts
+   */
+  static emitToAll<T>(message: Event, callback?: (T) => void): void {
+    chrome.tabs.query({}, (tabs) =>
+      tabs.forEach((tab) => chrome.tabs.sendMessage(tab.id, message))
+    );
     chrome.runtime.sendMessage(message, callback);
   }
 }

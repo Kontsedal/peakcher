@@ -6,6 +6,7 @@ const EVENTS = {
   AUTHENTICATE: "AUTHENTICATE",
   UPLOAD_FILES: "UPLOAD_FILES",
   SAFE_DISPATCH: "SAFE_DISPATCH",
+  INJECT_VIEW: "INJECT_VIEW",
 };
 
 type UploadPayload = {
@@ -13,7 +14,7 @@ type UploadPayload = {
   notifyUser?: boolean;
 };
 
-export class BackgroundService {
+export class CommunicationService {
   public static authenticate(dropboxCode: string): void {
     EventsService.emit({
       type: EVENTS.AUTHENTICATE,
@@ -50,14 +51,24 @@ export class BackgroundService {
    * every action
    */
   public static safeDispatch(action: PayloadAction) {
-    console.info("safeDispatch", action);
     EventsService.emit({ type: EVENTS.SAFE_DISPATCH, payload: { action } });
   }
 
   public static onSaveDispatch(handler: (action: PayloadAction) => void) {
     EventsService.on(EVENTS.SAFE_DISPATCH, ({ action }) => {
-      console.info("onSaveDispatch", action);
       handler(action);
     });
+  }
+
+  public static injectView(params: { url: string }, tabId: number) {
+    EventsService.emit(
+      { type: EVENTS.INJECT_VIEW, payload: params },
+      () => {},
+      tabId
+    );
+  }
+
+  public static onInjectView(handler: (params: { url: string }) => void) {
+    EventsService.on(EVENTS.INJECT_VIEW, handler);
   }
 }

@@ -1,4 +1,4 @@
-import { BackgroundService } from "../common/services/Background";
+import { CommunicationService } from "../common/services/Communication";
 
 const DROPBOX_CODE_PAGE_URL =
   "https://www.dropbox.com/1/oauth2/authorize_submit";
@@ -14,7 +14,7 @@ function getToken() {
   const element = document.querySelector(tokenSelector);
   if (element) {
     const code = element.getAttribute(tokenAttr);
-    BackgroundService.authenticate(code);
+    CommunicationService.authenticate(code);
   }
 }
 

@@ -7,7 +7,6 @@ module.exports = ({ authProxyUrl }) => ({
   // We need it to make soucemaps work
   content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
   browser_action: {
-    default_popup: "popup.html",
     default_icon: "assets/logo.png",
   },
   permissions: [
@@ -24,11 +23,22 @@ module.exports = ({ authProxyUrl }) => ({
   },
   content_scripts: [
     {
+      matches: ["https://www.dropbox.com/1/oauth2/authorize_submit"],
+      js: ["dropboxCodeExtractor.js"],
+    },
+    {
       matches: ["<all_urls>"],
-      js: ["bropboxCodeExtractor.js"],
+      /**
+       * need to manage webpack chunks manually for content scripts :(
+       */
+      js: [
+        "vendors_background_popup_viewInjector.bundle.js",
+        "viewInjector.js",
+      ],
     },
   ],
   icons: {
     "128": "assets/logo.png",
   },
+  web_accessible_resources: ["*"],
 });

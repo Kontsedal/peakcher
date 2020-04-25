@@ -10,6 +10,7 @@ const ENTRY_POINTS = {
     PATHS.SRC_DIR,
     "contentScript/dropboxCodeExtractor.ts"
   ),
+  viewInjector: path.join(PATHS.SRC_DIR, "contentScript/viewInjector.ts"),
 };
 
 module.exports = {
@@ -21,13 +22,13 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: "all",
+      automaticNameDelimiter: "_",
     },
   },
   module: {
     rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
   },
   plugins: [
-    plugins.cleanDistFolder,
     plugins.createManifestFile,
     plugins.processPopupHtmlFile,
     plugins.processBackgroundHtmlFile,

@@ -5,8 +5,9 @@ import { CONFIG } from "../config";
 
 interface Props {
   state: RootState;
+  increaseWidth: () => void;
 }
-export const AppView = ({ state }: Props) => {
+export const AppView = ({ state, increaseWidth }: Props) => {
   return (
     <div className={styles.root}>
       {!state.isAuthorized && (
@@ -21,6 +22,9 @@ export const AppView = ({ state }: Props) => {
           Login
         </button>
       )}
+      <button type="button" onClick={increaseWidth}>
+        increase width
+      </button>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { createLogger } from "redux-logger";
 import compact from "lodash/compact";
 import { slice } from "./slice";
 import { EventsService } from "../services/Events";
-import { BackgroundService } from "../services/Background";
+import { CommunicationService } from "../services/Communication";
 
 const EVENTS = {
   DISPATCH_EVENT: "DISPATCH_EVENT",
@@ -11,7 +11,7 @@ const EVENTS = {
 };
 
 const populateActionsMiddleware = () => (next) => (action) => {
-  EventsService.emit({
+  EventsService.emitToAll({
     type: EVENTS.DISPATCH_EVENT,
     payload: action,
   });
@@ -38,7 +38,7 @@ export const getStore = (isBackground: boolean) => {
 
   const originalDispatch = store.dispatch;
   store.dispatch = <T>(action): T => {
-    BackgroundService.safeDispatch(action);
+    CommunicationService.safeDispatch(action);
     // eslint-disable-next-line no-useless-return
     return;
   };
