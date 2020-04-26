@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
 import { I18n } from "../../../common/services/I18n";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
@@ -14,6 +14,8 @@ type Props = {
   selectOption: (option: string) => void;
   removeOption: (option: string) => void;
   optionTextGetter?: (option: string) => string;
+  allowCreate?: boolean;
+  onCreate?: (option: string) => void;
 };
 export const TagsSelectView = ({
   setCurrentText,
@@ -26,11 +28,19 @@ export const TagsSelectView = ({
   removeOption,
   optionTextGetter = (option) => option,
   placeholder,
+  allowCreate,
+  onCreate,
 }: Props) => {
   const rootRef = useRef();
   const outsideClickHandler = useCallback(() => {
     setInputIsActive(false);
   }, []);
+  const canCreateOption = useMemo(() => {
+    if (!allowCreate || !currentText) {
+      return false;
+    }
+    return options.every((item) => item !== currentText);
+  }, [options, currentText, allowCreate]);
   useOutsideClick(rootRef, outsideClickHandler);
   return (
     <div className={styles.root} ref={rootRef}>
@@ -60,6 +70,11 @@ export const TagsSelectView = ({
       </div>
       {showAutocomplete && (
         <div className={styles.autocompleteBox}>
+          {canCreateOption && (
+            <div>
+              <button onClick={() => onCreate(currentText)}>Create</button>
+            </div>
+          )}
           {!options.length && (
             <div className={styles.noOptions}>{I18n.t("noSelectOptions")}</div>
           )}

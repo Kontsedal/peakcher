@@ -7,11 +7,14 @@ const Wrapper = ({
   options = [],
   selected = [],
   optionTextGetter,
+  allowCreate,
 }: {
   options: string[];
   selected: string[];
+  allowCreate?: boolean;
   optionTextGetter?: (opt: string) => string;
 }) => {
+  const [optionsList, setOptionsList] = useState(options);
   const [selectedOptions, setSelectedOptions] = useState(selected);
   const onSelect = useCallback(
     (option) => {
@@ -25,15 +28,24 @@ const Wrapper = ({
     },
     [selectedOptions]
   );
+
+  const onCreate = useCallback(
+    (newOption) => {
+      setOptionsList([...optionsList, newOption]);
+    },
+    [optionsList, setOptionsList]
+  );
   return (
     <div style={{ maxWidth: 500 }}>
       <TagsSelect
         onSelect={onSelect}
         onRemove={onRemove}
-        options={options}
+        options={optionsList}
         selectedOptions={selectedOptions}
         optionTextGetter={optionTextGetter}
         placeholder={"Select some tags"}
+        allowCreate={allowCreate}
+        onCreate={onCreate}
       />
     </div>
   );
@@ -71,4 +83,8 @@ export const customOptionsText = () => (
       `[${Math.floor(Math.random() * 100)}] ${option}`
     }
   />
+);
+
+export const withCreateAbility = () => (
+  <Wrapper options={predefinedOptions} selected={[]} allowCreate />
 );

@@ -8,6 +8,8 @@ type Props = {
   onRemove: (tag: string) => void;
   optionTextGetter?: (option: string) => string;
   placeholder?: string;
+  allowCreate?: boolean;
+  onCreate?: (option: string) => void;
 };
 export const TagsSelect = ({
   options = [],
@@ -16,6 +18,8 @@ export const TagsSelect = ({
   onRemove,
   optionTextGetter,
   placeholder,
+  allowCreate = false,
+  onCreate,
 }: Props) => {
   const [currentText, setCurrentText] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
@@ -34,6 +38,14 @@ export const TagsSelect = ({
     },
     [selectedOptions]
   );
+
+  const createOption = useCallback(
+    (newOption: string) => {
+      onCreate(newOption);
+      selectOption(newOption);
+    },
+    [options, onCreate]
+  );
   return (
     <TagsSelectView
       setCurrentText={setCurrentText}
@@ -46,6 +58,8 @@ export const TagsSelect = ({
       selectedOptions={selectedOptions}
       optionTextGetter={optionTextGetter}
       placeholder={placeholder}
+      allowCreate={allowCreate}
+      onCreate={createOption}
     />
   );
 };
