@@ -3,11 +3,18 @@ import { TagsSelectView } from "./view";
 
 type Props = {
   options: string[];
+  selectedOptions: string[];
+  onSelect: (tag: string) => void;
+  onRemove: (tag: string) => void;
 };
-export const TagsSelect = ({ options = [] }: Props) => {
+export const TagsSelect = ({
+  options = [],
+  selectedOptions,
+  onSelect,
+  onRemove,
+}: Props) => {
   const [currentText, setCurrentText] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const filteredOptions: string[] = useMemo(() => {
     return options.filter(
       (option) =>
@@ -17,7 +24,8 @@ export const TagsSelect = ({ options = [] }: Props) => {
   }, [options, selectedOptions, currentText]);
   const selectOption = useCallback(
     (option: string) => {
-      setSelectedOptions(selectedOptions.concat([option]));
+      onSelect(option);
+      setCurrentText("");
       setInputIsActive(false);
     },
     [selectedOptions]
@@ -30,6 +38,7 @@ export const TagsSelect = ({ options = [] }: Props) => {
       showAutocomplete={inputIsActive}
       setInputIsActive={setInputIsActive}
       selectOption={selectOption}
+      removeOption={onRemove}
       selectedOptions={selectedOptions}
     />
   );

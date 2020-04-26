@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useRef } from "react";
 import styles from "./styles.module.scss";
-import onClickOutside from "react-onclickoutside";
+import { I18n } from "../../../common/services/I18n";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 type Props = {
   options: string[];
@@ -10,8 +11,9 @@ type Props = {
   showAutocomplete: boolean;
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
+  removeOption: (option: string) => void;
 };
-export const View = ({
+export const TagsSelectView = ({
   setCurrentText,
   currentText,
   setInputIsActive,
@@ -19,19 +21,29 @@ export const View = ({
   options,
   selectOption,
   selectedOptions,
+  removeOption,
 }: Props) => {
-  useEffect(() => {
-    // hehe, suck it
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    View.handleClickOutside = () => setInputIsActive(false);
-  });
+  const rootRef = useRef();
+  const outsideClickHandler = useCallback(() => {
+    setInputIsActive(false);
+  }, []);
+  useOutsideClick(rootRef, outsideClickHandler);
   return (
-    <div className={styles.root}>
+    <div className={styles.root} ref={rootRef}>
       <div className={styles.box}>
-        {selectedOptions.map((option) => (
+        {selectedOptions.map((option, index) => (
           <div className={styles.selectedOption} key={option} title={option}>
-            {option}
+            <div className={styles.selectedOptionText}>{option}</div>
+            {index < selectedOptions.length - 1 && ","}
+            <div className={styles.hoveredSelectedOption}>
+              <div className={styles.hoveredSelectedOptionText}>{option}</div>
+              <button
+                type="button"
+                aria-label="Remove"
+                className={styles.hoveredSelectedOptionAction}
+                onClick={() => removeOption(option)}
+              />
+            </div>
           </div>
         ))}
         <input
@@ -44,6 +56,9 @@ export const View = ({
       </div>
       {showAutocomplete && (
         <div className={styles.autocompleteBox}>
+          {!options.length && (
+            <div className={styles.noOptions}>{I18n.t("noSelectOptions")}</div>
+          )}
           {options.map((option) => (
             <div
               onKeyDown={() => {}}
@@ -65,10 +80,3 @@ export const View = ({
     </div>
   );
 };
-
-export const TagsSelectView = onClickOutside(
-  View,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  () => View.handleClickOutside
-);

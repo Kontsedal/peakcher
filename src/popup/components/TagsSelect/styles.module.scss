@@ -1,40 +1,49 @@
-$box-height: 30px;
-$input-height: $box-height - 5;
+$row-height: 30px;
+$input-height: $row-height;
 
 .root {
   position: relative;
+  font-size: 1.5rem;
 }
 
 .box {
-  border: 1px solid #eee;
-  border-radius: 4px;
-  height: $box-height;
+  border-bottom: 1px solid #eee;
+  min-height: $row-height;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0 5px;
 }
 
 .input {
-  font-size: 1.6rem;
   border: none;
   background: transparent;
   outline: none;
   height: $input-height;
   line-height: $input-height;
-  width:100%;
+  flex-grow: 1;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 
 .autocompleteBox {
   position: absolute;
   bottom: 0;
+  background-color: white;
   left: 0;
   transform: translateY(100%);
   border: 1px solid #eee;
-  border-radius: 4px;
+  border-top: none;
   max-height: 200px;
   overflow-y: auto;
+  width: 100%;
+  max-width: 300px;
 }
-
+.noOptions {
+  padding: 5px 8px;
+  text-align: center;
+  font-weight: 300;
+}
 .autocompleteItem {
   padding: 5px 8px;
   cursor: pointer;
@@ -49,13 +58,65 @@ $input-height: $box-height - 5;
 }
 
 .selectedOption {
-  padding: 2px 5px;
-  background-color: #eee;
-  font-size: 1.5rem;
-  margin-right: 5px;
+  padding: 2px 0 2px 3px;
+  max-width: 20%;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+
+  &:hover .hoveredSelectedOption {
+    display: flex;
+  }
+}
+
+.selectedOptionText {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 20%;
-  flex-shrink: 0;
 }
+
+.hoveredSelectedOption {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #eee;
+  top:-2px;
+  left: -2px;
+  max-width: calc(100% + 35px);
+}
+
+.hoveredSelectedOptionText {
+  padding: 4px 4px 4px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+%iconBar {
+  content: '';
+  position: absolute;
+  top:50%;
+  left: 50%;
+  width: 60%;
+  height: 2px;
+  background-color: #323232;
+}
+.hoveredSelectedOptionAction {
+  width: 28px;
+  background-color: #ddd;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  &:after {
+    @extend %iconBar;
+    transform:translate3d(-50%, -50%, 0) rotate(45deg);
+  }
+  &:before {
+    @extend %iconBar;
+    transform:translate3d(-50%, -50%, 0) rotate(-45deg);
+  }
+}
+
