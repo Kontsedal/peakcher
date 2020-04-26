@@ -8,6 +8,7 @@ type Props = {
   selectedOptions: string[];
   setCurrentText: (value: string) => void;
   currentText: string;
+  placeholder?: string;
   showAutocomplete: boolean;
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
@@ -24,6 +25,7 @@ export const TagsSelectView = ({
   selectedOptions,
   removeOption,
   optionTextGetter = (option) => option,
+  placeholder,
 }: Props) => {
   const rootRef = useRef();
   const outsideClickHandler = useCallback(() => {
@@ -53,6 +55,7 @@ export const TagsSelectView = ({
           value={currentText}
           onFocus={() => setInputIsActive(true)}
           onChange={(e) => setCurrentText(e.target.value)}
+          placeholder={!selectedOptions.length ? placeholder : ""}
         />
       </div>
       {showAutocomplete && (

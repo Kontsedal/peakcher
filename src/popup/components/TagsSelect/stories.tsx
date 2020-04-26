@@ -33,6 +33,7 @@ const Wrapper = ({
         options={options}
         selectedOptions={selectedOptions}
         optionTextGetter={optionTextGetter}
+        placeholder={"Select some tags"}
       />
     </div>
   );
@@ -41,7 +42,7 @@ const predefinedOptions = [
   "one",
   "two",
   "three",
-  "fore",
+  "four",
   "five",
   "six",
   "seven",
