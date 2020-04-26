@@ -6,12 +6,14 @@ type Props = {
   selectedOptions: string[];
   onSelect: (tag: string) => void;
   onRemove: (tag: string) => void;
+  optionTextGetter?: (option: string) => string;
 };
 export const TagsSelect = ({
   options = [],
   selectedOptions,
   onSelect,
   onRemove,
+  optionTextGetter,
 }: Props) => {
   const [currentText, setCurrentText] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
@@ -40,6 +42,7 @@ export const TagsSelect = ({
       selectOption={selectOption}
       removeOption={onRemove}
       selectedOptions={selectedOptions}
+      optionTextGetter={optionTextGetter}
     />
   );
 };

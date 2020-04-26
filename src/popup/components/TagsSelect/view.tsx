@@ -12,6 +12,7 @@ type Props = {
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
   removeOption: (option: string) => void;
+  optionTextGetter?: (option: string) => string;
 };
 export const TagsSelectView = ({
   setCurrentText,
@@ -22,6 +23,7 @@ export const TagsSelectView = ({
   selectOption,
   selectedOptions,
   removeOption,
+  optionTextGetter = (option) => option,
 }: Props) => {
   const rootRef = useRef();
   const outsideClickHandler = useCallback(() => {
@@ -31,10 +33,9 @@ export const TagsSelectView = ({
   return (
     <div className={styles.root} ref={rootRef}>
       <div className={styles.box}>
-        {selectedOptions.map((option, index) => (
+        {selectedOptions.map((option) => (
           <div className={styles.selectedOption} key={option} title={option}>
-            <div className={styles.selectedOptionText}>{option}</div>
-            {index < selectedOptions.length - 1 && ","}
+            <div className={styles.selectedOptionText}>{option}</div>,
             <div className={styles.hoveredSelectedOption}>
               <div className={styles.hoveredSelectedOptionText}>{option}</div>
               <button
@@ -61,7 +62,6 @@ export const TagsSelectView = ({
           )}
           {options.map((option) => (
             <div
-              onKeyDown={() => {}}
               tabIndex={0}
               role="option"
               aria-selected="false"
@@ -72,7 +72,9 @@ export const TagsSelectView = ({
                 selectOption(option);
               }}
             >
-              <div className={styles.autocompleteItemText}>{option}</div>
+              <div className={styles.autocompleteItemText}>
+                {optionTextGetter(option)}
+              </div>
             </div>
           ))}
         </div>

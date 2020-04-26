@@ -5,9 +5,10 @@ module.exports = {
     webextensions: true,
   },
   extends: [
-    "airbnb-typescript",
-    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
   ],
   globals: {
     Atomics: "readonly",
