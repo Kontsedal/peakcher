@@ -1,30 +1,17 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { RootState } from "../common/store";
-import { CONFIG } from "../config";
+import { LogInPage } from "./pages/LogIn";
+import { MainPage } from "./pages/Main";
 
 interface Props {
-  state: RootState;
-  increaseWidth: () => void;
+  isAuthorized: boolean;
 }
-export const AppView = ({ state, increaseWidth }: Props) => {
+
+export const AppView = ({ isAuthorized }: Props) => {
   return (
     <div className={styles.root}>
-      {!state.isAuthorized && (
-        <button
-          type="button"
-          onClick={() => {
-            chrome.tabs.create({
-              url: `https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${CONFIG.DROPBOX_APP_KEY}`,
-            });
-          }}
-        >
-          Login
-        </button>
-      )}
-      <button type="button" onClick={increaseWidth}>
-        increase width
-      </button>
+      {!isAuthorized && <LogInPage />}
+      {isAuthorized && <MainPage />}
     </div>
   );
 };

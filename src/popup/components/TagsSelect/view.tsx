@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
 import { I18n } from "../../../common/services/I18n";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
+import cn from "classnames";
 
 type Props = {
   options: string[];
@@ -16,6 +17,7 @@ type Props = {
   optionTextGetter?: (option: string) => string;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
+  className?: string;
 };
 export const TagsSelectView = ({
   setCurrentText,
@@ -30,6 +32,7 @@ export const TagsSelectView = ({
   placeholder,
   allowCreate,
   onCreate,
+  className,
 }: Props) => {
   const rootRef = useRef();
   const outsideClickHandler = useCallback(() => {
@@ -43,7 +46,7 @@ export const TagsSelectView = ({
   }, [options, currentText, allowCreate]);
   useOutsideClick(rootRef, outsideClickHandler);
   return (
-    <div className={styles.root} ref={rootRef}>
+    <div className={cn(styles.root, className)} ref={rootRef}>
       <div className={styles.box}>
         {selectedOptions.map((option) => (
           <div className={styles.selectedOption} key={option} title={option}>

@@ -122,7 +122,7 @@
     "message": "Видалити"
   },
   "searchBarPlaceholder": {
-    "message": "Пошук по тегам"
+    "message": "Пошук по тегам..."
   },
   "searchSettingsButtonTitle": {
     "message": "Налаштування пошуку"
@@ -220,5 +220,8 @@
   },
   "dataLossProtectDetails": {
     "message": "Захищає вас від втрати даних коли розширення використовується на декількох комп'ютерах. Уповільнює роботу розширення."
+  },
+  "addFile": {
+    "message": "Додати файл(и)"
   }
 }

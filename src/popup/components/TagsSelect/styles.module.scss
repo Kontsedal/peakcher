@@ -4,10 +4,10 @@ $input-height: $row-height;
 .root {
   position: relative;
   font-size: 1.5rem;
+  z-index: 2;
 }
 
 .box {
-  border-bottom: 1px solid #eee;
   min-height: $row-height;
   display: flex;
   flex-wrap: wrap;
@@ -81,13 +81,13 @@ $input-height: $row-height;
   position: absolute;
   z-index: 1;
   background-color: #eee;
-  top:-2px;
-  left: -2px;
+  top: 1px;
+  left: 1px;
   max-width: calc(100% + 35px);
 }
 
 .hoveredSelectedOptionText {
-  padding: 4px 4px 4px 4px;
+  padding: 1px 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -103,7 +103,7 @@ $input-height: $row-height;
   background-color: #323232;
 }
 .hoveredSelectedOptionAction {
-  width: 28px;
+  width: 23px;
   background-color: #ddd;
   flex-shrink: 0;
   position: relative;

@@ -122,7 +122,7 @@
     "message": "Delete"
   },
   "searchBarPlaceholder": {
-    "message": "Search by tags"
+    "message": "Search by tags..."
   },
   "searchSettingsButtonTitle": {
     "message": "Search settings"
@@ -223,5 +223,8 @@
   },
   "noSelectOptions": {
     "message": "No options"
+  },
+  "addFile": {
+    "message": "Add file(s)"
   }
 }

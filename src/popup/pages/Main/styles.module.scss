@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.toolbar {
+  padding: 23px 26px 21px 26px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.gridWrapper {
+  display: flex;
+  flex-grow: 1;
+  padding: 22px 25px 25px 25px;
+  background-color: #F1F3F4;
+}
+.tagsSelect {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-shrink: 0;
+  button:first-child {
+    margin-right: 6px;
+  }
+}

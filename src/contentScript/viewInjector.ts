@@ -1,5 +1,6 @@
 import { CommunicationService } from "../common/services/Communication";
 import { getStore } from "../common/store";
+import styles from "./styles.module.scss";
 
 let injectedView;
 let unsubscribeFromStore;
@@ -20,10 +21,7 @@ CommunicationService.onInjectView(({ url }) => {
   injectedView = iframeEl;
 
   iframeEl.src = url;
-  iframeEl.style.position = "fixed";
-  iframeEl.style.top = "0px";
-  iframeEl.style.right = "0px";
-  iframeEl.style["z-index"] = "9999";
+  iframeEl.classList.add(styles.window);
   iframeEl.setAttribute("frameborder", "0");
   document.body.appendChild(iframeEl);
 });

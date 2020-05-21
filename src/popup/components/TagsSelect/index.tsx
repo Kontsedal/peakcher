@@ -10,6 +10,7 @@ type Props = {
   placeholder?: string;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
+  className?: string;
 };
 export const TagsSelect = ({
   options = [],
@@ -20,6 +21,7 @@ export const TagsSelect = ({
   placeholder,
   allowCreate = false,
   onCreate,
+  className,
 }: Props) => {
   const [currentText, setCurrentText] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
@@ -60,6 +62,7 @@ export const TagsSelect = ({
       placeholder={placeholder}
       allowCreate={allowCreate}
       onCreate={createOption}
+      className={className}
     />
   );
 };
