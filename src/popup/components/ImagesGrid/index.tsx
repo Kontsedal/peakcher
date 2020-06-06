@@ -11,6 +11,7 @@ import { getFilesArray, getSearchColumnsCount } from "common/store/selectors";
 import * as utils from "./utils";
 import { CONFIG } from "config";
 import { File } from "common/interfaces";
+import { ImageItem } from "./components/ImageItem";
 
 const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
 const DEFAULT_VISIBLE_ROWS = 6;
@@ -39,7 +40,7 @@ export const ImagesGrid = ({ files }: { files: File[] }) => {
     if (!containerRef.current) {
       return;
     }
-    setGridWidth(containerRef.current.offsetWidth);
+    setGridWidth(containerRef.current.clientWidth);
   }, [containerRef.current]);
   const setContainerRef = useCallback((elem) => {
     containerRef.current = elem;
@@ -77,7 +78,7 @@ export const ImagesGrid = ({ files }: { files: File[] }) => {
               style={{ width, height, left: x, top: y }}
               className={styles.item}
             >
-              <img src={file.publicUrl} />
+              <ImageItem file={file}/>
             </div>
           );
         })}

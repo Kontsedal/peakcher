@@ -26,7 +26,12 @@ module.exports = {
     },
   },
   module: {
-    rules: [loaders.processTypescriptFiles, loaders.processSassFiles],
+    rules: [
+      loaders.processTypescriptFiles,
+      loaders.processSassFiles,
+      loaders.processImages,
+      loaders.processSvg,
+    ],
   },
   plugins: [
     plugins.createManifestFile,

@@ -19,7 +19,19 @@ const processSassFiles = {
   ],
 };
 
+const processImages = {
+  test: /\.(png|jpg|gif|webp)$/,
+  use: ["file-loader"],
+};
+
+const processSvg = {
+  test: /\.svg$/,
+  use: ['@svgr/webpack'],
+};
+
 module.exports = {
   processTypescriptFiles,
   processSassFiles,
+  processImages,
+  processSvg
 };
