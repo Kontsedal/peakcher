@@ -78,7 +78,7 @@ export const ImagesGrid = ({ files }: { files: File[] }) => {
               style={{ width, height, left: x, top: y }}
               className={styles.item}
             >
-              <ImageItem file={file}/>
+              <ImageItem file={file} />
             </div>
           );
         })}

@@ -1,5 +1,5 @@
 .imageItem {
-  background-color: #DDDFE1;
+  background-color: #dddfe1;
   height: 100%;
   border-radius: 4px;
   position: relative;
@@ -17,10 +17,10 @@
 
 .hoverContainer {
   display: none;
-  background-color: rgba(0,0,0,.7);
+  background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   left: 0;
-  top:0;
+  top: 0;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -37,24 +37,25 @@
 .actionButton {
   font-weight: 600;
   font-size: 12px;
-  color: #2D9CDB;
+  color: #2d9cdb;
   border: none;
   outline: none;
-  background: #F2F2F2;
+  background: #f2f2f2;
   height: 23px;
   cursor: pointer;
 
   &:hover {
-    background: #2D9CDB;
-    color: #F2F2F2;
+    background: #2d9cdb;
+    color: #f2f2f2;
 
-    g, path {
-      fill: #F2F2F2;
+    g,
+    path {
+      fill: #f2f2f2;
     }
   }
 
   &:active {
-    background: darken(#2D9CDB, 10);
+    background: darken(#2d9cdb, 10);
   }
 }
 
@@ -74,10 +75,85 @@
 }
 
 .moreActionsButton {
+  position: relative;
   cursor: pointer;
   border-radius: 50%;
   padding: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.moreActionsPopup {
+  position: absolute;
+  top: -5px;
+  left: 23px;
+  transform: translate3d(-100%, -100%, 0);
+  display: inline-block;
+  padding: 3px;
+  background: #f2f2f2;
+  border-radius: 3px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  .moreActionsItem {
+    padding: 5px;
+    min-height: 22px;
+    color: #2d9cdb;
+    font-size: 11px;
+    white-space: nowrap;
+    word-break: keep-all;
+    &:hover {
+      background: #2d9cdb;
+      color: #f2f2f2;
+    }
+  }
+
+  .moreActionsItem.loading {
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .moreActionsItemText {
+      display: none;
+    }
+    &:hover {
+      background: inherit;
+      color: inherit;
+    }
+    .loader {
+      display: block;
+    }
+  }
+
+  .loader {
+    display: none;
+    width: 100%;
+    height: 4px;
+    background-color: #2d9cdb;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      animation: loadingAnimation 1s ease-in-out infinite;
+      background: #fff;
+    }
+  }
+}
+
+@keyframes :local(loadingAnimation) {
+  0% {
+    width: 0;
+    left: 0%;
+  }
+
+  50% {
+    width: 80%;
+    left: 20%;
+  }
+  100% {
+    width: 0%;
+    left: 100%;
+  }
 }

@@ -12,6 +12,7 @@ export const AppView = ({ isAuthorized }: Props) => {
     <div className={styles.root}>
       {!isAuthorized && <LogInPage />}
       {isAuthorized && <MainPage />}
+      <div id="tooltip-portal"></div>
     </div>
   );
 };

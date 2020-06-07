@@ -44,7 +44,7 @@ export const TagsSelectView = ({
     }
     return options.every((item) => item !== currentText);
   }, [options, currentText, allowCreate]);
-  useOutsideClick(rootRef, outsideClickHandler);
+  useOutsideClick(rootRef.current, outsideClickHandler);
   return (
     <div className={cn(styles.root, className)} ref={rootRef}>
       <div className={styles.box}>

@@ -1,33 +1,33 @@
 .button {
-  border: 0.5px solid #DDDFE1;
+  border: 0.5px solid #dddfe1;
   box-sizing: border-box;
   border-radius: 4px;
   font-weight: 600;
   font-size: 11px;
   line-height: 15px;
   letter-spacing: 0.01em;
-  color: #1E2736;
+  color: #1e2736;
   padding: 4px 12px 5px 12px;
   cursor: pointer;
   outline: none;
 
   &:hover {
-    background-color: lighten(#DDDFE1, 10);
+    background-color: lighten(#dddfe1, 10);
   }
   &:active {
-    background-color: lighten(#DDDFE1, 5);
+    background-color: lighten(#dddfe1, 5);
   }
 }
 
 .primary {
-  color: #FFFFFF;
-  background: #2D9CDB;
+  color: #ffffff;
+  background: #2d9cdb;
   border: none;
 
   &:hover {
-    background-color: darken(#2D9CDB, 10);
+    background-color: darken(#2d9cdb, 10);
   }
   &:active {
-    background-color: darken(#2D9CDB, 5);
+    background-color: darken(#2d9cdb, 5);
   }
 }
