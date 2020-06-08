@@ -23,7 +23,7 @@ export const App = () => {
   return (
     <div className={styles.root}>
       {currentView === VIEWS.LOGIN && <LogInPage />}
-      {currentView === VIEWS.MAIN && <MainPage />}
+      {currentView !== VIEWS.LOGIN && <MainPage />}
       {currentView === VIEWS.EDIT_TAG && <EditTagsPage />}
     </div>
   );
