@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import cn from "classnames";
 import { File } from "common/interfaces";
 import styles from "./styles.module.scss";
@@ -7,6 +7,7 @@ import MoreIcon from "./assets/actions.svg";
 import { linkToBase64 } from "utils/file";
 import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { CurrentViewContext } from "../../../../context/CurrentView";
 
 type Props = {
   file: File;
@@ -23,6 +24,7 @@ export const ImageItem = ({ file }: Props) => {
     setActionsVisible(false);
   }, [setActionsVisible]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions);
+  const {showEditImageTagsView} = useContext(CurrentViewContext)
   return (
     <div className={styles.imageItem}>
       <img src={file.publicUrl} />
@@ -44,7 +46,7 @@ export const ImageItem = ({ file }: Props) => {
               onMouseEnter={loadBase64}
               style={{ display: actionsVisible ? "block" : "none" }}
             >
-              <div className={styles.moreActionsItem}>Edit tags</div>
+              <div className={styles.moreActionsItem} onClick={() => showEditImageTagsView(file.id)}>Edit tags</div>
               <div className={styles.moreActionsItem}>Edit image</div>
               <CopyToClipboard text={base64Link}>
                 <div

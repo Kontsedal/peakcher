@@ -41,14 +41,4 @@ export class EventsService {
     }
     chrome.runtime.sendMessage(message, callback);
   }
-
-  /**
-   * Emits event to all extension scripts including content scripts
-   */
-  static emitToAll<T>(message: Event, callback?: (T) => void): void {
-    chrome.tabs.query({}, (tabs) =>
-      tabs.forEach((tab) => chrome.tabs.sendMessage(tab.id, message))
-    );
-    chrome.runtime.sendMessage(message, callback);
-  }
 }

@@ -92,27 +92,23 @@ export const slice = createSlice({
     logOut: () => {
       return initialState;
     },
-    setFileTags: (
-      state,
-      action: PayloadAction<{ fileId: string; tags: string[] }>
-    ) => {
-      const { tags, fileId } = action.payload;
-      const removedTags = difference(state.files[fileId].tags, tags.sort());
-      removedTags.forEach((tag: string) => {
-        if (state.tags[tag]) {
-          state.tags[tag] = state.tags[tag].filter((file) => file !== fileId);
-        }
-      });
-      state.files[fileId].tags = [];
-      tags.forEach((tag) => {
-        if (!state.tags[tag]) {
-          state.tags[tag] = [];
-        }
-        if (!state.tags[tag].includes(fileId)) {
-          state.tags[tag].push(fileId);
-        }
-        state.files[fileId].tags.push(tag);
-      });
+    addFileTag: (state, action) => {
+      const { fileId, tag } = action.payload;
+      if (!fileId || !tag || !state.files[fileId]) {
+        return state;
+      }
+      state.files[fileId].tags.push(tag)
+      state.tags[tag].push(fileId)
+      return state
+    },
+    removeFileTag: (state, action) => {
+      const { fileId, tag } = action.payload;
+      if (!fileId || !tag || !state.files[fileId]) {
+        return state;
+      }
+      state.files[fileId].tags = state.files[fileId].tags.filter(item => item !== tag)
+      state.tags[tag] =  state.tags[tag].filter(item => item !== fileId)
+      return state
     },
     setState: (state, action) => action.payload,
     setRemoteState: (state, action) => {

@@ -11,7 +11,7 @@ const EVENTS = {
 };
 
 const populateActionsMiddleware = () => (next) => (action) => {
-  EventsService.emitToAll({
+  EventsService.emit({
     type: EVENTS.DISPATCH_EVENT,
     payload: action,
   });
@@ -52,4 +52,17 @@ export const getStore = (isBackground: boolean) => {
 };
 
 export type RootState = ReturnType<typeof slice.reducer>;
-export const { actions } = slice;
+export const  actions = {
+  setIsAuthorized: slice.actions.setIsAuthorized,
+  addFile: slice.actions.addFile,
+  setSettings: slice.actions.setSettings,
+  deleteFile: slice.actions.deleteFile,
+  deleteTag: slice.actions.deleteTag,
+  setRemoteSpaceInfo: slice.actions.setRemoteSpaceInfo,
+  logOut: slice.actions.logOut,
+  addFileTag: slice.actions.addFileTag,
+  removeFileTag: slice.actions.removeFileTag,
+  setState: slice.actions.setState,
+  setRemoteState: slice.actions.setRemoteState,
+  setUploadFileStatus: slice.actions.setUploadFileStatus,
+};
