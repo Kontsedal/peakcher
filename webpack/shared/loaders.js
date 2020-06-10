@@ -29,9 +29,16 @@ const processSvg = {
   use: ['@svgr/webpack'],
 };
 
+const lintJavaScript = {
+  test: /\.(js|tsx?)$/,
+  exclude: /node_modules/,
+  use: ['babel-loader', 'eslint-loader'],
+}
+
 module.exports = {
   processTypescriptFiles,
   processSassFiles,
   processImages,
-  processSvg
+  processSvg,
+  lintJavaScript
 };

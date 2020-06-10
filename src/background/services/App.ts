@@ -17,7 +17,7 @@ export interface RemoteSession {
 }
 
 export class AppService {
-  public static generateFileNameToUpload(fileName, mimeType) {
+  public static generateFileNameToUpload(fileName, mimeType): string {
     let extension = fileName.split(".").pop();
     if (mimeType && mime.getExtension(mimeType)) {
       extension = mime.getExtension(mimeType);
