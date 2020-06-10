@@ -1,4 +1,5 @@
 import { File } from "common/interfaces";
+import { CONFIG } from "../../../config";
 
 export const getImagesPositions = ({
   images,
@@ -19,7 +20,10 @@ export const getImagesPositions = ({
   const result = {};
   const columnsHeights = new Array(columnsCount).fill(0);
   images.forEach((image) => {
-    const newHeight = (columnWidth / image.width) * image.height;
+    let newHeight = (columnWidth / image.width) * image.height;
+    if (newHeight < CONFIG.MIN_GRID_IMAGE_HEIGHT) {
+      newHeight = CONFIG.MIN_GRID_IMAGE_HEIGHT;
+    }
     const columnNumber = columnsHeights.indexOf(Math.min(...columnsHeights));
     const columnHeight = columnsHeights[columnNumber];
     const newY = columnHeight + imagesOffset;
