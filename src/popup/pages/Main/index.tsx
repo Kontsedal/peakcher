@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import styles from "./styles.module.scss";
 import { ImagesGrid } from "../../components/ImagesGrid";
 import { TagsSelect } from "../../components/TagsSelect";
@@ -12,6 +12,7 @@ import {
 import { File } from "common/interfaces";
 import { I18n } from "../../../common/services/I18n";
 import { Button } from "../../components/Button";
+import { CurrentViewContext } from "../../context/CurrentView";
 
 export const MainPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -19,6 +20,7 @@ export const MainPage = () => {
   const tagsArray = useSelector(getTagsArray);
   const filesArray = useSelector(getFilesArray);
   const files = useSelector(getFiles);
+  const { showSettingsView } = useContext(CurrentViewContext);
 
   const handleSelectTag = useCallback(
     (tag) => {
@@ -60,7 +62,9 @@ export const MainPage = () => {
         />
         <div className={styles.actions}>
           <Button primary>{I18n.t("addFile")}</Button>
-          <Button>{I18n.t("settingsButtonTitle")}</Button>
+          <Button onClick={showSettingsView}>
+            {I18n.t("settingsButtonTitle")}
+          </Button>
         </div>
       </div>
       <div className={styles.gridWrapper}>

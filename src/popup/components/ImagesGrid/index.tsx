@@ -34,7 +34,7 @@ export const ImagesGrid = ({ files }: { files: File[] }) => {
             columnsCount: columnsCount,
           })
         : undefined,
-    [files, gridWidth]
+    [files, gridWidth, columnsCount]
   );
   const calculateGridWidth = useCallback(() => {
     if (!containerRef.current) {

@@ -4,8 +4,8 @@
   "description": "Browser extension to store images in dropbox",
   "main": "index.js",
   "scripts": {
-    "build:dev": "cross-env NODE_ENV=development webpack --config webpack/dev.js --watch",
-    "build:prod": "cross-env NODE_ENV=production  webpack --config webpack/prod.js",
+    "start": "cross-env NODE_ENV=development webpack --config webpack/dev.js --watch",
+    "build": "cross-env NODE_ENV=production  webpack --config webpack/prod.js",
     "lint": "eslint ./src/**/*.ts --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",

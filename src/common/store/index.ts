@@ -52,7 +52,7 @@ export type RootState = ReturnType<typeof slice.reducer>;
 export const actions = {
   setIsAuthorized: slice.actions.setIsAuthorized,
   addFile: slice.actions.addFile,
-  setSettings: slice.actions.setSettings,
+  setSettingValue: slice.actions.setSettingValue,
   deleteFile: slice.actions.deleteFile,
   deleteTag: slice.actions.deleteTag,
   setRemoteSpaceInfo: slice.actions.setRemoteSpaceInfo,

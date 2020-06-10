@@ -7,7 +7,6 @@ import {
   UploadStatus,
   UploadFileInfo,
 } from "common/interfaces";
-import difference from "lodash/difference";
 import merge from "lodash/merge";
 import { CONFIG } from "../../config";
 
@@ -54,8 +53,47 @@ export const slice = createSlice({
       const file = action.payload;
       state.files[file.id] = file;
     },
-    setSettings: (state, action: PayloadAction<Settings>) => {
-      state.settings = action.payload;
+    setSettingValue: (
+      state,
+      action: PayloadAction<{
+        settingName: string;
+        settingValue: string | boolean | number;
+      }>
+    ) => {
+      let { settingName, settingValue } = action.payload;
+      if (
+        typeof state.settings[settingName] === "undefined" ||
+        typeof settingValue === "undefined"
+      ) {
+        return state;
+      }
+      const allowedRanges = {
+        popupHeight: {
+          min: CONFIG.MIN_POPUP_HEIGHT,
+          max: CONFIG.MAX_POPUP_HEIGHT,
+        },
+        popupWidth: {
+          min: CONFIG.MIN_POPUP_WIDTH,
+          max: CONFIG.MAX_POPUP_WIDTH,
+        },
+        searchColumnsCount: {
+          min: CONFIG.MIN_IMAGES_IN_ROW,
+          max: CONFIG.MAX_IMAGES_IN_ROW,
+        },
+      };
+      if (
+        allowedRanges[settingName] &&
+        settingValue < allowedRanges[settingName].min
+      ) {
+        settingValue = allowedRanges[settingName].min;
+      }
+      if (
+        allowedRanges[settingName] &&
+        settingValue > allowedRanges[settingName].max
+      ) {
+        settingValue = allowedRanges[settingName].max;
+      }
+      state.settings[settingName] = settingValue;
     },
     deleteFile: (state, action: PayloadAction<string>) => {
       const fileId = action.payload;
@@ -97,18 +135,20 @@ export const slice = createSlice({
       if (!fileId || !tag || !state.files[fileId]) {
         return state;
       }
-      state.files[fileId].tags.push(tag)
-      state.tags[tag].push(fileId)
-      return state
+      state.files[fileId].tags.push(tag);
+      state.tags[tag].push(fileId);
+      return state;
     },
     removeFileTag: (state, action) => {
       const { fileId, tag } = action.payload;
       if (!fileId || !tag || !state.files[fileId]) {
         return state;
       }
-      state.files[fileId].tags = state.files[fileId].tags.filter(item => item !== tag)
-      state.tags[tag] =  state.tags[tag].filter(item => item !== fileId)
-      return state
+      state.files[fileId].tags = state.files[fileId].tags.filter(
+        (item) => item !== tag
+      );
+      state.tags[tag] = state.tags[tag].filter((item) => item !== fileId);
+      return state;
     },
     setState: (state, action) => action.payload,
     setRemoteState: (state, action) => {

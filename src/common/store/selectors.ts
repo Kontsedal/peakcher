@@ -10,8 +10,7 @@ export const getTags = (state: RootState) => (state ? state.tags : undefined);
 export const getTagsArray = createSelector(getTags, (tags) =>
   Object.keys(tags)
 );
-export const getSettings = (state: RootState) =>
-  state ? state.settings : undefined;
+export const getSettings = (state: RootState) => state.settings;
 export const getSearchColumnsCount = createSelector(
   getSettings,
   (settings) => settings.searchColumnsCount
