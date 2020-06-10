@@ -6,15 +6,12 @@ import { EventsService } from "../services/Events";
 import { CommunicationService } from "../services/Communication";
 
 const EVENTS = {
-  DISPATCH_EVENT: "DISPATCH_EVENT",
+  DISPATCH: "DISPATCH",
   GET_STATE: "GET_STATE",
 };
 
 const populateActionsMiddleware = () => (next) => (action) => {
-  EventsService.emit({
-    type: EVENTS.DISPATCH_EVENT,
-    payload: action,
-  });
+  CommunicationService.dispatch(action);
   next(action);
 };
 
@@ -30,7 +27,7 @@ export const getStore = (isBackground: boolean) => {
   });
 
   if (isBackground) {
-    EventsService.on(EVENTS.GET_STATE, (message, sender, respond) => {
+    CommunicationService.onGetState((respond) => {
       respond(store.getState());
     });
     return store;
@@ -42,17 +39,17 @@ export const getStore = (isBackground: boolean) => {
     // eslint-disable-next-line no-useless-return
     return;
   };
-  EventsService.on(EVENTS.DISPATCH_EVENT, (remoteAction: PayloadAction) => {
-    originalDispatch(remoteAction);
+  CommunicationService.onDispatch((action) => {
+    originalDispatch(action);
   });
-  EventsService.emit({ type: EVENTS.GET_STATE }, (newState) =>
+  CommunicationService.getState((newState) =>
     originalDispatch(slice.actions.setState(newState))
   );
   return store;
 };
 
 export type RootState = ReturnType<typeof slice.reducer>;
-export const  actions = {
+export const actions = {
   setIsAuthorized: slice.actions.setIsAuthorized,
   addFile: slice.actions.addFile,
   setSettings: slice.actions.setSettings,

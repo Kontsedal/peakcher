@@ -6,7 +6,7 @@ import { RootState } from "../../common/store";
 export const initEventListeners = (
   appService: AppService,
   store: Store<RootState>
-) => {
+): void => {
   CommunicationService.onAuthenticate(({ code, tabId }): void => {
     appService
       .authenticate({ code, tabId })
@@ -20,7 +20,7 @@ export const initEventListeners = (
   });
 
   CommunicationService.onSaveDispatch(async (action) => {
-    // await appService.checkStateRelevance();
+    await appService.checkStateRelevance();
     store.dispatch(action);
   });
 

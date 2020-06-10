@@ -2,12 +2,14 @@ import { getStore } from "../common/store";
 import { AppService } from "./services/App";
 import { CONFIG } from "../config";
 import { initEventListeners } from "./listeners/initEventListeners";
+import { initStoreListeners } from "./listeners/initStoreListeners";
 
 export const main = async () => {
   const store = getStore(true);
   const appService = new AppService(store);
   await appService.init();
   initEventListeners(appService, store);
+  initStoreListeners(appService, store);
   tryToLoadState(appService).catch();
   tryToLoadUsedSpace(appService).catch();
 };

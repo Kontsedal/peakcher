@@ -1,12 +1,15 @@
-import { PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, Action } from "@reduxjs/toolkit";
 import { EventsService } from "./Events";
 import { FileToUpload } from "../interfaces";
+import { RootState } from "common/store";
 
 const EVENTS = {
   AUTHENTICATE: "AUTHENTICATE",
   UPLOAD_FILES: "UPLOAD_FILES",
   SAFE_DISPATCH: "SAFE_DISPATCH",
   INJECT_VIEW: "INJECT_VIEW",
+  DISPATCH: "DISPATCH",
+  GET_STATE: "GET_STATE",
 };
 
 type UploadPayload = {
@@ -68,7 +71,29 @@ export class CommunicationService {
     );
   }
 
-  public static onInjectView(handler: (params: { url: string }) => void) {
+  public static onInjectView(handler: (params: { url: string }) => void): void {
     EventsService.on(EVENTS.INJECT_VIEW, handler);
+  }
+
+  public static getState(handler: (state: RootState) => void): void {
+    EventsService.emit({ type: EVENTS.GET_STATE }, handler);
+  }
+
+  public static onGetState(
+    handler: (respond: (state: RootState) => void) => void
+  ): void {
+    EventsService.on(EVENTS.GET_STATE, (message, sender, respond) => {
+      handler(respond);
+    });
+  }
+
+  public static dispatch(action: Action): void {
+    EventsService.emit({ type: EVENTS.DISPATCH, payload: action });
+  }
+
+  public static onDispatch(handler: (action: Action) => void): void {
+    EventsService.on(EVENTS.DISPATCH, (action: Action) => {
+      handler(action);
+    });
   }
 }

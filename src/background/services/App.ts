@@ -86,7 +86,7 @@ export class AppService {
   }: {
     files: FileToUpload[];
     notifyUser?: boolean;
-  }) {
+  }): Promise<void> {
     files.forEach((fileToUpload) => {
       this.uploadQueue.push(async () => {
         try {
@@ -295,7 +295,7 @@ export class AppService {
     });
   }
 
-  private async isCurrentSessionRelevant() {
+  private async isCurrentSessionRelevant(): Promise<boolean> {
     const sessionExist = await this.doesAnySessionExist();
     if (!sessionExist) {
       return false;
