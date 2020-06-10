@@ -13,6 +13,7 @@ module.exports = ({ authProxyUrl }) => ({
     "storage",
     "notifications",
     "contextMenus",
+    "activeTab",
     "https://api.dropboxapi.com/*",
     authProxyUrl,
   ],
@@ -25,16 +26,6 @@ module.exports = ({ authProxyUrl }) => ({
     {
       matches: ["https://www.dropbox.com/1/oauth2/authorize_submit"],
       js: ["dropboxCodeExtractor.js"],
-    },
-    {
-      matches: ["<all_urls>"],
-      /**
-       * need to manage webpack chunks manually for content scripts :(
-       */
-      js: [
-        "vendors_background_popup_viewInjector.bundle.js",
-        "viewInjector.js",
-      ],
     },
   ],
   icons: {

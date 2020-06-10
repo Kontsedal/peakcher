@@ -1,27 +1,27 @@
-import { CommunicationService } from "../common/services/Communication";
 import { getStore } from "../common/store";
 import styles from "./styles.module.scss";
 
-let injectedView;
-let unsubscribeFromStore;
-CommunicationService.onInjectView(({ url }) => {
-  if (injectedView) {
-    injectedView.parentElement.removeChild(injectedView);
-    injectedView = undefined;
-    unsubscribeFromStore();
+function main() {
+  const IFRAME_ID = "peakcherIframe";
+
+  let existingIframe = document.getElementById(IFRAME_ID);
+  if (existingIframe) {
+    existingIframe.parentNode.removeChild(existingIframe);
     return;
   }
+
   const store = getStore(false);
-  unsubscribeFromStore = store.subscribe(() => {
+  store.subscribe(() => {
     const state = store.getState();
     iframeEl.style.width = `${state.settings.popupWidth}px`;
     iframeEl.style.height = `${state.settings.popupHeight}px`;
   });
   const iframeEl = document.createElement("iframe");
-  injectedView = iframeEl;
-
-  iframeEl.src = url;
+  iframeEl.src = chrome.runtime.getURL("popup.html");
+  iframeEl.id = IFRAME_ID;
   iframeEl.classList.add(styles.window);
   iframeEl.setAttribute("frameborder", "0");
   document.body.appendChild(iframeEl);
-});
+}
+
+main();

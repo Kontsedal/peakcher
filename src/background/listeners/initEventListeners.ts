@@ -25,11 +25,25 @@ export const initEventListeners = (
   });
 
   chrome.browserAction.onClicked.addListener((tab) => {
-    CommunicationService.injectView(
-      {
-        url: `${window.location.origin}/popup.html`,
-      },
-      tab.id
-    );
+    const scriptsToInject = [
+      "/vendors_background_popup_viewInjector.bundle.js",
+      "/background_popup_viewInjector.bundle.js",
+      "/viewInjector.js",
+    ];
+    function injectNext() {
+      let scriptSrc = scriptsToInject.shift();
+      console.log("inject " + scriptSrc);
+      if (!scriptSrc) {
+        return;
+      }
+      chrome.tabs.executeScript(
+        null,
+        {
+          file: scriptSrc,
+        },
+        injectNext
+      );
+    }
+    injectNext();
   });
 };

@@ -63,18 +63,6 @@ export class CommunicationService {
     });
   }
 
-  public static injectView(params: { url: string }, tabId: number) {
-    EventsService.emit(
-      { type: EVENTS.INJECT_VIEW, payload: params },
-      () => {},
-      tabId
-    );
-  }
-
-  public static onInjectView(handler: (params: { url: string }) => void): void {
-    EventsService.on(EVENTS.INJECT_VIEW, handler);
-  }
-
   public static getState(handler: (state: RootState) => void): void {
     EventsService.emit({ type: EVENTS.GET_STATE }, handler);
   }
