@@ -62,4 +62,5 @@ export const actions = {
   setState: slice.actions.setState,
   setRemoteState: slice.actions.setRemoteState,
   setUploadFileStatus: slice.actions.setUploadFileStatus,
+  removeUploadFileStatus: slice.actions.removeUploadFileStatus,
 };

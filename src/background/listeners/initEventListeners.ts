@@ -13,7 +13,7 @@ export const initEventListeners = (
       .catch((error) => console.error("Failed to authenticate", error));
   });
 
-  CommunicationService.onUploadFile(({ files, notifyUser }): void => {
+  CommunicationService.onUploadFiles(({ files, notifyUser }): void => {
     appService
       .uploadFiles({ files, notifyUser })
       .catch((error) => console.error("Failed to upload files", error));

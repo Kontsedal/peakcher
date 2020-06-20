@@ -13,12 +13,14 @@ import { File } from "common/interfaces";
 import { I18n } from "../../../common/services/I18n";
 import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
+import { UploadFilesButton } from "../../components/UploadFilesButton";
+import orderBy from "lodash/orderBy";
 
 export const MainPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const tags = useSelector(getTags);
   const tagsArray = useSelector(getTagsArray);
-  const filesArray = useSelector(getFilesArray);
+  let filesArray = useSelector(getFilesArray);
   const files = useSelector(getFiles);
   const { showSettingsView } = useContext(CurrentViewContext);
 
@@ -34,7 +36,7 @@ export const MainPage = () => {
     },
     [selectedTags, setSelectedTags]
   );
-  const filteredFiles: File[] = useMemo(() => {
+  let filteredFiles: File[] = useMemo(() => {
     const result = {};
     selectedTags.forEach((tag) => {
       const tagFiles = tags[tag];
@@ -47,6 +49,7 @@ export const MainPage = () => {
     });
     return Object.values(result);
   }, [selectedTags, files]);
+  filesArray = orderBy(filesArray, ["createdAt"], ["desc"]);
   const filesToRender = selectedTags.length ? filteredFiles : filesArray;
   return (
     <div className={styles.root}>
@@ -61,7 +64,7 @@ export const MainPage = () => {
           optionTextGetter={(tag) => `[${tags[tag].length}] ${tag}`}
         />
         <div className={styles.actions}>
-          <Button primary>{I18n.t("addFile")}</Button>
+          <UploadFilesButton />
           <Button onClick={showSettingsView}>
             {I18n.t("settingsButtonTitle")}
           </Button>

@@ -158,5 +158,12 @@ export const slice = createSlice({
       const fileInfo = action.payload;
       state.uploadStatus[fileInfo.id] = fileInfo;
     },
+    removeUploadFileStatus: (
+      state,
+      action: PayloadAction<{ uploadId: string }>
+    ) => {
+      const { uploadId } = action.payload;
+      delete state.uploadStatus[uploadId];
+    },
   },
 });

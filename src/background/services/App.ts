@@ -33,6 +33,8 @@ export class AppService {
 
   private authTable: AuthTable;
 
+  private lastUploadedSerializedState: string;
+
   private store: Store<RootState>;
 
   constructor(store: Store<RootState>) {
@@ -134,11 +136,8 @@ export class AppService {
         },
       });
       this.store.dispatch(
-        actions.setUploadFileStatus({
-          id: fileToUpload.uploadId,
-          uploading: false,
-          error: false,
-          progress: 100,
+        actions.removeUploadFileStatus({
+          uploadId: fileToUpload.uploadId,
         })
       );
       await this.checkStateRelevance();
@@ -220,13 +219,19 @@ export class AppService {
   }
 
   public async uploadStateToRemote(state) {
+    delete state.uploadStatus;
     if (!state.isAuthorized) {
       return;
     }
     if (!this.authToken) {
       return;
     }
-    const file = new Blob([JSON.stringify(state)], {
+    let serializedState = JSON.stringify(state);
+    if (serializedState === this.lastUploadedSerializedState) {
+      console.warn("Skip same state to upload");
+      return;
+    }
+    const file = new Blob([serializedState], {
       type: "application/json",
     });
     DropboxService.uploadFile({
@@ -234,6 +239,8 @@ export class AppService {
       file,
       token: this.authToken,
       makePublic: false,
+    }).then(() => {
+      this.lastUploadedSerializedState = serializedState;
     });
   }
 

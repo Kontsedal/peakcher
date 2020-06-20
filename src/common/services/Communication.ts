@@ -33,7 +33,7 @@ export class CommunicationService {
     });
   }
 
-  public static uploadFile(payload: UploadPayload): void {
+  public static uploadFiles(payload: UploadPayload): void {
     EventsService.emit({
       type: EVENTS.UPLOAD_FILES,
       payload: {
@@ -43,7 +43,7 @@ export class CommunicationService {
     });
   }
 
-  public static onUploadFile(handler: (payload: UploadPayload) => void): void {
+  public static onUploadFiles(handler: (payload: UploadPayload) => void): void {
     EventsService.on(EVENTS.UPLOAD_FILES, (payload: UploadPayload) => {
       handler(payload);
     });
