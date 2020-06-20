@@ -172,7 +172,7 @@ export class AppService {
     }
   }
 
-  public async deleteFile({ fileId, callback, force = false }) {
+  public async deleteFile({ fileId, force = false }, callback) {
     const state = this.store.getState();
     const file = state.files[fileId];
     if (!fileId) {
@@ -219,7 +219,10 @@ export class AppService {
   }
 
   public async uploadStateToRemote(state) {
-    delete state.uploadStatus;
+    state = { ...state };
+    if (state.uploadStatus) {
+      delete state.uploadStatus;
+    }
     if (!state.isAuthorized) {
       return;
     }

@@ -24,6 +24,12 @@ export const initEventListeners = (
     store.dispatch(action);
   });
 
+  CommunicationService.onDeleteFile(({ fileId, force }, sender, respond) => {
+    appService
+      .deleteFile({ fileId, force }, respond)
+      .catch((error) => console.error("Failed to delete file", error));
+  });
+
   chrome.browserAction.onClicked.addListener((tab) => {
     const scriptsToInject = [
       "/vendors_background_popup_viewInjector.bundle.js",

@@ -8,6 +8,7 @@ import { linkToBase64 } from "utils/file";
 import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CurrentViewContext } from "../../../../context/CurrentView";
+import { CommunicationService } from "common/services/Communication";
 
 type Props = {
   file: File;
@@ -23,8 +24,11 @@ export const ImageItem = ({ file }: Props) => {
   const hideActions = useCallback(() => {
     setActionsVisible(false);
   }, [setActionsVisible]);
+  const deleteFile = useCallback(() => {
+    CommunicationService.deleteFile({ fileId: file.id });
+  }, [file.id]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions);
-  const {showEditImageTagsView} = useContext(CurrentViewContext)
+  const { showEditImageTagsView } = useContext(CurrentViewContext);
   return (
     <div className={styles.imageItem}>
       <img src={file.publicUrl} />
@@ -46,7 +50,12 @@ export const ImageItem = ({ file }: Props) => {
               onMouseEnter={loadBase64}
               style={{ display: actionsVisible ? "block" : "none" }}
             >
-              <div className={styles.moreActionsItem} onClick={() => showEditImageTagsView(file.id)}>Edit tags</div>
+              <div
+                className={styles.moreActionsItem}
+                onClick={() => showEditImageTagsView(file.id)}
+              >
+                Edit tags
+              </div>
               <div className={styles.moreActionsItem}>Edit image</div>
               <CopyToClipboard text={base64Link}>
                 <div
@@ -59,7 +68,9 @@ export const ImageItem = ({ file }: Props) => {
                   <div className={styles.loader} />
                 </div>
               </CopyToClipboard>
-              <div className={styles.moreActionsItem}>Remove</div>
+              <div className={styles.moreActionsItem} onClick={deleteFile}>
+                Remove
+              </div>
             </div>
 
             <MoreIcon />

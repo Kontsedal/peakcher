@@ -10,6 +10,7 @@ const EVENTS = {
   INJECT_VIEW: "INJECT_VIEW",
   DISPATCH: "DISPATCH",
   GET_STATE: "GET_STATE",
+  DELETE_FILE: "DELETE_FILE",
 };
 
 type UploadPayload = {
@@ -83,5 +84,25 @@ export class CommunicationService {
     EventsService.on(EVENTS.DISPATCH, (action: Action) => {
       handler(action);
     });
+  }
+
+  public static deleteFile(
+    {
+      fileId,
+      force,
+    }: {
+      fileId: string;
+      force?: boolean;
+    },
+    callback?: ({ success: boolean, error: Error }) => void
+  ): void {
+    EventsService.emit(
+      { type: EVENTS.DELETE_FILE, payload: { fileId, force } },
+      callback
+    );
+  }
+
+  public static onDeleteFile(handler): void {
+    EventsService.on(EVENTS.DELETE_FILE, handler);
   }
 }
