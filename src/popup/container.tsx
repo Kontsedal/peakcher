@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import { RootState } from "../common/store";
 import { CurrentViewContext, VIEWS } from "./context/CurrentView";
 import styles from "./styles.module.scss";
@@ -13,6 +13,15 @@ export const App = () => {
   const { currentView, showMainView, showLoginView } = useContext(
     CurrentViewContext
   );
+  useEffect(() => {
+    if (!window.parent) {
+      return;
+    }
+    window.parent.postMessage(
+      { type: "peakcherSettings", payload: state.settings },
+      "*"
+    );
+  }, [state]);
   useEffect(() => {
     if (state.isAuthorized) {
       showMainView();

@@ -2,13 +2,7 @@ import { configureStore, PayloadAction } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import compact from "lodash/compact";
 import { slice } from "./slice";
-import { EventsService } from "../services/Events";
 import { CommunicationService } from "../services/Communication";
-
-const EVENTS = {
-  DISPATCH: "DISPATCH",
-  GET_STATE: "GET_STATE",
-};
 
 const populateActionsMiddleware = () => (next) => (action) => {
   CommunicationService.dispatch(action);
