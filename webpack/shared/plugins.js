@@ -6,6 +6,8 @@ const ExtensionReloader = require("webpack-extension-reloader");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
 const getManifest = require("../../src/manifest");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const PATHS = require("./paths");
 
@@ -54,6 +56,10 @@ const createManifestFile = new WebpackExtensionManifestPlugin({
 
 const cleanDistFolder = new CleanWebpackPlugin();
 
+const analyzeBundleSize = new BundleAnalyzerPlugin({
+  analyzerPort: 3838,
+});
+
 module.exports = {
   processPopupHtmlFile,
   processBackgroundHtmlFile,
@@ -62,4 +68,5 @@ module.exports = {
   enableHotReload,
   createManifestFile,
   cleanDistFolder,
+  analyzeBundleSize,
 };
