@@ -7,11 +7,11 @@ import { v4 as uuid } from "uuid";
 import { CommunicationService } from "common/services/Communication";
 
 export const UploadFilesButton = () => {
-  let [inputVersion, setInputVersion] = useState(0);
+  const [inputVersion, setInputVersion] = useState(0);
   const inputRef = useRef<HTMLInputElement>();
   const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    let filesToUpload = Array.from(files).map((file) => ({
+    const filesToUpload = Array.from(files).map((file) => ({
       fileUrl: fileToLink(file),
       name: file.name,
       size: file.size,

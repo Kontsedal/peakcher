@@ -229,7 +229,7 @@ export class AppService {
     if (!this.authToken) {
       return;
     }
-    let serializedState = JSON.stringify(state);
+    const serializedState = JSON.stringify(state);
     if (serializedState === this.lastUploadedSerializedState) {
       console.warn("Skip same state to upload");
       return;

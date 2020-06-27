@@ -13,8 +13,8 @@ export const I18n = {
       }
       Object.entries(placeholders).map(
         ([key, value]: [string, { content: string }]) => {
-          let stringToReplace = `$${key}$`;
-          let paramsIndex = Number(value.content.replace(/\$/g, "")) - 1;
+          const stringToReplace = `$${key}$`;
+          const paramsIndex = Number(value.content.replace(/\$/g, "")) - 1;
           message = message.replace(stringToReplace, params[paramsIndex]);
         }
       );

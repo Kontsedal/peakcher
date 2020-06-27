@@ -36,7 +36,7 @@ export const MainPage = () => {
     },
     [selectedTags, setSelectedTags]
   );
-  let filteredFiles: File[] = useMemo(() => {
+  const filteredFiles: File[] = useMemo(() => {
     const result = {};
     selectedTags.forEach((tag) => {
       const tagFiles = tags[tag];

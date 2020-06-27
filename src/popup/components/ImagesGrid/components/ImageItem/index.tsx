@@ -13,7 +13,7 @@ type Props = {
 
 export const ImageItem = ({ file }: Props) => {
   const actionsPopupRef = useRef();
-  let [actionsVisible, setActionsVisible] = useState(false);
+  const [actionsVisible, setActionsVisible] = useState(false);
   const [base64Link, setBase64Link] = useState<undefined | string>();
   const [base64IsLoading, setBase64IsLoading] = useState(false);
   const loadBase64 = useCallback(() => {

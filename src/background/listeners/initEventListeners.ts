@@ -33,7 +33,7 @@ export const initEventListeners = (
   chrome.browserAction.onClicked.addListener(() => {
     const scriptsToInject = ["/viewInjector.js"];
     function injectNext() {
-      let scriptSrc = scriptsToInject.shift();
+      const scriptSrc = scriptsToInject.shift();
       if (!scriptSrc) {
         return;
       }

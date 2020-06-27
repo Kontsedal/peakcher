@@ -18,8 +18,8 @@ const image = {
 };
 
 const Component = ({ base64IsLoading, actionsVisible, base64Link }) => {
-  let width = 300;
-  let height = (image.height / image.width) * width;
+  const width = 300;
+  const height = (image.height / image.width) * width;
   return (
     <div style={{ width, height }}>
       <ImageItemView
