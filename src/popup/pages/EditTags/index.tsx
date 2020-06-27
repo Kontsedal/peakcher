@@ -7,7 +7,8 @@ import styles from "./styles.module.scss";
 import { TagsSelect } from "../../components/TagsSelect";
 import { actions } from "common/store";
 import { Button } from "../../components/Button";
-import { I18n } from "../../../common/services/I18n";
+import { I18n } from "common/services/I18n";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 export const EditTagsPage = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ export const EditTagsPage = () => {
   return (
     <div className={styles.root}>
       <div className={styles.toolbar}>
-        <Button className={styles.backButton} onClick={showMainView}>
+        <Button flat className={styles.backButton} onClick={showMainView}>
+          <MdKeyboardBackspace />
           {I18n.t("exitImageEditText")}
         </Button>
         <TagsSelect

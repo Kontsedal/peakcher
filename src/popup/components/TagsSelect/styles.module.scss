@@ -1,4 +1,4 @@
-@import "../../styles/vars";
+@import "../../styles/vars.module";
 
 $row-height: 30px;
 $input-height: $row-height;
@@ -135,6 +135,7 @@ $input-height: $row-height;
 
 .createNewTagButton {
   text-align: center;
+  color: $primary-color;
   font-size: 1.5rem;
   font-weight: bold;
 }
