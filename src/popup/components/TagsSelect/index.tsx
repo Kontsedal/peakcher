@@ -6,7 +6,7 @@ type Props = {
   selectedOptions: string[];
   onSelect: (tag: string) => void;
   onRemove: (tag: string) => void;
-  optionTextGetter?: (option: string) => string;
+  optionTextGetter?: (option: string) => string | object;
   placeholder?: string;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
@@ -48,9 +48,16 @@ export const TagsSelect = ({
     },
     [options, onCreate]
   );
+  const handleSetCurrentText = useCallback(
+    (text) => {
+      setCurrentText(text);
+      setInputIsActive(true);
+    },
+    [setCurrentText]
+  );
   return (
     <TagsSelectView
-      setCurrentText={setCurrentText}
+      setCurrentText={handleSetCurrentText}
       currentText={currentText}
       options={filteredOptions}
       showAutocomplete={inputIsActive}

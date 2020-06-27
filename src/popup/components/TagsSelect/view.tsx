@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { I18n } from "../../../common/services/I18n";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import cn from "classnames";
+import { Button } from "../Button";
 
 type Props = {
   options: string[];
@@ -14,7 +15,7 @@ type Props = {
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
   removeOption: (option: string) => void;
-  optionTextGetter?: (option: string) => string;
+  optionTextGetter?: (option: string) => string | object;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
   className?: string;
@@ -74,15 +75,20 @@ export const TagsSelectView = ({
       {showAutocomplete && (
         <div className={styles.autocompleteBox}>
           {canCreateOption && (
-            <div>
-              <button onClick={() => onCreate(currentText)}>Create</button>
-            </div>
+            <button
+              className={cn(styles.autocompleteItem, styles.createNewTagButton)}
+              onClick={() => onCreate(currentText)}
+            >
+              <span className={styles.autocompleteItemText}>
+                {I18n.t("createTag", [currentText])}
+              </span>
+            </button>
           )}
           {!options.length && (
             <div className={styles.noOptions}>{I18n.t("noSelectOptions")}</div>
           )}
           {options.map((option) => (
-            <div
+            <button
               tabIndex={0}
               role="option"
               aria-selected="false"
@@ -96,7 +102,7 @@ export const TagsSelectView = ({
               <div className={styles.autocompleteItemText}>
                 {optionTextGetter(option)}
               </div>
-            </div>
+            </button>
           ))}
         </div>
       )}

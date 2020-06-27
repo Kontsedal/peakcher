@@ -22,16 +22,23 @@ export const EditTagsPage = () => {
   const handleRemove = useCallback((tag) => {
     dispatch(actions.removeFileTag({ fileId: editImageId, tag }));
   }, []);
+  const handleCreate = useCallback((tag) => {
+    dispatch(actions.addFileTag({ fileId: editImageId, tag }));
+  }, []);
   return (
     <div className={styles.root}>
       <div className={styles.toolbar}>
-        <Button className={styles.backButton} onClick={showMainView}>{I18n.t("exitImageEditText")}</Button>
+        <Button className={styles.backButton} onClick={showMainView}>
+          {I18n.t("exitImageEditText")}
+        </Button>
         <TagsSelect
+          allowCreate
           options={tagsArray}
           selectedOptions={currentFile.tags}
           onSelect={handleSelect}
           onRemove={handleRemove}
-          placeholder={I18n.t('imageTagsInputPlaceholder')}
+          onCreate={handleCreate}
+          placeholder={I18n.t("imageTagsInputPlaceholder")}
         />
       </div>
       <div className={styles.imageWrapper}>

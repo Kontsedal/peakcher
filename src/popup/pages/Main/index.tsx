@@ -61,7 +61,12 @@ export const MainPage = () => {
           onSelect={handleSelectTag}
           onRemove={handleRemoveTag}
           placeholder={I18n.t("searchBarPlaceholder")}
-          optionTextGetter={(tag) => `[${tags[tag].length}] ${tag}`}
+          optionTextGetter={(tag) => (
+            <span>
+              <span className={styles.tagBadge}>{tags[tag].length}</span>
+              <span>{tag}</span>
+            </span>
+          )}
         />
         <div className={styles.actions}>
           <UploadFilesButton />
