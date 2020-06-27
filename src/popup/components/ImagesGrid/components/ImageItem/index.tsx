@@ -18,16 +18,27 @@ export const ImageItem = ({ file }: Props) => {
   const actionsPopupRef = useRef();
   let [actionsVisible, setActionsVisible] = useState(false);
   const [base64Link, setBase64Link] = useState<undefined | string>();
-  const loadBase64 = useCallback(() => {
-    linkToBase64(file.publicUrl, file.type).then((link) => setBase64Link(link));
-  }, [file.publicUrl, setBase64Link]);
+  const [base64IsLoading, setBase64IsLoading] = useState(false);
+  const loadBase64 = useCallback(
+    (event) => {
+      event.stopPropagation();
+      setBase64IsLoading(true);
+      linkToBase64(file.publicUrl, file.type).then((link) => {
+        setBase64IsLoading(false);
+        setBase64Link(link);
+      });
+    },
+    [file.publicUrl, setBase64Link, setBase64IsLoading]
+  );
   const hideActions = useCallback(() => {
     setActionsVisible(false);
   }, [setActionsVisible]);
   const deleteFile = useCallback(() => {
     CommunicationService.deleteFile({ fileId: file.id });
   }, [file.id]);
-  useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions);
+  useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
+    excludedClasses: [styles.moreActionsItem],
+  });
   const { showEditImageTagsView } = useContext(CurrentViewContext);
   return (
     <div className={styles.imageItem}>
@@ -47,7 +58,6 @@ export const ImageItem = ({ file }: Props) => {
             <div
               className={styles.moreActionsPopup}
               ref={actionsPopupRef}
-              onMouseEnter={loadBase64}
               style={{ display: actionsVisible ? "block" : "none" }}
             >
               <div
@@ -57,17 +67,26 @@ export const ImageItem = ({ file }: Props) => {
                 Edit tags
               </div>
               <div className={styles.moreActionsItem}>Edit image</div>
-              <CopyToClipboard text={base64Link}>
-                <div
-                  className={cn(
-                    styles.moreActionsItem,
-                    !base64Link && styles.loading
-                  )}
-                >
-                  <div className={styles.moreActionsItemText}>Copy Base64</div>
+              {!base64IsLoading && !base64Link && (
+                <div onClick={loadBase64} className={styles.moreActionsItem}>
+                  Get Base64
+                </div>
+              )}
+              {base64IsLoading && (
+                <div className={cn(styles.moreActionsItem, styles.loading)}>
                   <div className={styles.loader} />
                 </div>
-              </CopyToClipboard>
+              )}
+
+              {base64Link && (
+                <CopyToClipboard text={base64Link}>
+                  <div className={styles.moreActionsItem}>
+                    <div className={styles.moreActionsItemText}>
+                      Copy Base64
+                    </div>
+                  </div>
+                </CopyToClipboard>
+              )}
               <div className={styles.moreActionsItem} onClick={deleteFile}>
                 Remove
               </div>

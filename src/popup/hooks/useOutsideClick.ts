@@ -1,8 +1,18 @@
 import { useCallback, useEffect } from "react";
 
-export const useOutsideClick = (element, callback) => {
+export const useOutsideClick = (
+  element,
+  callback,
+  { excludedClasses = [] } = {}
+) => {
   const handleClick = useCallback(
     (event) => {
+      const isExcluded = Array.from(event.target.classList).some((item) =>
+        excludedClasses.includes(item)
+      );
+      if (isExcluded) {
+        return;
+      }
       if (!element || !element.contains(event.target)) {
         callback();
       }

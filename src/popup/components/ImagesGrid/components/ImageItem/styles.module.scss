@@ -109,9 +109,13 @@
     font-size: 11px;
     white-space: nowrap;
     word-break: keep-all;
+    cursor: pointer;
     &:hover {
       background: #2d9cdb;
       color: #f2f2f2;
+    }
+    &:active {
+      background: darken(#2d9cdb, 10);
     }
   }
 
@@ -153,7 +157,7 @@
 @keyframes :local(loadingAnimation) {
   0% {
     width: 0;
-    left: 0%;
+    left: 0;
   }
 
   50% {
@@ -161,7 +165,7 @@
     left: 20%;
   }
   100% {
-    width: 0%;
+    width: 0;
     left: 100%;
   }
 }
