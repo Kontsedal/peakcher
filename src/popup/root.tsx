@@ -7,7 +7,6 @@ import { IconContext } from "react-icons";
 import cssVars from "./styles/vars.module.scss";
 
 export const Root = () => {
-  alert(JSON.stringify(cssVars));
   return (
     <Provider store={getStore(false)}>
       <CurrentViewProvider>
