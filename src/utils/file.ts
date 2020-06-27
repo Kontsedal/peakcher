@@ -22,7 +22,6 @@ export const getImageSizes = (
       });
     };
     elem.onerror = (err) => {
-      console.error("img err", err);
       wrapper.remove();
       reject({ width: 0, height: 0 });
     };
