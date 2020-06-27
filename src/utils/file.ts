@@ -1,7 +1,8 @@
-export const fileToLink = (file: File | Blob | ArrayBuffer) =>
+export const fileToLink = (file: File | Blob | ArrayBuffer): string =>
   URL.createObjectURL(file);
+
 export const getImageSizes = (
-  url
+  url: string
 ): Promise<{ width: number; height: number }> => {
   return new Promise((resolve, reject) => {
     const wrapper = document.createElement("div");

@@ -4,7 +4,7 @@ import { CONFIG } from "../config";
 import { initEventListeners } from "./listeners/initEventListeners";
 import { initStoreListeners } from "./listeners/initStoreListeners";
 
-export const main = async () => {
+export const main = async (): Promise<void> => {
   const store = getStore(true);
   const appService = new AppService(store);
   await appService.init();

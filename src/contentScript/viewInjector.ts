@@ -1,10 +1,9 @@
 import styles from "./styles.module.scss";
-import { Settings } from "../common/interfaces";
 
 function main() {
   const IFRAME_ID = "peakcherIframe";
 
-  let existingIframe = document.getElementById(IFRAME_ID);
+  const existingIframe = document.getElementById(IFRAME_ID);
   if (existingIframe) {
     existingIframe.parentNode.removeChild(existingIframe);
     return;
