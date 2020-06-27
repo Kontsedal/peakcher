@@ -30,15 +30,10 @@ export const initEventListeners = (
       .catch((error) => console.error("Failed to delete file", error));
   });
 
-  chrome.browserAction.onClicked.addListener((tab) => {
-    const scriptsToInject = [
-      "/vendors_background_popup_viewInjector.bundle.js",
-      "/background_popup_viewInjector.bundle.js",
-      "/viewInjector.js",
-    ];
+  chrome.browserAction.onClicked.addListener(() => {
+    const scriptsToInject = ["/viewInjector.js"];
     function injectNext() {
       let scriptSrc = scriptsToInject.shift();
-      console.log("inject " + scriptSrc);
       if (!scriptSrc) {
         return;
       }

@@ -31,10 +31,12 @@ const defineGlobalVariables = new webpack.DefinePlugin({
   IS_DEV: process.env.NODE_ENV === "development",
 });
 
-const copyStaticFiles = new CopyPlugin([
-  { from: path.join(PATHS.SRC_DIR, "assets"), to: "assets" },
-  { from: path.join(PATHS.SRC_DIR, "_locales"), to: "./_locales" },
-]);
+const copyStaticFiles = new CopyPlugin({
+  patterns: [
+    { from: path.join(PATHS.SRC_DIR, "assets"), to: "assets" },
+    { from: path.join(PATHS.SRC_DIR, "_locales"), to: "./_locales" },
+  ],
+});
 
 const enableHotReload = new ExtensionReloader({
   entries: {
