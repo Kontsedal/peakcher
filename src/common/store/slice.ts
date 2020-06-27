@@ -135,7 +135,12 @@ export const slice = createSlice({
       if (!fileId || !tag || !state.files[fileId]) {
         return state;
       }
-      state.files[fileId].tags.push(tag);
+      if (!state.files[fileId].tags.includes(tag)) {
+        state.files[fileId].tags.push(tag);
+      }
+      if (!state.tags[tag]) {
+        state.tags[tag] = [];
+      }
       state.tags[tag].push(fileId);
       return state;
     },
@@ -148,6 +153,9 @@ export const slice = createSlice({
         (item) => item !== tag
       );
       state.tags[tag] = state.tags[tag].filter((item) => item !== fileId);
+      if (state.tags[tag].length === 0) {
+        delete state.tags[tag];
+      }
       return state;
     },
     setState: (state, action) => action.payload,

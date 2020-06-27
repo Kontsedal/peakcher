@@ -20,7 +20,7 @@ export const TagsSelect = ({
   optionTextGetter,
   placeholder,
   allowCreate = false,
-  onCreate,
+  onCreate = () => {},
   className,
 }: Props) => {
   const [currentText, setCurrentText] = useState("");

@@ -13,7 +13,6 @@ export const EditTagsPage = () => {
   const dispatch = useDispatch();
   const { editImageId, showMainView } = useContext(CurrentViewContext);
   const files = useSelector(getFiles);
-  const tags = useSelector(getTags);
   const tagsArray = useSelector(getTagsArray);
   const currentFile = files[editImageId];
   const handleSelect = useCallback((tag) => {
@@ -21,9 +20,6 @@ export const EditTagsPage = () => {
   }, []);
   const handleRemove = useCallback((tag) => {
     dispatch(actions.removeFileTag({ fileId: editImageId, tag }));
-  }, []);
-  const handleCreate = useCallback((tag) => {
-    dispatch(actions.addFileTag({ fileId: editImageId, tag }));
   }, []);
   return (
     <div className={styles.root}>
@@ -37,7 +33,6 @@ export const EditTagsPage = () => {
           selectedOptions={currentFile.tags}
           onSelect={handleSelect}
           onRemove={handleRemove}
-          onCreate={handleCreate}
           placeholder={I18n.t("imageTagsInputPlaceholder")}
         />
       </div>
