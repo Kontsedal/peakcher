@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import { LogInPage } from "./pages/LogIn";
 import { MainPage } from "./pages/Main";
 import { EditTagsPage } from "./pages/EditTags";
-import { SettingsPage } from "./pages/Settings";
+import { Settings } from "./components/Settings";
 
 export const App = () => {
   const state = useSelector((currentState: RootState) => currentState);
@@ -35,7 +35,7 @@ export const App = () => {
       {currentView === VIEWS.LOGIN && <LogInPage />}
       {currentView !== VIEWS.LOGIN && <MainPage />}
       {currentView === VIEWS.EDIT_TAG && <EditTagsPage />}
-      {currentView === VIEWS.SETTINGS && <SettingsPage />}
+      <Settings />
     </div>
   );
 };

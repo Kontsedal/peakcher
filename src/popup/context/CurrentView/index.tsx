@@ -4,20 +4,21 @@ export const VIEWS = {
   MAIN: "main",
   LOGIN: "login",
   EDIT_TAG: "edit_tag",
-  SETTINGS: "settings",
 };
 export const CurrentViewContext = React.createContext({
   currentView: VIEWS.LOGIN,
   editImageId: null,
+  settingsIsShown: false,
+  showSettings: (show: boolean) => {},
   showMainView: () => {},
   showLoginView: () => {},
-  showSettingsView: () => {},
   showEditImageTagsView: (imageId: string) => {},
 });
 
 export const CurrentViewProvider = ({ children }) => {
   const [currentView, setCurrentView] = useState(VIEWS.MAIN);
   const [editImageId, setEditImageId] = useState(null);
+  const [settingsIsShown, setSettingsIsShown] = useState(false);
 
   const showMainView = useCallback(() => {
     setCurrentView(VIEWS.MAIN);
@@ -25,9 +26,12 @@ export const CurrentViewProvider = ({ children }) => {
   const showLoginView = useCallback(() => {
     setCurrentView(VIEWS.LOGIN);
   }, [setCurrentView]);
-  const showSettingsView = useCallback(() => {
-    setCurrentView(VIEWS.SETTINGS);
-  }, [setCurrentView]);
+  const showSettings = useCallback(
+    (show: boolean) => {
+      setSettingsIsShown(show);
+    },
+    [setSettingsIsShown]
+  );
   const showEditImageTagsView = useCallback(
     (imageId) => {
       setEditImageId(imageId);
@@ -43,7 +47,8 @@ export const CurrentViewProvider = ({ children }) => {
         currentView,
         showEditImageTagsView,
         showLoginView,
-        showSettingsView,
+        showSettings,
+        settingsIsShown,
       }}
     >
       {children}

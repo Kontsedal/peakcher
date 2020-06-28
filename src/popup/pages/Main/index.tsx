@@ -22,7 +22,7 @@ export const MainPage = () => {
   const tagsArray = useSelector(getTagsArray);
   let filesArray = useSelector(getFilesArray);
   const files = useSelector(getFiles);
-  const { showSettingsView } = useContext(CurrentViewContext);
+  const { showSettings } = useContext(CurrentViewContext);
 
   const handleSelectTag = useCallback(
     (tag) => {
@@ -70,7 +70,7 @@ export const MainPage = () => {
         />
         <div className={styles.actions}>
           <UploadFilesButton />
-          <Button onClick={showSettingsView}>
+          <Button onClick={() => showSettings(true)}>
             {I18n.t("settingsButtonTitle")}
           </Button>
         </div>
