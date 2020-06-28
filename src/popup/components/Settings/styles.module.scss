@@ -1,11 +1,60 @@
+@import "../../styles/vars.module";
+
 .root {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 300px;
   z-index: 2;
   background-color: white;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  button {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+
+  .field {
+    margin-bottom: 10px;
+  }
+  label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 7px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 2px solid lighten($text-color, 60);
+    border-radius: 0;
+    outline: none;
+    height: 30px;
+
+    &:active, &:focus, &:hover {
+      border: 2px solid $primary-color;
+    }
+  }
 }

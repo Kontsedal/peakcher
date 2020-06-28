@@ -1,0 +1,51 @@
+@import "../../styles/vars.module";
+
+$input-height: 22px;
+$input-width: 40px;
+$ball-size: 15px;
+$ball-distance: ($input-height - $ball-size) / 2;
+$animation-speed: 0.15s;
+
+.wrapper {
+  display: inline-block;
+  position: relative;
+  height: $input-height;
+  width: $input-width;
+  cursor: pointer;
+  .originalInput {
+    display: none;
+  }
+  .background {
+    height: $input-height;
+    background-color: darkgray;
+    position: relative;
+    transition: all $animation-speed;
+
+    .ball {
+      position: absolute;
+      width: $ball-size;
+      height: $ball-size;
+      background-color: white;
+      left: $ball-distance;
+      top: $ball-distance;
+      transition: all $animation-speed;
+    }
+
+    &:hover {
+      background-color: darken(darkgray, 10);
+    }
+  }
+
+  .originalInput:checked {
+    &+.background {
+      background: $primary-color;
+      .ball {
+        left: $input-width - $ball-size - $ball-distance;
+      }
+      &:hover  {
+        background-color: darken($primary-color, 10);
+      }
+    }
+  }
+
+}

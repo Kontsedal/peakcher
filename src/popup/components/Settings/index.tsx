@@ -17,10 +17,9 @@ export const Settings = () => {
     settingName,
     valueAccessor: (
       event: ChangeEvent<HTMLInputElement>
-    ) => number | string | boolean = defaultValueAccessor,
-    valueAttribute = "value"
+    ) => number | string | boolean = defaultValueAccessor
   ) => ({
-    [valueAttribute]: settings[settingName],
+    value: settings[settingName],
     onChange: (event: ChangeEvent<HTMLInputElement>) => {
       dispatch(
         actions.setSettingValue({
