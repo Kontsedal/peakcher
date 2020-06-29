@@ -2,6 +2,7 @@ import { Store } from "redux";
 import { CommunicationService } from "../../common/services/Communication";
 import { AppService } from "../services/App";
 import { RootState } from "../../common/store";
+import { injectScripts } from "../../utils/activeTab";
 
 export const initEventListeners = (
   appService: AppService,
@@ -30,21 +31,11 @@ export const initEventListeners = (
       .catch((error) => console.error("Failed to delete file", error));
   });
 
-  chrome.browserAction.onClicked.addListener(() => {
-    const scriptsToInject = ["/viewInjector.js"];
-    function injectNext() {
-      const scriptSrc = scriptsToInject.shift();
-      if (!scriptSrc) {
-        return;
-      }
-      chrome.tabs.executeScript(
-        null,
-        {
-          file: scriptSrc,
-        },
-        injectNext
-      );
+  chrome.browserAction.onClicked.addListener((data) => {
+    let isServicePage = !/^https?/.test(data.url);
+    if (isServicePage) {
+      return window.open(chrome.extension.getURL("popup.html"));
     }
-    injectNext();
+    injectScripts(["/viewInjector.js"]);
   });
 };
