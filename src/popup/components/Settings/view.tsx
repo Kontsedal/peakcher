@@ -4,9 +4,12 @@ import { Button } from "../Button";
 import { MdChevronLeft } from "react-icons/all";
 import { I18n } from "../../../common/services/I18n";
 import { Toggle } from "../Toggle";
+import { RemoteSpaceInfo } from "../../../common/interfaces";
+import { UsedSpace } from "./components/UsedSpace";
 
 type Props = {
   closeSettings: () => void;
+  remoteSpaceInfo: RemoteSpaceInfo;
   getInputProps: (
     inputName: string,
     valueExtractor?: (event) => boolean | string | number
@@ -15,7 +18,11 @@ type Props = {
     value: any;
   };
 };
-export const SettingsView = ({ closeSettings, getInputProps }: Props) => (
+export const SettingsView = ({
+  closeSettings,
+  getInputProps,
+  remoteSpaceInfo,
+}: Props) => (
   <div className={style.root}>
     <div className={style.header}>
       <Button flat onClick={closeSettings}>
@@ -24,6 +31,7 @@ export const SettingsView = ({ closeSettings, getInputProps }: Props) => (
       <h2>{I18n.t("settingsWindowTitle")}</h2>
     </div>
     <div className={style.content}>
+      <UsedSpace total={remoteSpaceInfo.total} used={remoteSpaceInfo.used} />
       <div className={style.field}>
         <label htmlFor="popupHeight">{I18n.t("windowHeightInputLabel")}</label>
         <input

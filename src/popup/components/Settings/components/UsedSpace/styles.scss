@@ -1,0 +1,32 @@
+$bar-height: 25px;
+
+.root {
+  height: $bar-height;
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid #bec0c1;
+  margin-bottom: 10px;
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.3s;
+  height: 100%;
+}
+
+.text {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  text-align: center;
+  top: -1px;
+  line-height: $bar-height;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+}

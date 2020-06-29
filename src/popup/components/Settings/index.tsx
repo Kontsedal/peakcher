@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChangeEvent, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrentViewContext } from "../../context/CurrentView";
-import { getSettings } from "common/store/selectors";
+import { getRemoteSpaceInfo, getSettings } from "common/store/selectors";
 import { actions } from "common/store";
 import { SettingsView } from "./view";
 
@@ -13,6 +13,8 @@ export const Settings = () => {
   const { settingsIsShown, showSettings } = useContext(CurrentViewContext);
   const dispatch = useDispatch();
   const settings = useSelector(getSettings);
+  const remoteSpaceInfo = useSelector(getRemoteSpaceInfo);
+
   const getInputProps = (
     settingName,
     valueAccessor: (
@@ -34,6 +36,7 @@ export const Settings = () => {
   }
   return (
     <SettingsView
+      remoteSpaceInfo={remoteSpaceInfo}
       getInputProps={getInputProps}
       closeSettings={() => {
         showSettings(false);

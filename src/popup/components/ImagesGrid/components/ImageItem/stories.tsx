@@ -23,6 +23,7 @@ const Component = ({ base64IsLoading, actionsVisible, base64Link }) => {
   return (
     <div style={{ width, height }}>
       <ImageItemView
+        isRemoving={false}
         file={image}
         showEditImageTagsView={() => {}}
         setActionsVisible={(visible) => {}}

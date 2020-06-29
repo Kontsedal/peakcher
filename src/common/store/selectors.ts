@@ -15,3 +15,5 @@ export const getSearchColumnsCount = createSelector(
   getSettings,
   (settings) => settings.searchColumnsCount
 );
+
+export const getRemoteSpaceInfo = (state) => state.remoteSpaceInfo;

@@ -1,12 +1,18 @@
 import React, { ChangeEvent } from "react";
 import { SettingsView } from "./view";
-import { Settings } from "common/interfaces";
+import { RemoteSpaceInfo, Settings } from "common/interfaces";
 
 export default { title: "Settings block" };
 const defaultValueAccessor = (event: ChangeEvent<HTMLInputElement>) =>
   Number(event.target.value);
 
-const Component = ({ settings }: { settings: Settings }) => {
+const Component = ({
+  settings,
+  remoteSpaceInfo,
+}: {
+  settings: Settings;
+  remoteSpaceInfo: RemoteSpaceInfo;
+}) => {
   const getInputProps = (
     settingName,
     valueAccessor: (
@@ -26,7 +32,11 @@ const Component = ({ settings }: { settings: Settings }) => {
         display: "inline-block",
       }}
     >
-      <SettingsView closeSettings={() => {}} getInputProps={getInputProps} />
+      <SettingsView
+        closeSettings={() => {}}
+        remoteSpaceInfo={remoteSpaceInfo}
+        getInputProps={getInputProps}
+      />
     </div>
   );
 };
@@ -37,6 +47,40 @@ export const common = () => (
       popupWidth: 1000,
       protectFromDataConflicts: false,
       searchColumnsCount: 4,
+    }}
+    remoteSpaceInfo={{
+      used: 123 * 1024 * 1024,
+      total: 500 * 1024 * 1024,
+    }}
+  />
+);
+
+export const mediumSpaceLeft = () => (
+  <Component
+    settings={{
+      popupHeight: 500,
+      popupWidth: 1000,
+      protectFromDataConflicts: false,
+      searchColumnsCount: 4,
+    }}
+    remoteSpaceInfo={{
+      used: 350 * 1024 * 1024,
+      total: 500 * 1024 * 1024,
+    }}
+  />
+);
+
+export const fewSpaceLeft = () => (
+  <Component
+    settings={{
+      popupHeight: 500,
+      popupWidth: 1000,
+      protectFromDataConflicts: false,
+      searchColumnsCount: 4,
+    }}
+    remoteSpaceInfo={{
+      used: 480 * 1024 * 1024,
+      total: 500 * 1024 * 1024,
     }}
   />
 );
