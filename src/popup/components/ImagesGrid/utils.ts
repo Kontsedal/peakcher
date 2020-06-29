@@ -19,14 +19,17 @@ export const getImagesPositions = ({
     (imagesOffset * (columnsCount - 1)) / columnsCount;
   const result = {};
   const columnsHeights = new Array(columnsCount).fill(0);
-  images.forEach((image) => {
+  images.forEach((image, index) => {
     let newHeight = (columnWidth / image.width) * image.height;
     if (newHeight < CONFIG.MIN_GRID_IMAGE_HEIGHT) {
       newHeight = CONFIG.MIN_GRID_IMAGE_HEIGHT;
     }
     const columnNumber = columnsHeights.indexOf(Math.min(...columnsHeights));
     const columnHeight = columnsHeights[columnNumber];
-    const newY = columnHeight + imagesOffset;
+    let newY = columnHeight;
+    if (index > columnsCount) {
+      newY += imagesOffset;
+    }
     columnsHeights[columnNumber] = newY + newHeight;
     result[image.id] = {
       x: columnNumber * columnWidth + columnNumber * imagesOffset,
