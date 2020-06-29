@@ -5,6 +5,7 @@ import React, { MutableRefObject } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { File } from "common/interfaces";
 import cn from "classnames";
+import { Action } from "./components/Action";
 
 type Props = {
   file: File;
@@ -12,6 +13,7 @@ type Props = {
   actionsPopupRef?: MutableRefObject<any>;
   actionsVisible: boolean;
   base64IsLoading: boolean;
+  isRemoving: boolean;
   base64Link?: string;
   showEditImageTagsView: (id: string) => void;
   loadBase64: () => void;
@@ -28,6 +30,7 @@ export const ImageItemView = ({
   base64Link,
   loadBase64,
   deleteFile,
+  isRemoving,
 }: Props) => (
   <div className={styles.imageItem}>
     <img src={file.publicUrl} />
@@ -48,36 +51,19 @@ export const ImageItemView = ({
             ref={actionsPopupRef}
             style={{ display: actionsVisible ? "block" : "none" }}
           >
-            <div
-              className={styles.moreActionsItem}
+            <Action
+              text="Edit tags"
               onClick={() => showEditImageTagsView(file.id)}
-            >
-              Edit tags
-            </div>
-            <div className={styles.moreActionsItem}>Edit image</div>
-            {!base64IsLoading && !base64Link && (
-              <div onClick={loadBase64} className={styles.moreActionsItem}>
-                Get Base64
-              </div>
-            )}
-            {base64IsLoading && (
-              <div className={cn(styles.moreActionsItem, styles.loading)}>
-                <div className={styles.loader} />
-              </div>
-            )}
-
-            {base64Link && (
-              <CopyToClipboard text={base64Link}>
-                <div className={styles.moreActionsItem}>
-                  <div className={styles.moreActionsItemText}>Copy Base64</div>
-                </div>
-              </CopyToClipboard>
-            )}
-            <div className={styles.moreActionsItem} onClick={deleteFile}>
-              Remove
-            </div>
+            />
+            <Action text="Edit image" onClick={() => {}} />
+            <Action
+              text={base64Link ? "Copy Base64" : "Get Base64"}
+              isLoading={base64IsLoading}
+              textToCopy={base64Link}
+              onClick={!base64Link && !base64IsLoading && loadBase64}
+            />
+            <Action text="Remove" onClick={deleteFile} isLoading={isRemoving} />
           </div>
-
           <MoreIcon />
         </button>
       </div>

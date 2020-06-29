@@ -16,6 +16,7 @@ export const ImageItem = ({ file }: Props) => {
   const [actionsVisible, setActionsVisible] = useState(false);
   const [base64Link, setBase64Link] = useState<undefined | string>();
   const [base64IsLoading, setBase64IsLoading] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
   const loadBase64 = useCallback(() => {
     setBase64IsLoading(true);
     linkToBase64(file.publicUrl, file.type).then((link) => {
@@ -27,10 +28,13 @@ export const ImageItem = ({ file }: Props) => {
     setActionsVisible(false);
   }, [setActionsVisible]);
   const deleteFile = useCallback(() => {
-    CommunicationService.deleteFile({ fileId: file.id });
-  }, [file.id]);
+    setIsRemoving(true);
+    CommunicationService.deleteFile({ fileId: file.id }, (response) => {
+      setIsRemoving(false);
+    });
+  }, [file.id, setIsRemoving]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
-    excludedClasses: [styles.moreActionsItem],
+    excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
   });
   const { showEditImageTagsView } = useContext(CurrentViewContext);
   return (
@@ -41,6 +45,7 @@ export const ImageItem = ({ file }: Props) => {
       base64Link={base64Link}
       deleteFile={deleteFile}
       file={file}
+      isRemoving={isRemoving}
       loadBase64={loadBase64}
       setActionsVisible={setActionsVisible}
       showEditImageTagsView={showEditImageTagsView}
