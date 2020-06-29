@@ -9,6 +9,7 @@ import { UsedSpace } from "./components/UsedSpace";
 
 type Props = {
   closeSettings: () => void;
+  onLogOut: () => void;
   remoteSpaceInfo: RemoteSpaceInfo;
   getInputProps: (
     inputName: string,
@@ -22,6 +23,7 @@ export const SettingsView = ({
   closeSettings,
   getInputProps,
   remoteSpaceInfo,
+  onLogOut,
 }: Props) => (
   <div className={style.root}>
     <div className={style.header}>
@@ -70,6 +72,11 @@ export const SettingsView = ({
             (event) => event.target.checked
           )}
         />
+      </div>
+      <div className={style.logOut}>
+        <Button primary onClick={onLogOut}>
+          {I18n.t("logOutButtonText")}
+        </Button>
       </div>
     </div>
   </div>

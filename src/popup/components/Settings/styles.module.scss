@@ -34,6 +34,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  height: 100%;
 
   .field {
     margin-bottom: 10px;
@@ -55,6 +56,14 @@
 
     &:active, &:focus, &:hover {
       border: 2px solid $primary-color;
+    }
+  }
+
+  .logOut {
+    margin-top: auto;
+    button {
+      width: 100%;
+      display: block;
     }
   }
 }

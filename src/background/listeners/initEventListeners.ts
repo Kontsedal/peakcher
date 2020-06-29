@@ -1,8 +1,9 @@
 import { Store } from "redux";
 import { CommunicationService } from "../../common/services/Communication";
 import { AppService } from "../services/App";
-import { RootState } from "../../common/store";
+import { actions, RootState } from "../../common/store";
 import { injectScripts } from "../../utils/activeTab";
+import { AuthTable } from "../../common/database/AuthTable";
 
 export const initEventListeners = (
   appService: AppService,
@@ -29,6 +30,11 @@ export const initEventListeners = (
     appService
       .deleteFile({ fileId, force }, respond)
       .catch((error) => console.error("Failed to delete file", error));
+  });
+
+  CommunicationService.onLogOut(async () => {
+    await new AuthTable().setAuthToken(null);
+    store.dispatch(actions.logOut());
   });
 
   chrome.browserAction.onClicked.addListener((data) => {

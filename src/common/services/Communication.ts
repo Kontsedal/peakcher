@@ -11,6 +11,7 @@ const EVENTS = {
   DISPATCH: "DISPATCH",
   GET_STATE: "GET_STATE",
   DELETE_FILE: "DELETE_FILE",
+  LOG_OUT: "LOG_OUT",
 };
 
 type UploadPayload = {
@@ -104,5 +105,15 @@ export class CommunicationService {
 
   public static onDeleteFile(handler): void {
     EventsService.on(EVENTS.DELETE_FILE, handler);
+  }
+
+  public static onLogOut(handler: () => void): void {
+    EventsService.on(EVENTS.LOG_OUT, () => {
+      handler();
+    });
+  }
+
+  public static logOut(): void {
+    EventsService.emit({ type: EVENTS.LOG_OUT });
   }
 }

@@ -33,6 +33,7 @@ const Component = ({
       }}
     >
       <SettingsView
+        onLogOut={() => {}}
         closeSettings={() => {}}
         remoteSpaceInfo={remoteSpaceInfo}
         getInputProps={getInputProps}

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent, useCallback, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrentViewContext } from "../../context/CurrentView";
 import { getRemoteSpaceInfo, getSettings } from "common/store/selectors";
 import { actions } from "common/store";
 import { SettingsView } from "./view";
+import { CommunicationService } from "../../../common/services/Communication";
 
 const defaultValueAccessor = (event: ChangeEvent<HTMLInputElement>) =>
   Number(event.target.value);
@@ -31,12 +32,17 @@ export const Settings = () => {
       );
     },
   });
+  const onLogOut = useCallback(() => {
+    CommunicationService.logOut();
+    showSettings(false);
+  }, []);
   if (!settingsIsShown) {
     return null;
   }
   return (
     <SettingsView
       remoteSpaceInfo={remoteSpaceInfo}
+      onLogOut={onLogOut}
       getInputProps={getInputProps}
       closeSettings={() => {
         showSettings(false);
