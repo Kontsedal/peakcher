@@ -89,6 +89,7 @@ export class AppService {
     files: FileToUpload[];
     notifyUser?: boolean;
   }): Promise<void> {
+    this.store.dispatch(actions.cleanUploadStatus());
     files.forEach((fileToUpload) => {
       this.uploadQueue.push(async () => {
         try {
