@@ -51,6 +51,7 @@ export const UploadFilesButton = () => {
       <input
         ref={inputRef}
         type="file"
+        multiple
         key={inputVersion}
         className={s.input}
         onChange={onChange}

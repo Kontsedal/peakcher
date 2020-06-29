@@ -15,6 +15,7 @@ import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
 import orderBy from "lodash/orderBy";
+import { UploadIndicator } from "../../components/UploadIndicator";
 
 export const MainPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -53,6 +54,7 @@ export const MainPage = () => {
   const filesToRender = selectedTags.length ? filteredFiles : filesArray;
   return (
     <div className={styles.root}>
+      <UploadIndicator />
       <div className={styles.toolbar}>
         <TagsSelect
           className={styles.tagsSelect}

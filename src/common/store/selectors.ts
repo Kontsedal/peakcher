@@ -17,3 +17,4 @@ export const getSearchColumnsCount = createSelector(
 );
 
 export const getRemoteSpaceInfo = (state) => state.remoteSpaceInfo;
+export const getUploadStatus = (state) => state.uploadStatus;
