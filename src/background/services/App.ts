@@ -90,30 +90,30 @@ export class AppService {
     notifyUser?: boolean;
   }): Promise<void> {
     this.store.dispatch(actions.cleanUploadStatus());
-    files.forEach((fileToUpload) => {
-      this.uploadQueue.push(async () => {
-        try {
-          await this.uploadFile(fileToUpload, notifyUser);
-        } catch (error) {
-          if (notifyUser) {
-            NotificationsService.uploadFailed();
-          }
-        }
-      });
-    });
+    try {
+      await Promise.all(
+        files.map((fileToUpload) => {
+          this.store.dispatch(
+            actions.setUploadFileStatus({
+              id: fileToUpload.uploadId,
+              uploading: true,
+              error: false,
+              progress: 0,
+            })
+          );
+          return this.uploadQueue.push(async () => {
+            await this.uploadFile(fileToUpload, notifyUser);
+          });
+        })
+      );
+    } finally {
+      this.store.dispatch(actions.cleanUploadStatus());
+    }
   }
 
   public async uploadFile(fileToUpload: FileToUpload, notifyUser?: boolean) {
     const fileBlob = await fetch(fileToUpload.fileUrl).then((response) =>
       response.blob()
-    );
-    this.store.dispatch(
-      actions.setUploadFileStatus({
-        id: fileToUpload.uploadId,
-        uploading: true,
-        error: false,
-        progress: 0,
-      })
     );
     try {
       const uploadResult = await DropboxService.uploadFile({
@@ -136,11 +136,6 @@ export class AppService {
           );
         },
       });
-      this.store.dispatch(
-        actions.removeUploadFileStatus({
-          uploadId: fileToUpload.uploadId,
-        })
-      );
       await this.checkStateRelevance();
       this.store.dispatch(
         actions.addFile({
@@ -164,6 +159,9 @@ export class AppService {
         NotificationsService.uploadSuccess(uploadResult.publicUrl);
       }
     } catch (error) {
+      if (notifyUser) {
+        NotificationsService.uploadFailed();
+      }
       actions.setUploadFileStatus({
         id: fileToUpload.uploadId,
         uploading: false,
