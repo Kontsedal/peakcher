@@ -3,6 +3,7 @@ import { AppService } from "./services/App";
 import { CONFIG } from "../config";
 import { initEventListeners } from "./listeners/initEventListeners";
 import { initStoreListeners } from "./listeners/initStoreListeners";
+import { initContextMenu } from "./listeners/initContextMenu";
 
 export const main = async (): Promise<void> => {
   const store = getStore(true);
@@ -10,6 +11,7 @@ export const main = async (): Promise<void> => {
   await appService.init();
   initEventListeners(appService, store);
   initStoreListeners(appService, store);
+  initContextMenu(store);
   tryToLoadState(appService).catch();
   tryToLoadUsedSpace(appService).catch();
 };

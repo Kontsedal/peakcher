@@ -226,5 +226,8 @@
   },
   "addFile": {
     "message": "Add file(s)"
+  },
+  "contextMenuSaveAction" : {
+    "message": "Save to Peakcher"
   }
 }

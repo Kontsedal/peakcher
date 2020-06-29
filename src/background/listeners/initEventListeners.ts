@@ -36,6 +36,6 @@ export const initEventListeners = (
     if (isServicePage) {
       return window.open(chrome.extension.getURL("popup.html"));
     }
-    injectScripts(["/viewInjector.js"]);
+    injectScripts([{ file: "/viewInjector.js" }]);
   });
 };

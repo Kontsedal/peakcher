@@ -223,5 +223,8 @@
   },
   "addFile": {
     "message": "Додати файл(и)"
+  },
+  "contextMenuSaveAction" : {
+    "message": "Зберегти в Peakcher"
   }
 }

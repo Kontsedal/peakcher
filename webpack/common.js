@@ -11,6 +11,7 @@ const ENTRY_POINTS = {
     "contentScript/dropboxCodeExtractor.ts"
   ),
   viewInjector: path.join(PATHS.SRC_DIR, "contentScript/viewInjector.ts"),
+  imageExtractor: path.join(PATHS.SRC_DIR, "contentScript/imageExtractor.ts"),
 };
 
 module.exports = {
