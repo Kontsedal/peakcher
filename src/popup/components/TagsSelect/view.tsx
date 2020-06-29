@@ -74,6 +74,28 @@ export const TagsSelectView = ({
       </div>
       {showAutocomplete && (
         <div className={styles.autocompleteBox}>
+          {!options.length && (
+            <div className={styles.noOptions}>{I18n.t("noSelectOptions")}</div>
+          )}
+          <div className={styles.options}>
+            {options.map((option) => (
+              <button
+                tabIndex={0}
+                role="option"
+                aria-selected="false"
+                key={option}
+                className={styles.autocompleteItem}
+                title={option}
+                onClick={() => {
+                  selectOption(option);
+                }}
+              >
+                <div className={styles.autocompleteItemText}>
+                  {optionTextGetter(option)}
+                </div>
+              </button>
+            ))}
+          </div>
           {canCreateOption && (
             <button
               className={cn(styles.autocompleteItem, styles.createNewTagButton)}
@@ -84,26 +106,6 @@ export const TagsSelectView = ({
               </span>
             </button>
           )}
-          {!options.length && (
-            <div className={styles.noOptions}>{I18n.t("noSelectOptions")}</div>
-          )}
-          {options.map((option) => (
-            <button
-              tabIndex={0}
-              role="option"
-              aria-selected="false"
-              key={option}
-              className={styles.autocompleteItem}
-              title={option}
-              onClick={() => {
-                selectOption(option);
-              }}
-            >
-              <div className={styles.autocompleteItemText}>
-                {optionTextGetter(option)}
-              </div>
-            </button>
-          ))}
         </div>
       )}
     </div>
