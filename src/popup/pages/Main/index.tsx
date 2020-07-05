@@ -16,7 +16,7 @@ import { CurrentViewContext } from "../../context/CurrentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
 import orderBy from "lodash/orderBy";
 import { UploadIndicator } from "../../components/UploadIndicator";
-import { SortSelect, SORT_OPTIONS } from "../../components/SortSelect";
+import { SORT_OPTIONS, SortSelect } from "../../components/SortSelect";
 
 const sortImages = (files: File[], sortType: string): File[] => {
   switch (sortType) {

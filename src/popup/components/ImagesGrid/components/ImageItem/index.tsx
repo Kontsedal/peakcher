@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { File } from "common/interfaces";
 import styles from "./styles.module.scss";
 import { linkToBase64 } from "utils/file";
@@ -8,6 +14,9 @@ import { CommunicationService } from "common/services/Communication";
 import { ImageItemView } from "./view";
 import { useDispatch } from "react-redux";
 import { actions } from "../../../../../common/store";
+import { ToastContext } from "../../../Toast/context";
+import { TOAST_TYPES } from "../../../Toast";
+import { I18n } from "../../../../../common/services/I18n";
 
 type Props = {
   file: File;
@@ -16,6 +25,7 @@ type Props = {
 export const ImageItem = ({ file }: Props) => {
   const actionsPopupRef = useRef();
   const dispatch = useDispatch();
+  const { showToast } = useContext(ToastContext);
   const [actionsVisible, setActionsVisible] = useState(false);
   const [base64Link, setBase64Link] = useState<undefined | string>();
   const [base64IsLoading, setBase64IsLoading] = useState(false);
@@ -34,10 +44,26 @@ export const ImageItem = ({ file }: Props) => {
     setIsRemoving(true);
     CommunicationService.deleteFile({ fileId: file.id }, (response) => {
       setIsRemoving(false);
+      if (response.success) {
+        showToast({
+          text: I18n.t("fileDeleteSuccessMessage"),
+          type: TOAST_TYPES.SUCCESS,
+        });
+      }
+      if (response.error) {
+        showToast({
+          text: I18n.t("fileDeleteErrorMessage"),
+          type: TOAST_TYPES.ERROR,
+        });
+      }
     });
   }, [file.id, setIsRemoving]);
   const onCopy = useCallback(() => {
     dispatch(actions.incrementUsedTimes({ fileId: file.id }));
+    showToast({
+      text: I18n.t("urlCopySuccessMessage"),
+      type: TOAST_TYPES.SUCCESS,
+    });
   }, [file, dispatch]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
     excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
