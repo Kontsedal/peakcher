@@ -8,15 +8,17 @@ export const Action = ({
   isLoading,
   onClick,
   textToCopy,
+  onCopy,
 }: {
   text: string;
   textToCopy?: string;
   isLoading?: boolean;
   onClick: () => void;
+  onCopy?: () => void;
 }) => {
   const element = (
     <div
-      onClick={!isLoading && onClick}
+      onClick={!isLoading ? onClick : undefined}
       className={cn(styles.moreActionsItem, isLoading && styles.loading)}
     >
       {isLoading && <div className={styles.loader} />}
@@ -24,7 +26,11 @@ export const Action = ({
     </div>
   );
   if (textToCopy) {
-    return <CopyToClipboard text={textToCopy}>{element}</CopyToClipboard>;
+    return (
+      <CopyToClipboard text={textToCopy} onCopy={onCopy}>
+        {element}
+      </CopyToClipboard>
+    );
   }
   return element;
 };

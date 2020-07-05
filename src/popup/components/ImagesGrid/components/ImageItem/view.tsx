@@ -18,6 +18,7 @@ type Props = {
   showEditImageTagsView: (id: string) => void;
   loadBase64: () => void;
   deleteFile: () => void;
+  onCopy?: () => void;
 };
 
 export const ImageItemView = ({
@@ -31,12 +32,13 @@ export const ImageItemView = ({
   loadBase64,
   deleteFile,
   isRemoving,
+  onCopy,
 }: Props) => (
   <div className={styles.imageItem}>
     <img src={file.publicUrl} />
     <div className={styles.hoverContainer}>
       <div className={styles.hoverActions}>
-        <CopyToClipboard text={file.publicUrl}>
+        <CopyToClipboard text={file.publicUrl} onCopy={onCopy}>
           <button className={cn(styles.actionButton, styles.linkButton)}>
             <LinkIcon className={styles.linkButtonIcon} />
             Link
@@ -60,7 +62,8 @@ export const ImageItemView = ({
               text={base64Link ? "Copy Base64" : "Get Base64"}
               isLoading={base64IsLoading}
               textToCopy={base64Link}
-              onClick={!base64Link && !base64IsLoading && loadBase64}
+              onCopy={onCopy}
+              onClick={!base64Link && !base64IsLoading ? loadBase64 : undefined}
             />
             <Action text="Remove" onClick={deleteFile} isLoading={isRemoving} />
           </div>

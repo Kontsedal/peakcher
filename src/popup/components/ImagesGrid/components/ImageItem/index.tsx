@@ -6,6 +6,8 @@ import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { CurrentViewContext } from "../../../../context/CurrentView";
 import { CommunicationService } from "common/services/Communication";
 import { ImageItemView } from "./view";
+import { useDispatch } from "react-redux";
+import { actions } from "../../../../../common/store";
 
 type Props = {
   file: File;
@@ -13,6 +15,7 @@ type Props = {
 
 export const ImageItem = ({ file }: Props) => {
   const actionsPopupRef = useRef();
+  const dispatch = useDispatch();
   const [actionsVisible, setActionsVisible] = useState(false);
   const [base64Link, setBase64Link] = useState<undefined | string>();
   const [base64IsLoading, setBase64IsLoading] = useState(false);
@@ -33,6 +36,9 @@ export const ImageItem = ({ file }: Props) => {
       setIsRemoving(false);
     });
   }, [file.id, setIsRemoving]);
+  const onCopy = useCallback(() => {
+    dispatch(actions.incrementUsedTimes({ fileId: file.id }));
+  }, [file, dispatch]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
     excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
   });
@@ -49,6 +55,7 @@ export const ImageItem = ({ file }: Props) => {
       loadBase64={loadBase64}
       setActionsVisible={setActionsVisible}
       showEditImageTagsView={showEditImageTagsView}
+      onCopy={onCopy}
     />
   );
 };

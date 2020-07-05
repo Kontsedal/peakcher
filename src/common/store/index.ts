@@ -12,7 +12,7 @@ const populateActionsMiddleware = () => (next) => (action) => {
 export const getStore = (isBackground: boolean) => {
   const middleware = compact([
     isBackground && populateActionsMiddleware,
-    IS_DEV && createLogger(),
+    IS_DEV && createLogger({ diff: true }),
   ]);
 
   const store = configureStore({
@@ -58,4 +58,5 @@ export const actions = {
   setUploadFileStatus: slice.actions.setUploadFileStatus,
   removeUploadFileStatus: slice.actions.removeUploadFileStatus,
   cleanUploadStatus: slice.actions.cleanUploadStatus,
+  incrementUsedTimes: slice.actions.incrementUsedTimes,
 };

@@ -176,5 +176,12 @@ export const slice = createSlice({
       const { uploadId } = action.payload;
       delete state.uploadStatus[uploadId];
     },
+    incrementUsedTimes: (state, action: PayloadAction<{ fileId: string }>) => {
+      const { fileId } = action.payload;
+      if (!fileId || !state.files[fileId]) {
+        return state;
+      }
+      state.files[fileId].usedTimes += 1;
+    },
   },
 });
