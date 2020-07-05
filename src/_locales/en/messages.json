@@ -229,5 +229,23 @@
   },
   "contextMenuSaveAction" : {
     "message": "Save to Peakcher"
+  },
+  "sortTitle": {
+    "message": "Show:"
+  },
+  "sortFromNew": {
+    "message": "New first"
+  },
+  "sortFromOld": {
+    "message": "Old first"
+  },
+  "sortFromPopular": {
+    "message": "Popular first"
+  },
+  "sortFromUnpopular": {
+    "message": "Unpopular first"
+  },
+  "withoutTags": {
+    "message": "Without tags"
   }
 }

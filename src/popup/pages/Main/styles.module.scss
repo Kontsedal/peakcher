@@ -11,11 +11,15 @@
   justify-content: space-between;
   align-items: center;
 }
-
+.sortWrapper {
+  background-color: #f1f3f4;
+  padding: 22px 0 22px 36px;
+  flex-shrink: 0;
+}
 .gridWrapper {
   display: flex;
   flex-grow: 1;
-  padding: 22px 25px 25px 25px;
+  padding: 0 25px 25px 25px;
   background-color: #f1f3f4;
 }
 .tagsSelect {

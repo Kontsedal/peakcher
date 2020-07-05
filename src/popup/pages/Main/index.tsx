@@ -16,9 +16,28 @@ import { CurrentViewContext } from "../../context/CurrentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
 import orderBy from "lodash/orderBy";
 import { UploadIndicator } from "../../components/UploadIndicator";
+import { SortSelect, SORT_OPTIONS } from "../../components/SortSelect";
+
+const sortImages = (files: File[], sortType: string): File[] => {
+  switch (sortType) {
+    case SORT_OPTIONS.NEW_FIRST:
+      return orderBy(files, ["createdAt"], ["desc"]);
+    case SORT_OPTIONS.OLD_FIRST:
+      return orderBy(files, ["createdAt"], ["asc"]);
+    case SORT_OPTIONS.POPULAR_FIRST:
+      return orderBy(files, ["usedTimes"], ["desc"]);
+    case SORT_OPTIONS.UNPOPULAR_FIRST:
+      return orderBy(files, ["usedTimes"], ["asc"]);
+    case SORT_OPTIONS.WITHOUT_TAGS:
+      return files.filter((file) => file.tags.length === 0);
+    default:
+      return files;
+  }
+};
 
 export const MainPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [sortType, setSortType] = useState(SORT_OPTIONS.NEW_FIRST);
   const tags = useSelector(getTags);
   const tagsArray = useSelector(getTagsArray);
   let filesArray = useSelector(getFilesArray);
@@ -50,7 +69,9 @@ export const MainPage = () => {
     });
     return Object.values(result);
   }, [selectedTags, files]);
-  filesArray = orderBy(filesArray, ["createdAt"], ["desc"]);
+  filesArray = useMemo(() => {
+    return sortImages(filesArray, sortType);
+  }, [filesArray, sortType]);
   const filesToRender = selectedTags.length ? filteredFiles : filesArray;
   return (
     <div className={styles.root}>
@@ -76,6 +97,9 @@ export const MainPage = () => {
             {I18n.t("settingsButtonTitle")}
           </Button>
         </div>
+      </div>
+      <div className={styles.sortWrapper}>
+        <SortSelect onChange={setSortType} value={sortType} />
       </div>
       <div className={styles.gridWrapper}>
         <ImagesGrid files={filesToRender} />

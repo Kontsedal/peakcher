@@ -13,7 +13,7 @@ export const useOutsideClick = (
       if (isExcluded) {
         return;
       }
-      if (!element || !element.contains(event.target)) {
+      if (!element || (element.contains && !element.contains(event.target))) {
         callback();
       }
     },

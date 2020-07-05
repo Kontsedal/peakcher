@@ -33,7 +33,7 @@ describe("ImagesGrid utils", () => {
         { width: 100, height: 150, id: "3" },
         { width: 100, height: 300, id: "4" },
         { width: 100, height: 150, id: "5" },
-        { width: 100, height: 120, id: "6" },
+        { width: 100, height: 145, id: "6" },
       ];
       const images = imagesSizes.map(buildImage);
       const expectedResult = {
@@ -42,7 +42,7 @@ describe("ImagesGrid utils", () => {
         3: { width: 100, height: 150, x: 200, y: 0 },
         4: { width: 100, height: 300, x: 200, y: 150 },
         5: { width: 100, height: 150, x: 0, y: 200 },
-        6: { width: 100, height: 120, x: 100, y: 300 },
+        6: { width: 100, height: 145, x: 100, y: 300 },
       };
       expect(expectedResult).toEqual(
         utils.getImagesPositions({

@@ -226,5 +226,23 @@
   },
   "contextMenuSaveAction" : {
     "message": "Сохранить в Peakcher"
+  },
+  "sortTitle": {
+    "message": "Показывать:"
+  },
+  "sortFromNew": {
+    "message": "Сначала новые"
+  },
+  "sortFromOld": {
+    "message": "Сначала старые"
+  },
+  "sortFromPopular": {
+    "message": "Сначала популярные"
+  },
+  "sortFromUnpopular": {
+    "message": "Сначала не популярные"
+  },
+  "withoutTags": {
+    "message": "Без тегов"
   }
 }
