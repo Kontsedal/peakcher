@@ -177,9 +177,12 @@
   .errorActions {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 150px;
     button:first-child {
-      margin-right: 5px;
+      margin-bottom: 2px;
     }
   }
 }
