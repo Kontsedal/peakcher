@@ -30,6 +30,10 @@ export const ImageItem = ({ file }: Props) => {
   const [base64Link, setBase64Link] = useState<undefined | string>();
   const [base64IsLoading, setBase64IsLoading] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  //to reload view
+  const [version, setVersion] = useState(1);
   const loadBase64 = useCallback(() => {
     setBase64IsLoading(true);
     linkToBase64(file.publicUrl, file.type).then((link) => {
@@ -65,17 +69,36 @@ export const ImageItem = ({ file }: Props) => {
       type: TOAST_TYPES.SUCCESS,
     });
   }, [file, dispatch]);
+  const forceDelete = useCallback(() => {
+    dispatch(actions.deleteFile(file.id));
+    showToast({
+      text: I18n.t("fileDeleteSuccessMessage"),
+      type: TOAST_TYPES.SUCCESS,
+    });
+  }, [file]);
+  const reload = useCallback(() => {
+    setLoading(true);
+    setLoadError(false);
+    setVersion((version) => version + 1);
+  }, [setVersion, setLoadError]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
     excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
   });
   const { showEditImageTagsView } = useContext(CurrentViewContext);
   return (
     <ImageItemView
+      key={version}
       actionsPopupRef={actionsPopupRef}
       actionsVisible={actionsVisible}
       base64IsLoading={base64IsLoading}
       base64Link={base64Link}
       deleteFile={deleteFile}
+      hasLoadingError={loadError}
+      onImageLoadError={() => setLoadError(true)}
+      onImageLoad={() => setLoading(false)}
+      onReload={reload}
+      forceDelete={forceDelete}
+      loading={loading}
       file={file}
       isRemoving={isRemoving}
       loadBase64={loadBase64}

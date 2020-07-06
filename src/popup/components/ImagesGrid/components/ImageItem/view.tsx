@@ -6,8 +6,11 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { File } from "common/interfaces";
 import cn from "classnames";
 import { Action } from "./components/Action";
+import { MdWarning } from "react-icons/all";
+import { Button } from "../../../Button";
+import { I18n } from "../../../../../common/services/I18n";
 
-type Props = {
+export type Props = {
   file: File;
   setActionsVisible: (visible: boolean) => void;
   actionsPopupRef?: MutableRefObject<any>;
@@ -19,6 +22,12 @@ type Props = {
   loadBase64: () => void;
   deleteFile: () => void;
   onCopy?: () => void;
+  onImageLoadError: () => void;
+  forceDelete: () => void;
+  onReload: () => void;
+  hasLoadingError: boolean;
+  onImageLoad: () => void;
+  loading: boolean;
 };
 
 export const ImageItemView = ({
@@ -32,44 +41,72 @@ export const ImageItemView = ({
   loadBase64,
   deleteFile,
   isRemoving,
+  forceDelete,
+  onImageLoadError,
   onCopy,
+  onReload,
+  hasLoadingError,
+  onImageLoad,
+  loading,
 }: Props) => (
   <div className={styles.imageItem}>
-    <img src={file.publicUrl} />
-    <div className={styles.hoverContainer}>
-      <div className={styles.hoverActions}>
-        <CopyToClipboard text={file.publicUrl} onCopy={onCopy}>
-          <button className={cn(styles.actionButton, styles.linkButton)}>
-            <LinkIcon className={styles.linkButtonIcon} />
-            Link
-          </button>
-        </CopyToClipboard>
-        <button
-          onClick={() => setActionsVisible(true)}
-          className={cn(styles.actionButton, styles.moreActionsButton)}
-        >
-          <div
-            className={styles.moreActionsPopup}
-            ref={actionsPopupRef}
-            style={{ display: actionsVisible ? "block" : "none" }}
-          >
-            <Action
-              text="Edit tags"
-              onClick={() => showEditImageTagsView(file.id)}
-            />
-            <Action text="Edit image" onClick={() => {}} />
-            <Action
-              text={base64Link ? "Copy Base64" : "Get Base64"}
-              isLoading={base64IsLoading}
-              textToCopy={base64Link}
-              onCopy={onCopy}
-              onClick={!base64Link && !base64IsLoading ? loadBase64 : undefined}
-            />
-            <Action text="Remove" onClick={deleteFile} isLoading={isRemoving} />
-          </div>
-          <MoreIcon />
-        </button>
+    {hasLoadingError && (
+      <div className={styles.loadingError}>
+        <MdWarning size={20} className={styles.icon} />
+        <p>{I18n.t("imageLoadErrorText")}</p>
+        <div className={styles.errorActions}>
+          <Button onClick={onReload} primary>
+            Reload
+          </Button>
+          <Button onClick={forceDelete}>
+            {I18n.t("removeFileToUploadButtonTitle")}
+          </Button>
+        </div>
       </div>
-    </div>
+    )}
+    <img onLoad={onImageLoad} onError={onImageLoadError} src={file.publicUrl} />
+    {!loading && (
+      <div className={styles.hoverContainer}>
+        <div className={styles.hoverActions}>
+          <CopyToClipboard text={file.publicUrl} onCopy={onCopy}>
+            <button className={cn(styles.actionButton, styles.linkButton)}>
+              <LinkIcon className={styles.linkButtonIcon} />
+              Link
+            </button>
+          </CopyToClipboard>
+          <button
+            onClick={() => setActionsVisible(true)}
+            className={cn(styles.actionButton, styles.moreActionsButton)}
+          >
+            <div
+              className={styles.moreActionsPopup}
+              ref={actionsPopupRef}
+              style={{ display: actionsVisible ? "block" : "none" }}
+            >
+              <Action
+                text="Edit tags"
+                onClick={() => showEditImageTagsView(file.id)}
+              />
+              <Action text="Edit image" onClick={() => {}} />
+              <Action
+                text={base64Link ? "Copy Base64" : "Get Base64"}
+                isLoading={base64IsLoading}
+                textToCopy={base64Link}
+                onCopy={onCopy}
+                onClick={
+                  !base64Link && !base64IsLoading ? loadBase64 : undefined
+                }
+              />
+              <Action
+                text="Remove"
+                onClick={deleteFile}
+                isLoading={isRemoving}
+              />
+            </div>
+            <MoreIcon />
+          </button>
+        </div>
+      </div>
+    )}
   </div>
 );

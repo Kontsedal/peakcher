@@ -247,5 +247,8 @@
   },
   "withoutTags": {
     "message": "Without tags"
+  },
+  "reloadImageAction": {
+    "message": "Reload"
   }
 }

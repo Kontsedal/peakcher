@@ -17,7 +17,12 @@ const image = {
   usedTimes: 0,
 };
 
-const Component = ({ base64IsLoading, actionsVisible, base64Link }) => {
+const Component = ({
+  base64IsLoading,
+  actionsVisible,
+  base64Link,
+  ...rest
+}) => {
   const width = 300;
   const height = (image.height / image.width) * width;
   return (
@@ -29,9 +34,16 @@ const Component = ({ base64IsLoading, actionsVisible, base64Link }) => {
         setActionsVisible={(visible) => {}}
         loadBase64={() => {}}
         deleteFile={() => {}}
-        base64IsLoading={base64IsLoading}
-        actionsVisible={actionsVisible}
-        base64Link={base64Link}
+        base64Link={""}
+        actionsVisible={false}
+        loading={false}
+        base64IsLoading={false}
+        onImageLoadError={() => {}}
+        onImageLoad={() => {}}
+        onReload={() => {}}
+        forceDelete={() => {}}
+        hasLoadingError={false}
+        {...rest}
       />
     </div>
   );
@@ -52,3 +64,6 @@ export const base64Loaded = () => (
     base64IsLoading={false}
   />
 );
+
+// @ts-ignore
+export const loadingError = () => <Component hasLoadingError />;

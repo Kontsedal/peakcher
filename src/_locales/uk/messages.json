@@ -244,5 +244,8 @@
   },
   "withoutTags": {
     "message": "Без тегів"
+  },
+  "reloadImageAction": {
+    "message": "Оновити"
   }
 }
