@@ -64,7 +64,12 @@ export const ImageItemView = ({
         </div>
       </div>
     )}
-    <img onLoad={onImageLoad} onError={onImageLoadError} src={file.publicUrl} />
+    <img
+      onLoad={onImageLoad}
+      onError={onImageLoadError}
+      src={file.publicUrl}
+      style={{ visibility: hasLoadingError ? "hidden" : "visible" }}
+    />
     {!loading && (
       <div className={styles.hoverContainer}>
         <div className={styles.hoverActions}>

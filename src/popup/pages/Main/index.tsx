@@ -17,6 +17,7 @@ import { UploadFilesButton } from "../../components/UploadFilesButton";
 import orderBy from "lodash/orderBy";
 import { UploadIndicator } from "../../components/UploadIndicator";
 import { SORT_OPTIONS, SortSelect } from "../../components/SortSelect";
+import { NoFiles } from "./components/NoFiles";
 
 const sortImages = (files: File[], sortType: string): File[] => {
   switch (sortType) {
@@ -73,6 +74,7 @@ export const MainPage = () => {
     return sortImages(filesArray, sortType);
   }, [filesArray, sortType]);
   const filesToRender = selectedTags.length ? filteredFiles : filesArray;
+  const hasFiles = !!filesToRender.length;
   return (
     <div className={styles.root}>
       <UploadIndicator />
@@ -102,7 +104,8 @@ export const MainPage = () => {
         <SortSelect onChange={setSortType} value={sortType} />
       </div>
       <div className={styles.gridWrapper}>
-        <ImagesGrid files={filesToRender} />
+        {hasFiles && <ImagesGrid files={filesToRender} />}
+        {!hasFiles && <NoFiles />}
       </div>
     </div>
   );

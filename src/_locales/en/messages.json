@@ -250,5 +250,11 @@
   },
   "reloadImageAction": {
     "message": "Reload"
+  },
+  "noImagesTitle": {
+    "message": "You don't have saved pictures yet"
+  },
+  "noImagesDescription": {
+    "message": "Click on \"Add file\" button or upload images directly from sites via context menu"
   }
 }
