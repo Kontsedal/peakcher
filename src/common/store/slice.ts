@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  File,
+  ImageData,
   Settings,
   RemoteSpaceInfo,
   UploadStatus,
@@ -14,7 +14,7 @@ export interface RootState {
   stateVersion: string | undefined;
   isAuthorized: boolean;
   files: {
-    [key: string]: File;
+    [key: string]: ImageData;
   };
   tags: {
     [key: string]: string[];
@@ -49,7 +49,7 @@ export const slice = createSlice({
     setIsAuthorized: (state, action: PayloadAction<boolean>) => {
       state.isAuthorized = action.payload;
     },
-    addFile: (state, action: PayloadAction<File>) => {
+    addFile: (state, action: PayloadAction<ImageData>) => {
       const file = action.payload;
       state.files[file.id] = file;
     },

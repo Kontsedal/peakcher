@@ -1,4 +1,4 @@
-import { File } from "common/interfaces";
+import { ImageData } from "common/interfaces";
 import { CONFIG } from "../../../config";
 
 export const getImagesPositions = ({
@@ -7,7 +7,7 @@ export const getImagesPositions = ({
   gridWidth,
   imagesOffset,
 }: {
-  images: File[];
+  images: ImageData[];
   gridWidth: number;
   columnsCount: number;
   imagesOffset;
@@ -25,8 +25,7 @@ export const getImagesPositions = ({
       newHeight = CONFIG.MIN_GRID_IMAGE_HEIGHT;
     }
     const columnNumber = columnsHeights.indexOf(Math.min(...columnsHeights));
-    const columnHeight = columnsHeights[columnNumber];
-    let newY = columnHeight;
+    let newY = columnsHeights[columnNumber];
     if (index > columnsCount) {
       newY += imagesOffset;
     }

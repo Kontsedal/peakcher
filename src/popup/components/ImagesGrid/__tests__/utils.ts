@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { File } from "common/interfaces";
+import { ImageData } from "common/interfaces";
 import * as utils from "../utils";
 
 const buildImage = ({
@@ -10,7 +10,7 @@ const buildImage = ({
   width: number;
   height: number;
   id: string;
-}): File => ({
+}): ImageData => ({
   name: uuid(),
   publicUrl: uuid(),
   id: id,

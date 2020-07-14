@@ -1,4 +1,4 @@
-export interface File {
+export interface ImageData {
   width: number;
   height: number;
   tags: string[];

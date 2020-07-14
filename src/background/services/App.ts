@@ -176,7 +176,7 @@ export class AppService {
     const file = state.files[fileId];
     if (!fileId) {
       callback({
-        error: new Error("File doesn't exist"),
+        error: new Error("ImageData doesn't exist"),
         success: false,
       });
       return;

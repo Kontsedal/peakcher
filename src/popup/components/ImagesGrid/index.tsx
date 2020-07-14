@@ -7,17 +7,17 @@ import React, {
 } from "react";
 import styles from "./styles.module.scss";
 import { useSelector } from "react-redux";
-import { getFilesArray, getSearchColumnsCount } from "common/store/selectors";
+import { getSearchColumnsCount } from "common/store/selectors";
 import * as utils from "./utils";
 import { CONFIG } from "config";
-import { File } from "common/interfaces";
+import { ImageData } from "common/interfaces";
 import { ImageItem } from "./components/ImageItem";
 
 const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
 const DEFAULT_VISIBLE_ROWS = 6;
 const MORE_ROWS_COUNT = 3;
 
-export const ImagesGrid = ({ files }: { files: File[] }) => {
+export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
   const containerRef = useRef<HTMLDivElement>();
   const [gridWidth, setGridWidth] = useState(0);
   const [visibleImageRows, setVisibleImageRows] = useState(

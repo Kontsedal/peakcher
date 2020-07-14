@@ -1,11 +1,5 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { File } from "common/interfaces";
+import React, { useCallback, useContext, useRef, useState } from "react";
+import { ImageData } from "common/interfaces";
 import styles from "./styles.module.scss";
 import { linkToBase64 } from "utils/file";
 import { useOutsideClick } from "../../../../hooks/useOutsideClick";
@@ -19,7 +13,7 @@ import { TOAST_TYPES } from "../../../Toast";
 import { I18n } from "../../../../../common/services/I18n";
 
 type Props = {
-  file: File;
+  file: ImageData;
 };
 
 export const ImageItem = ({ file }: Props) => {

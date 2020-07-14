@@ -9,7 +9,7 @@ import {
   getTags,
   getTagsArray,
 } from "common/store/selectors";
-import { File } from "common/interfaces";
+import { ImageData } from "common/interfaces";
 import { I18n } from "../../../common/services/I18n";
 import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
@@ -19,7 +19,7 @@ import { UploadIndicator } from "../../components/UploadIndicator";
 import { SORT_OPTIONS, SortSelect } from "../../components/SortSelect";
 import { NoFiles } from "./components/NoFiles";
 
-const sortImages = (files: File[], sortType: string): File[] => {
+const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
   switch (sortType) {
     case SORT_OPTIONS.NEW_FIRST:
       return orderBy(files, ["createdAt"], ["desc"]);
@@ -57,7 +57,7 @@ export const MainPage = () => {
     },
     [selectedTags, setSelectedTags]
   );
-  const filteredFiles: File[] = useMemo(() => {
+  const filteredFiles: ImageData[] = useMemo(() => {
     const result = {};
     selectedTags.forEach((tag) => {
       const tagFiles = tags[tag];

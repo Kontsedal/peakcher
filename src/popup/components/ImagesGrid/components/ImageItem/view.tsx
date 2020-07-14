@@ -3,7 +3,7 @@ import LinkIcon from "./assets/link.svg";
 import MoreIcon from "./assets/actions.svg";
 import React, { MutableRefObject } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { File } from "common/interfaces";
+import { ImageData } from "common/interfaces";
 import cn from "classnames";
 import { Action } from "./components/Action";
 import { MdWarning } from "react-icons/all";
@@ -11,7 +11,7 @@ import { Button } from "../../../Button";
 import { I18n } from "../../../../../common/services/I18n";
 
 export type Props = {
-  file: File;
+  file: ImageData;
   setActionsVisible: (visible: boolean) => void;
   actionsPopupRef?: MutableRefObject<any>;
   actionsVisible: boolean;
@@ -65,6 +65,7 @@ export const ImageItemView = ({
       </div>
     )}
     <img
+      alt={file.tags.join(", ")}
       onLoad={onImageLoad}
       onError={onImageLoadError}
       src={file.publicUrl}
