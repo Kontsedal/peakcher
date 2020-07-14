@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useContext } from "react";
 import { CurrentViewContext } from "../../context/CurrentView";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiles, getTags, getTagsArray } from "common/store/selectors";
+import { getFiles, getTagsArray } from "common/store/selectors";
 import styles from "./styles.module.scss";
 import { TagsSelect } from "../../components/TagsSelect";
 import { actions } from "common/store";
@@ -39,7 +39,12 @@ export const EditTagsPage = () => {
         />
       </div>
       <div className={styles.imageWrapper}>
-        <img src={currentFile.publicUrl} className={styles.image} />
+        <img
+          alt={currentFile.tags.join(", ")}
+          style={{ maxWidth: currentFile.width, maxHeight: currentFile.height }}
+          src={currentFile.publicUrl}
+          className={styles.image}
+        />
       </div>
     </div>
   );
