@@ -1,0 +1,18 @@
+@import "../../../../styles/vars.module";
+
+.button {
+  border: none;
+  padding: 10px;
+  background-color: transparent;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+     background-color: #e2e2e2;
+  }
+
+  &.active {
+    background-color: lighten($primary-color, 30);
+  }
+}
