@@ -93,7 +93,7 @@ export const ImageItemView = ({
                 text="Edit tags"
                 onClick={() => showEditImageTagsView(file.id)}
               />
-              <Action text="Edit image" onClick={() => {}} />
+              {/*<Action text="Edit image" onClick={() => {}} />*/}
               <Action
                 text={base64Link ? "Copy Base64" : "Get Base64"}
                 isLoading={base64IsLoading}
