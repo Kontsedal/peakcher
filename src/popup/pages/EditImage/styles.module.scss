@@ -26,6 +26,9 @@
   justify-content: center;
   height: 100%;
 
+  .canvas {
+    position: relative;
+  }
   canvas {
     background-color: white;
     cursor: crosshair;
