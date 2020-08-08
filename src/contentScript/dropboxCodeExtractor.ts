@@ -1,5 +1,4 @@
 import { CommunicationService } from "../common/services/Communication";
-
 const DROPBOX_CODE_PAGE_URL =
   "https://www.dropbox.com/1/oauth2/authorize_submit";
 function init() {

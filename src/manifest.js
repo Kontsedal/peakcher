@@ -1,8 +1,10 @@
+const packageJson = require("../package.json");
+
 module.exports = ({ authProxyUrl }) => ({
-  name: "Peakcher: Anonymous image gallery",
-  short_name: "Peakcher",
+  name: "Peakcher 2",
+  short_name: "Peakcher 2",
   description: "Never lose your memes again",
-  version: "2.0.0",
+  version: packageJson.version,
   manifest_version: 2,
   // We need it to make soucemaps work
   content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",

@@ -35,8 +35,8 @@ const initialState: RootState = {
   },
   uploadStatus: {},
   settings: {
-    popupHeight: CONFIG.MIN_POPUP_HEIGHT,
-    popupWidth: CONFIG.MIN_POPUP_WIDTH,
+    popupHeight: CONFIG.INITIAL_POPUP_HEIGHT,
+    popupWidth: CONFIG.INITIAL_POPUP_WIDTH,
     searchColumnsCount: 3,
     protectFromDataConflicts: false,
   },
