@@ -12,7 +12,6 @@ module.exports = ({ authProxyUrl }) => ({
     default_icon: "assets/logo.png",
   },
   permissions: [
-    "storage",
     "notifications",
     "contextMenus",
     "activeTab",
