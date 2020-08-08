@@ -4,7 +4,7 @@ module.exports = ({ authProxyUrl }) => ({
   name: "Peakcher 2",
   short_name: "Peakcher 2",
   description: "Never lose your memes again",
-  version: packageJson.version,
+  version: packageJson.version + ".0",
   manifest_version: 2,
   // We need it to make soucemaps work
   content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
