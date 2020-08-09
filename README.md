@@ -46,6 +46,7 @@ To solve this, I decided to make a single source of truth, and it is the backgro
  and sends action back, and only then we dispatch action in the popup.
  
  There is the diagram of the flow: 
+ 
 ![state flow diagram](./readme_assets/stateFlow.png)
 
 
@@ -59,4 +60,5 @@ This whole flow makes extension slow(on adding images and tags, not for search),
 user should enable it in the settings page. 
 
  There is the diagram of the flow: 
+ 
 ![remotestate flow diagram](./readme_assets/remoteStateFlow.png)
