@@ -1,8 +1,9 @@
-# Peakcher browser extension
-
 <div align="center">
   <img align="center" src="https://raw.githubusercontent.com/Kontsedal/peakcher/master/readme_assets/logo.svg" width="200"/>
 </div>
+
+# Peakcher browser extension
+
 
 ## Functionality
 
