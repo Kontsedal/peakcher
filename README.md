@@ -64,3 +64,10 @@ user should enable it in the settings page.
  There is the diagram of the flow: 
  
 ![remotestate flow diagram](./readme_assets/remoteStateFlow.png)
+
+## Roadmap
+1) Add ability to edit images (add text, draw curves, lines, rectangles, etc.)
+2) Refactor
+3) Cover by unit and e2e
+4) Use GitHub CI for tests and linting
+5) Add support for GoogleDrive and OneDrive(if possible)
