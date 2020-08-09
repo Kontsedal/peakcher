@@ -1,6 +1,7 @@
 <div align="center">
   <img align="center" src="https://raw.githubusercontent.com/Kontsedal/peakcher/master/readme_assets/logo.svg" width="200"/>
 </div>
+[Chrome store](https://chrome.google.com/webstore/detail/peakcher-2/iimmbnkpceokheecnikobjbpnnenbeap)
 
 # Peakcher browser extension
 
