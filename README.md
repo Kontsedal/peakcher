@@ -1,5 +1,5 @@
 # Peakcher browser extension
-
+![logo](./readme_assets/logo.svg | width = 200)
 ## Functionality
 
 This extension links to the dropbox account and then provides the ability to:
@@ -15,6 +15,8 @@ Also, in the ongoing version, there will be an ability to edit an image (add tex
 Extension communicates directly with Dropbox API. Basically, we need to upload images and JSON 
 database with images' data(URL, size, width, height, tags, etc.), and extension settings (popup width, popup height,
 protect from data loss flag).
+
+### Auth
 
 To perform operations with Dropbox API, we need Dropbox Auth Token. Dropbox has two options to get it:
 1) Redirect to your website with a token in URL if a user allows access to his account
