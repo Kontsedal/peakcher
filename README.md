@@ -1,5 +1,9 @@
 # Peakcher browser extension
-![logo](./readme_assets/logo.svg | width = 200)
+
+<div align="center">
+  <img align="center" src="https://raw.githubusercontent.com/Kontsedal/peakcher/master/readme_assets/logo.svg" width="200"/>
+</div>
+
 ## Functionality
 
 This extension links to the dropbox account and then provides the ability to:
