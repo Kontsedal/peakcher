@@ -1,6 +1,6 @@
 # Peakcher browser extension
 
-##Functionality
+## Functionality
 
 This extension links to the dropbox account and then provides the ability to:
 1) Upload images to your Dropbox from your computer
@@ -10,7 +10,7 @@ This extension links to the dropbox account and then provides the ability to:
 Also, in the ongoing version, there will be an ability to edit an image (add text, draw curves, lines, rectangles, etc.)
 
 
-##How it works
+## How it works
 
 Extension communicates directly with Dropbox API. Basically, we need to upload images and JSON 
 database with images' data(URL, size, width, height, tags, etc.), and extension settings (popup width, popup height,
