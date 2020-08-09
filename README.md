@@ -19,7 +19,7 @@ protect from data loss flag).
 To perform operations with Dropbox API, we need Dropbox Auth Token. Dropbox has two options to get it:
 1) Redirect to your website with a token in URL if a user allows access to his account
 2) Show page with Auth Code if a user allows access to his account, so you need to send it with your 
-application secret to Dropbox API to get Auth Code
+application secret to Dropbox API to get Auth Token
 
 I choose the second option because I wanted it to be more self-contained. But in this case, we need to send an app secret and therefore have it inside the client-side code. It is terrible, so I decided to create a small serverless handler which 
 takes auth code, adds secret, sends a request to Dropbox API and responds with Auth Token ([repo](https://github.com/Kontsedal/peakcher-lambda))
