@@ -11,7 +11,7 @@ import merge from "lodash/merge";
 import { CONFIG } from "../../config";
 
 export interface RootState {
-  stateVersion: string | undefined;
+  stateVersion: number | undefined;
   isAuthorized: boolean;
   files: {
     [key: string]: ImageData;

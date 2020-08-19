@@ -11,6 +11,7 @@ import { DropboxService } from "./Dropdox";
 import { RootState, actions } from "../../common/store";
 import { NotificationsService } from "./Notifications";
 import { MigrationService } from "./Migration";
+import { getImageSizes } from "../../utils/file";
 
 export interface RemoteSession {
   sessionId: string;
@@ -136,6 +137,14 @@ export class AppService {
           );
         },
       });
+      if (!fileToUpload.width || !fileToUpload.height) {
+        const sizes = await getImageSizes(uploadResult.publicUrl);
+        if (!sizes.width || !sizes.height) {
+          return NotificationsService.uploadFailed();
+        }
+        fileToUpload.width = sizes.width;
+        fileToUpload.height = sizes.height;
+      }
       await this.checkStateRelevance();
       this.store.dispatch(
         actions.addFile({
@@ -212,7 +221,8 @@ export class AppService {
 
   public async loadRemoteState() {
     const remoteState = await this.fetchRemoteState();
-    const validState = MigrationService.migrateState(remoteState);
+    const migrationService = new MigrationService();
+    const validState = await migrationService.migrateState(remoteState);
     this.store.dispatch(actions.setRemoteState(validState));
     this.store.dispatch(actions.setIsAuthorized(true));
   }

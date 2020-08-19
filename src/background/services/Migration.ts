@@ -1,14 +1,16 @@
 /* eslint-disable no-case-declarations,default-case */
 import merge from "lodash/merge";
 import { CONFIG } from "../../config";
+import { RootState } from "../../common/store";
+import { getImageSizes } from "../../utils/file";
 
 export class MigrationService {
-  static migrateState(state) {
+  async migrateState(state) {
     const stateVersion = state.stateVersion || 1;
     if (stateVersion === CONFIG.CURRENT_STATE_VERSION) {
-      return state;
+      return this.fixCorruptedFiles(state);
     }
-    const newState = merge({}, state);
+    const newState: RootState = merge({}, state);
     switch (stateVersion) {
       case 1:
         newState.stateVersion = 2;
@@ -20,6 +22,25 @@ export class MigrationService {
         });
         newState.tags = migratedTags;
     }
+
     return newState;
+  }
+
+  async fixCorruptedFiles(state: RootState) {
+    const corruptedFiles = Object.values(state.files).filter(
+      (file) => !file.height || !file.width
+    );
+    await Promise.all(
+      corruptedFiles.map(async (file) => {
+        let sizes = await getImageSizes(file.publicUrl);
+        if (!sizes.width || !sizes.height) {
+          delete state.files[file.id];
+          return;
+        }
+        state.files[file.id].width = sizes.width;
+        state.files[file.id].height = sizes.height;
+      })
+    );
+    return state;
   }
 }
