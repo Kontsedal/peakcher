@@ -1,6 +1,12 @@
 import { CommunicationService } from "../common/services/Communication";
 import { blobToBase64, getImageSizes } from "../utils/file";
 
+declare global {
+  interface Window {
+    peakcherImageToUpload: string;
+  }
+}
+
 async function main() {
   const imageUrl = window.peakcherImageToUpload;
   if (typeof imageUrl === "undefined") {

@@ -1,24 +1,5 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import axios from "axios";
 import { CONFIG } from "../../config";
-
-interface UploadParams {
-  file: Blob | File;
-  fileName: string;
-  token: string;
-  makePublic: boolean;
-  onProgress?: () => any;
-}
-
-interface CreateFolderParams {
-  token: string;
-  path: string;
-}
-
-interface ShareFileParams {
-  token: string;
-  filePath: string;
-}
 
 export class DropboxService {
   public static authenticate(code: string): Promise<string> {
@@ -92,15 +73,26 @@ export class DropboxService {
       .then((res) => res.data);
   }
 
-  public static async createFolderIfDoesntExist({ path, token }) {
+  public static async createFolderIfDoesntExist({
+    path,
+    token,
+  }: {
+    path: string;
+    token: string;
+  }): Promise<void> {
     const folderExists = await DropboxService.doesPathExist({ path, token });
     if (!folderExists) {
-      return DropboxService.createFolder({ path, token });
+      await DropboxService.createFolder({ path, token });
     }
-    return true;
   }
 
-  public static async doesPathExist({ path, token }) {
+  public static async doesPathExist({
+    path,
+    token,
+  }: {
+    path: string;
+    token: string;
+  }): Promise<boolean> {
     try {
       await DropboxService.getMetadata({ path, token });
       return true;
@@ -109,7 +101,13 @@ export class DropboxService {
     }
   }
 
-  public static getMetadata({ path, token }) {
+  public static getMetadata({
+    path,
+    token,
+  }: {
+    path: string;
+    token: string;
+  }): Promise<Record<string, unknown>> {
     const data = {
       path: `/${path}`,
       include_media_info: true,
@@ -126,7 +124,13 @@ export class DropboxService {
       .then((response) => response.data);
   }
 
-  public static deleteFile({ path, token }) {
+  public static deleteFile({
+    path,
+    token,
+  }: {
+    path: string;
+    token: string;
+  }): Promise<void> {
     return axios
       .post(
         "https://api.dropboxapi.com/2/files/delete_v2",
@@ -148,7 +152,10 @@ export class DropboxService {
       });
   }
 
-  public static createFolder(params: CreateFolderParams) {
+  public static createFolder(params: {
+    token: string;
+    path: string;
+  }): Promise<void> {
     return axios
       .post(
         "https://api.dropboxapi.com/2/files/create_folder_v2",
@@ -166,7 +173,15 @@ export class DropboxService {
       .then((response) => response.data);
   }
 
-  public static shareFile(params: ShareFileParams) {
+  public static shareFile(params: {
+    token: string;
+    filePath: string;
+  }): Promise<{
+    publicUrl: string;
+    name: string;
+    path: string;
+    size: number;
+  }> {
     return axios
       .post(
         "https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings",
@@ -194,7 +209,14 @@ export class DropboxService {
       });
   }
 
-  public static getSpaceUsage({ token }: { token: string }) {
+  public static getSpaceUsage({
+    token,
+  }: {
+    token: string;
+  }): Promise<{
+    total: number;
+    used: number;
+  }> {
     return axios({
       method: "POST",
       url: "https://api.dropboxapi.com/2/users/get_space_usage",
