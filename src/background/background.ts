@@ -1,10 +1,10 @@
-import { getStore } from "../common/store";
+import { Logger } from "common/services/Logger";
+import { getStore } from "common/store";
 import { AppService } from "./services/App";
 import { CONFIG } from "../config";
 import { initEventListeners } from "./listeners/initEventListeners";
 import { initStoreListeners } from "./listeners/initStoreListeners";
 import { initContextMenu } from "./listeners/initContextMenu";
-import { Logger } from "../common/services/Logger";
 
 export const main = async (): Promise<void> => {
   const store = getStore(true);
