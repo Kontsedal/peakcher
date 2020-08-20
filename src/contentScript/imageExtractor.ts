@@ -25,7 +25,7 @@ main().catch((error) => {
 });
 
 async function corsRequest(url) {
-  let corsMirrors = [
+  const corsMirrors = [
     "https://yacdn.org/proxy/",
     "https://cors-anywhere.herokuapp.com/",
     "",
@@ -33,7 +33,7 @@ async function corsRequest(url) {
   return requestMirror();
 
   async function requestMirror() {
-    let mirrorUrl = corsMirrors.pop();
+    const mirrorUrl = corsMirrors.pop();
     if (typeof mirrorUrl === "undefined") {
       throw new Error("Failed to load file using CORS proxies");
     }

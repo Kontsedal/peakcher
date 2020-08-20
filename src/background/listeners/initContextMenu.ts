@@ -8,7 +8,7 @@ const menuId = "send_to_peakcher";
 
 export const initContextMenu = (store: Store<RootState>) => {
   const state = store.getState();
-  let unsubscribe = store.subscribe(() => {
+  const unsubscribe = store.subscribe(() => {
     unsubscribe();
     initContextMenu(store);
   });

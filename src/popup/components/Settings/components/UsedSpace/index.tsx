@@ -18,7 +18,7 @@ const getBarColor = (percentUsed: number): string => {
 export const UsedSpace = ({ total, used }: Props) => {
   const totalMb = bytesToMegabytes(total).toFixed(0);
   const usedMb = bytesToMegabytes(used).toFixed(0);
-  let percent = (used * 100) / total;
+  const percent = (used * 100) / total;
   return (
     <div className={classes.root}>
       <div

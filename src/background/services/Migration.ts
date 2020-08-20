@@ -32,7 +32,7 @@ export class MigrationService {
     );
     await Promise.all(
       corruptedFiles.map(async (file) => {
-        let sizes = await getImageSizes(file.publicUrl);
+        const sizes = await getImageSizes(file.publicUrl);
         if (!sizes.width || !sizes.height) {
           delete state.files[file.id];
           return;

@@ -10,15 +10,13 @@ import styles from "./styles.module.scss";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export const ToastContext = createContext({
-  showToast: ({
-    text,
-    type,
-    timeout = 2000,
-  }: {
+  showToast: (params: {
     text: string;
     type: TOAST_TYPES;
     timeout?: number;
-  }) => {},
+  }) => {
+    console.log("showToast", params);
+  },
 });
 
 export const ToastProvider = ({ children }) => {
@@ -38,10 +36,10 @@ export const ToastProvider = ({ children }) => {
   const showToast = useCallback(
     ({ text, type, timeout = 2000 }) => {
       toastId.current += 1;
-      let id = toastId.current;
+      const id = toastId.current;
       const toast = { text, type, id, onClose: () => hideToast(id) };
       setToasts((toasts) => [...toasts, toast]);
-      let timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         hideToast(id);
       }, timeout);
       timeouts.current.push(timeoutId);

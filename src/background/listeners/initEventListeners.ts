@@ -38,7 +38,7 @@ export const initEventListeners = (
   });
 
   chrome.browserAction.onClicked.addListener((data) => {
-    let isServicePage = !/^https?/.test(data.url);
+    const isServicePage = !/^https?/.test(data.url);
     if (isServicePage) {
       return window.open(chrome.extension.getURL("popup.html"));
     }

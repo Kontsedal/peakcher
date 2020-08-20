@@ -1,7 +1,7 @@
 export const injectScripts = (
   scriptsUrls: Array<{ code?: string; file?: string }> = []
 ): void => {
-  let scriptsToInject = [...scriptsUrls];
+  const scriptsToInject = [...scriptsUrls];
   function injectNext() {
     const script = scriptsToInject.shift();
     if (!script) {

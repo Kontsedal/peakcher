@@ -12,9 +12,9 @@ export const hundred = () => <UploadIndicatorView progress={10} />;
 export const animated = () => {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       setProgress((progress) => {
-        let newProgress = progress + 5;
+        const newProgress = progress + 5;
         if (newProgress > 100) {
           return 0;
         }
