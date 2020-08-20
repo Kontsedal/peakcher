@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
-import { SettingsView } from "./view";
 import { RemoteSpaceInfo, Settings } from "common/interfaces";
+import { SettingsView } from "./view";
 
 export default { title: "Settings block" };
 const defaultValueAccessor = (event: ChangeEvent<HTMLInputElement>) =>

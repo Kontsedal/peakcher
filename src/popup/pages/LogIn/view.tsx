@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import Logo from "../../../assets/logo.svg";
 import { Button } from "../../components/Button";
 import { I18n } from "../../../common/services/I18n";
+
 export const LogInPageView = ({ onLogIn }: { onLogIn: () => void }) => {
   return (
     <div className={styles.page}>

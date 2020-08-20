@@ -1,6 +1,7 @@
 import React from "react";
 import { ImageItemView } from "./view";
 import { mockImageData } from "../../../../../../.storybook/mockData";
+
 export default { title: "ImageItem" };
 
 const Component = ({
@@ -20,7 +21,7 @@ const Component = ({
         setActionsVisible={() => {}}
         loadBase64={() => {}}
         deleteFile={() => {}}
-        base64Link={""}
+        base64Link=""
         actionsVisible={false}
         loading={false}
         base64IsLoading={false}
@@ -35,20 +36,16 @@ const Component = ({
   );
 };
 export const basic = () => (
-  <Component base64Link={""} actionsVisible={false} base64IsLoading={false} />
+  <Component base64Link="" actionsVisible={false} base64IsLoading={false} />
 );
 export const visibleActions = () => (
-  <Component base64Link={""} actionsVisible={true} base64IsLoading={false} />
+  <Component base64Link="" actionsVisible base64IsLoading={false} />
 );
 export const base64IsLoading = () => (
-  <Component base64Link={""} actionsVisible={true} base64IsLoading={true} />
+  <Component base64Link="" actionsVisible base64IsLoading />
 );
 export const base64Loaded = () => (
-  <Component
-    base64Link={"some link"}
-    actionsVisible={true}
-    base64IsLoading={false}
-  />
+  <Component base64Link="some link" actionsVisible base64IsLoading={false} />
 );
 
 // @ts-ignore

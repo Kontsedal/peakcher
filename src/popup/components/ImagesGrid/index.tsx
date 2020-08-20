@@ -5,12 +5,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import styles from "./styles.module.scss";
 import { useSelector } from "react-redux";
 import { getSearchColumnsCount } from "common/store/selectors";
-import * as utils from "./utils";
 import { CONFIG } from "config";
 import { ImageData } from "common/interfaces";
+import * as utils from "./utils";
+import styles from "./styles.module.scss";
 import { ImageItem } from "./components/ImageItem";
 
 const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
@@ -29,9 +29,9 @@ export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
       gridWidth
         ? utils.getImagesPositions({
             images: files,
-            gridWidth: gridWidth,
+            gridWidth,
             imagesOffset: CONFIG.GRID_CELLS_DISTANCE,
-            columnsCount: columnsCount,
+            columnsCount,
           })
         : undefined,
     [files, gridWidth, columnsCount]
@@ -54,7 +54,7 @@ export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
     const element = containerRef.current;
     const height = element.clientHeight;
     const scrollHeight = element.scrollHeight - height;
-    const scrollTop = element.scrollTop;
+    const { scrollTop } = element;
     const percent = Math.floor((scrollTop / scrollHeight) * 100);
     if (percent >= SCROLL_PERCENT_TO_SHOW_MORE_IMAGES) {
       setVisibleImageRows(visibleImageRows + MORE_ROWS_COUNT);

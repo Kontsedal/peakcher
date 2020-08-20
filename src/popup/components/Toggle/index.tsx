@@ -9,7 +9,7 @@ type Props = {
   [key: string]: any;
 };
 export const Toggle = ({ name, onChange, value, ...props }: Props) => {
-  const idRef = useRef(uuid() + "_toggle_" + name);
+  const idRef = useRef(`${uuid()}_toggle_${name}`);
   return (
     <label htmlFor={idRef.current} className={styles.wrapper} {...props}>
       <input

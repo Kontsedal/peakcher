@@ -1,7 +1,4 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import styles from "./styles.module.scss";
-import { ImagesGrid } from "../../components/ImagesGrid";
-import { TagsSelect } from "../../components/TagsSelect";
 import { useSelector } from "react-redux";
 import {
   getFiles,
@@ -10,11 +7,14 @@ import {
   getTagsArray,
 } from "common/store/selectors";
 import { ImageData } from "common/interfaces";
+import orderBy from "lodash/orderBy";
+import styles from "./styles.module.scss";
+import { ImagesGrid } from "../../components/ImagesGrid";
+import { TagsSelect } from "../../components/TagsSelect";
 import { I18n } from "../../../common/services/I18n";
 import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
-import orderBy from "lodash/orderBy";
 import { UploadIndicator } from "../../components/UploadIndicator";
 import { SORT_OPTIONS, SortSelect } from "../../components/SortSelect";
 import { NoFiles } from "./components/NoFiles";

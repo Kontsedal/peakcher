@@ -1,5 +1,5 @@
-import { CONFIG } from "../../../config";
 import React from "react";
+import { CONFIG } from "../../../config";
 import { LogInPageView } from "./view";
 
 export const LogInPage = () => {

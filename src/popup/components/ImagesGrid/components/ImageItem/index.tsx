@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { ImageData } from "common/interfaces";
-import styles from "./styles.module.scss";
 import { linkToBase64 } from "utils/file";
+import { CommunicationService } from "common/services/Communication";
+import { useDispatch } from "react-redux";
+import styles from "./styles.module.scss";
 import { useOutsideClick } from "../../../../hooks/useOutsideClick";
 import { CurrentViewContext } from "../../../../context/CurrentView";
-import { CommunicationService } from "common/services/Communication";
 import { ImageItemView } from "./view";
-import { useDispatch } from "react-redux";
 import { actions } from "../../../../../common/store";
 import { ToastContext } from "../../../Toast/context";
 import { TOAST_TYPES } from "../../../Toast";
@@ -26,7 +26,7 @@ export const ImageItem = ({ file }: Props) => {
   const [isRemoving, setIsRemoving] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [loading, setLoading] = useState(false);
-  //to reload view
+  // to reload view
   const [version, setVersion] = useState(1);
   const loadBase64 = useCallback(() => {
     setBase64IsLoading(true);

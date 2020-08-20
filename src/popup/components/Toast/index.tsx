@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
-import styles from "./styles.module.scss";
 import { MdClear, MdDone, MdWarning } from "react-icons/all";
+import styles from "./styles.module.scss";
 
 const ICON_COLOR = "rgba(255,255,255, 0.7)";
 export enum TOAST_TYPES {

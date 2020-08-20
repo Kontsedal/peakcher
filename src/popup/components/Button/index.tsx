@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./styles.module.scss";
 import cn from "classnames";
+import styles from "./styles.module.scss";
 
 type Props = {
   children?: any;

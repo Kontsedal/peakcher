@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
+import { MdChevronLeft } from "react-icons/all";
 import style from "./styles.module.scss";
 import { Button } from "../Button";
-import { MdChevronLeft } from "react-icons/all";
 import { I18n } from "../../../common/services/I18n";
 import { Toggle } from "../Toggle";
 import { RemoteSpaceInfo } from "../../../common/interfaces";

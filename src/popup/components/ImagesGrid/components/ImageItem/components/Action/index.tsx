@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../../styles.module.scss";
 import cn from "classnames";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import styles from "../../styles.module.scss";
 
 export const Action = ({
   text,

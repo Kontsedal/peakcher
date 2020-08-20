@@ -5,9 +5,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Toast, TOAST_TYPES } from "./";
-import styles from "./styles.module.scss";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Toast, TOAST_TYPES } from ".";
+import styles from "./styles.module.scss";
 
 export const ToastContext = createContext({
   showToast: (params: {
@@ -53,9 +53,9 @@ export const ToastProvider = ({ children }) => {
       {children}
       <TransitionGroup
         className={styles.toastContainer}
-        appear={true}
+        appear
         enter={false}
-        exit={true}
+        exit
       >
         {toasts.map((toast) => (
           <CSSTransition

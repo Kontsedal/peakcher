@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import styles from "./styles.module.scss";
 import { ImageData } from "common/interfaces";
 import { MdBrush, MdTextFields } from "react-icons/all";
+import styles from "./styles.module.scss";
 import { ToolButton } from "./components/ToolButton";
 
 type Props = {
@@ -55,7 +55,7 @@ export const EditImagePageView = ({ image }: Props) => {
   }, [canvasSize, imageElement]);
 
   const { cursorPosition } = useDrawer({
-    drawAreaRef: drawAreaRef,
+    drawAreaRef,
     activeTool,
   });
   return (

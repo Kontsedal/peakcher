@@ -43,7 +43,7 @@ const Wrapper = ({
         options={optionsList}
         selectedOptions={selectedOptions}
         optionTextGetter={optionTextGetter}
-        placeholder={"Select some tags"}
+        placeholder="Select some tags"
         allowCreate={allowCreate}
         onCreate={onCreate}
       />

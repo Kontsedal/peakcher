@@ -2,7 +2,7 @@ import { CommunicationService } from "../common/services/Communication";
 import { blobToBase64, getImageSizes } from "../utils/file";
 
 async function main() {
-  const imageUrl = window["peakcherImageToUpload"];
+  const imageUrl = window.peakcherImageToUpload;
   if (typeof imageUrl === "undefined") {
     return;
   }

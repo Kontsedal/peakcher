@@ -1,6 +1,6 @@
-import { RootState } from "./index";
 import { createSelector } from "reselect";
 import { ImageData } from "common/interfaces";
+import { RootState } from "./index";
 
 export const getFiles = (state: RootState) => (state ? state.files : undefined);
 export const getFilesArray = createSelector(

@@ -1,12 +1,12 @@
-import styles from "./styles.module.scss";
-import LinkIcon from "./assets/link.svg";
-import MoreIcon from "./assets/actions.svg";
 import React, { MutableRefObject } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ImageData } from "common/interfaces";
 import cn from "classnames";
-import { Action } from "./components/Action";
 import { MdWarning } from "react-icons/all";
+import { Action } from "./components/Action";
+import MoreIcon from "./assets/actions.svg";
+import LinkIcon from "./assets/link.svg";
+import styles from "./styles.module.scss";
 import { Button } from "../../../Button";
 import { I18n } from "../../../../../common/services/I18n";
 
@@ -93,7 +93,7 @@ export const ImageItemView = ({
                 text="Edit tags"
                 onClick={() => showEditImageTagsView(file.id)}
               />
-              {/*<Action text="Edit image" onClick={() => {}} />*/}
+              {/* <Action text="Edit image" onClick={() => {}} /> */}
               <Action
                 text={base64Link ? "Copy Base64" : "Get Base64"}
                 isLoading={base64IsLoading}

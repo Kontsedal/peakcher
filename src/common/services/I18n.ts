@@ -6,8 +6,8 @@ export const I18n = {
       if (!defaultLocale[id]) {
         return `No translation for id:"${id}"`;
       }
-      let message = defaultLocale[id].message;
-      const placeholders = defaultLocale[id].placeholders;
+      let { message } = defaultLocale[id];
+      const { placeholders } = defaultLocale[id];
       if (!params || !placeholders) {
         return message;
       }

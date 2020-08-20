@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ChangeEvent, useCallback, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CurrentViewContext } from "../../context/CurrentView";
 import { getRemoteSpaceInfo, getSettings } from "common/store/selectors";
 import { actions } from "common/store";
+import { CurrentViewContext } from "../../context/CurrentView";
 import { SettingsView } from "./view";
 import { CommunicationService } from "../../../common/services/Communication";
 
@@ -26,7 +26,7 @@ export const Settings = () => {
     onChange: (event: ChangeEvent<HTMLInputElement>) => {
       dispatch(
         actions.setSettingValue({
-          settingName: settingName,
+          settingName,
           settingValue: valueAccessor(event),
         })
       );

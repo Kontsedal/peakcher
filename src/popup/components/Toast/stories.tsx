@@ -1,5 +1,5 @@
 import React from "react";
-import { Toast, TOAST_TYPES } from "./";
+import { Toast, TOAST_TYPES } from ".";
 
 export default { title: "Toast" };
 

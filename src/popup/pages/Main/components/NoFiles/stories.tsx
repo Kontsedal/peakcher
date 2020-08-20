@@ -1,5 +1,5 @@
 import React from "react";
-import { NoFiles } from "./";
+import { NoFiles } from ".";
 
 export default { title: "No files view" };
 

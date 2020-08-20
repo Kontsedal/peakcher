@@ -1,7 +1,7 @@
 import { PayloadAction, Action } from "@reduxjs/toolkit";
+import { RootState } from "common/store";
 import { EventsService } from "./Events";
 import { FileToUpload } from "../interfaces";
-import { RootState } from "common/store";
 
 const EVENTS = {
   AUTHENTICATE: "AUTHENTICATE",

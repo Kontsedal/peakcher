@@ -1,16 +1,16 @@
 import { I18n } from "common/services/I18n";
-import { Button } from "../Button";
 import React, { useRef, useState } from "react";
-import s from "./styles.module.scss";
 import { fileToLink, getImageSizes } from "utils/file";
 import { v4 as uuid } from "uuid";
 import { CommunicationService } from "common/services/Communication";
+import s from "./styles.module.scss";
+import { Button } from "../Button";
 
 export const UploadFilesButton = () => {
   const [inputVersion, setInputVersion] = useState(0);
   const inputRef = useRef<HTMLInputElement>();
   const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+    const { files } = event.target;
     const filesToUpload = Array.from(files).map((file) => ({
       fileUrl: fileToLink(file),
       name: file.name,

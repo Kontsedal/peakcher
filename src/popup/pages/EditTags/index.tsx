@@ -1,14 +1,14 @@
-import React, { useCallback } from "react";
-import { useContext } from "react";
-import { CurrentViewContext } from "../../context/CurrentView";
+import React, { useCallback, useContext } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getFiles, getTagsArray } from "common/store/selectors";
-import styles from "./styles.module.scss";
-import { TagsSelect } from "../../components/TagsSelect";
 import { actions } from "common/store";
-import { Button } from "../../components/Button";
 import { I18n } from "common/services/I18n";
 import { MdKeyboardBackspace } from "react-icons/md";
+import styles from "./styles.module.scss";
+import { TagsSelect } from "../../components/TagsSelect";
+import { Button } from "../../components/Button";
+import { CurrentViewContext } from "../../context/CurrentView";
 
 export const EditTagsPage = () => {
   const dispatch = useDispatch();

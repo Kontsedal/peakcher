@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { I18n } from "../../../common/services/I18n";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 
-//TODO: Rewrite to enum
+// TODO: Rewrite to enum
 export const SORT_OPTIONS = {
   NEW_FIRST: "NEW_FIRST",
   OLD_FIRST: "OLD_FIRST",

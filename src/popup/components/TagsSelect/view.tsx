@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useRef } from "react";
+import cn from "classnames";
 import styles from "./styles.module.scss";
 import { I18n } from "../../../common/services/I18n";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import cn from "classnames";
 import { Button } from "../Button";
 
 type Props = {
