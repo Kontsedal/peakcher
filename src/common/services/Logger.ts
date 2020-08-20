@@ -1,5 +1,13 @@
 /* eslint-disable no-console */
-type Argument = string | number | boolean | Record<string, unknown>;
+import LastError = chrome.runtime.LastError;
+
+type Argument =
+  | string
+  | number
+  | boolean
+  | Record<string, unknown>
+  | LastError
+  | Error;
 
 export class Logger {
   static info(...args: Argument[]): void {
