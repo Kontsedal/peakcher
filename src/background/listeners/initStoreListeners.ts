@@ -1,7 +1,7 @@
-import { CommunicationService } from "common/services/Communication";
 import { AppService } from "background/services/App";
 import { RootState } from "common/store";
 import { Store } from "redux";
+import { Logger } from "../../common/services/Logger";
 
 export const initStoreListeners = (
   appService: AppService,
@@ -12,7 +12,7 @@ export const initStoreListeners = (
     try {
       await appService.uploadStateToRemote(state);
     } catch (error) {
-      console.error("Failed to upload state to remote", error);
+      Logger.error("Failed to upload state to remote", error);
     }
   });
 };

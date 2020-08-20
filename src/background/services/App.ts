@@ -2,23 +2,27 @@ import debounce from "lodash/debounce";
 import mime from "mime";
 import { v4 as uuid } from "uuid";
 import { Store } from "redux";
-import { CONFIG } from "../../config";
 
-import { FileToUpload } from "../../common/interfaces";
-import { AuthTable } from "../../common/database/AuthTable";
-import { Queue } from "../../common/utils/queue";
+import { FileToUpload } from "common/interfaces";
+import { AuthTable } from "common/database/AuthTable";
+import { Queue } from "common/utils/queue";
+import { RootState, actions } from "common/store";
+import { getImageSizes } from "utils/file";
+import { Logger } from "common/services/Logger";
 import { DropboxService } from "./Dropdox";
-import { RootState, actions } from "../../common/store";
+import { CONFIG } from "../../config";
 import { NotificationsService } from "./Notifications";
 import { MigrationService } from "./Migration";
-import { getImageSizes } from "../../utils/file";
 
 export interface RemoteSession {
   sessionId: string;
 }
 
 export class AppService {
-  public static generateFileNameToUpload(fileName, mimeType): string {
+  public static generateFileNameToUpload(
+    fileName: string,
+    mimeType?: string
+  ): string {
     let extension = fileName.split(".").pop();
     if (mimeType && mime.getExtension(mimeType)) {
       extension = mime.getExtension(mimeType);
@@ -48,18 +52,24 @@ export class AppService {
     this.uploadQueue = new Queue({ concurrentTasksCount: 3 });
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     this.authTable = new AuthTable();
     await this.authTable.init();
     this.authToken = await this.authTable.getAuthToken();
     this.sessionId = await this.getSessionId();
   }
 
-  public canAuthorize() {
+  public canAuthorize(): boolean {
     return !!this.authToken;
   }
 
-  public async authenticate({ code, tabId }: { code: string; tabId: number }) {
+  public async authenticate({
+    code,
+    tabId,
+  }: {
+    code: string;
+    tabId: number;
+  }): Promise<void> {
     if (!code) {
       return;
     }
@@ -67,7 +77,7 @@ export class AppService {
     if (this.authToken) {
       chrome.tabs.remove(tabId);
       await this.authTable.setAuthToken(this.authToken);
-      this.refreshUsedSpace();
+      await this.refreshUsedSpace();
       try {
         await this.loadRemoteState();
         NotificationsService.authSuccess();
@@ -112,10 +122,14 @@ export class AppService {
     }
   }
 
-  public async uploadFile(fileToUpload: FileToUpload, notifyUser?: boolean) {
+  public async uploadFile(
+    fileToUpload: FileToUpload,
+    notifyUser?: boolean
+  ): Promise<void> {
     const fileBlob = await fetch(fileToUpload.fileUrl).then((response) =>
       response.blob()
     );
+    const fileData = { ...fileToUpload };
     try {
       const uploadResult = await DropboxService.uploadFile({
         file: fileBlob,
@@ -137,13 +151,14 @@ export class AppService {
           );
         },
       });
-      if (!fileToUpload.width || !fileToUpload.height) {
+      if (!fileData.width || !fileData.height) {
         const sizes = await getImageSizes(uploadResult.publicUrl);
         if (!sizes.width || !sizes.height) {
-          return NotificationsService.uploadFailed();
+          NotificationsService.uploadFailed();
+          return;
         }
-        fileToUpload.width = sizes.width;
-        fileToUpload.height = sizes.height;
+        fileData.width = sizes.width;
+        fileData.height = sizes.height;
       }
       await this.checkStateRelevance();
       this.store.dispatch(
@@ -153,16 +168,17 @@ export class AppService {
           size: uploadResult.size,
           publicUrl: uploadResult.publicUrl,
           path: uploadResult.path,
-          type: fileToUpload.type,
-          width: fileToUpload.width,
-          height: fileToUpload.height,
+          type: fileData.type,
+          width: fileData.width,
+          height: fileData.height,
           usedTimes: 0,
           tags: [],
           createdAt: Date.now(),
         })
       );
-      this.refreshUsedSpace().catch(
-        console.error.bind(null, "refreshUsedSpace:: ")
+
+      this.refreshUsedSpace().catch((error) =>
+        Logger.error("AppService:::uploadFile refreshUsedSpace error", error)
       );
       if (notifyUser) {
         NotificationsService.uploadSuccess(uploadResult.publicUrl);
@@ -180,7 +196,10 @@ export class AppService {
     }
   }
 
-  public async deleteFile({ fileId, force = false }, callback) {
+  public async deleteFile(
+    { fileId, force = false }: { fileId: string; force?: boolean },
+    callback: (result: { error: Error | boolean; success: boolean }) => void
+  ): Promise<void> {
     const state = this.store.getState();
     const file = state.files[fileId];
     if (!fileId) {
@@ -209,17 +228,17 @@ export class AppService {
     }
   }
 
-  public async fetchRemoteState() {
+  public async fetchRemoteState(): Promise<RootState> {
     if (!this.authToken) {
       throw new Error("User is not authenticated");
     }
-    return DropboxService.downloadFile({
+    return DropboxService.downloadFile<RootState>({
       fileName: CONFIG.DB_FILE_NAME,
       token: this.authToken,
     });
   }
 
-  public async loadRemoteState() {
+  public async loadRemoteState(): Promise<void> {
     const remoteState = await this.fetchRemoteState();
     const migrationService = new MigrationService();
     const validState = await migrationService.migrateState(remoteState);
@@ -227,20 +246,22 @@ export class AppService {
     this.store.dispatch(actions.setIsAuthorized(true));
   }
 
-  public async uploadStateToRemote(state) {
-    state = { ...state };
-    if (state.uploadStatus) {
-      delete state.uploadStatus;
+  public async uploadStateToRemote(state: RootState): Promise<void> {
+    const stateToUpload = { ...state };
+    if (stateToUpload.uploadStatus) {
+      delete stateToUpload.uploadStatus;
     }
-    if (!state.isAuthorized) {
+    if (!stateToUpload.isAuthorized) {
       return;
     }
     if (!this.authToken) {
       return;
     }
-    const serializedState = JSON.stringify(state);
+    const serializedState = JSON.stringify(stateToUpload);
     if (serializedState === this.lastUploadedSerializedState) {
-      console.warn("Skip same state to upload");
+      Logger.warn(
+        "[AppService::uploadStateToRemote] Skip same state to upload"
+      );
       return;
     }
     const file = new Blob([serializedState], {
@@ -256,13 +277,15 @@ export class AppService {
     });
   }
 
-  public async checkStateRelevance() {
+  public async checkStateRelevance(): Promise<void> {
     const state = this.store.getState();
     if (!state.settings.protectFromDataConflicts) {
       return;
     }
     if (!this.authToken) {
-      throw new Error("User is not authenticated");
+      throw new Error(
+        "[AppService::checkStateRelevance] User is not authenticated"
+      );
     }
     const sessionIsRelevant = await this.isCurrentSessionRelevant();
     if (!sessionIsRelevant) {
@@ -271,9 +294,11 @@ export class AppService {
     }
   }
 
-  public async refreshUsedSpace() {
+  public async refreshUsedSpace(): Promise<void> {
     if (!this.authToken) {
-      throw new Error("User is not authenticated");
+      throw new Error(
+        "[AppService::refreshUsedSpace] User is not authenticated"
+      );
     }
     return DropboxService.getSpaceUsage({
       token: this.authToken,
@@ -288,7 +313,7 @@ export class AppService {
     });
   }
 
-  private async getSessionId() {
+  private async getSessionId(): Promise<string> {
     if (this.sessionId) {
       return this.sessionId;
     }
@@ -300,15 +325,15 @@ export class AppService {
     return sessionId;
   }
 
-  private doesAnySessionExist() {
+  private doesAnySessionExist(): Promise<boolean> {
     return DropboxService.doesPathExist({
       path: CONFIG.SESSION_FILE_NAME,
       token: this.authToken,
     });
   }
 
-  private getRemoteSession() {
-    return DropboxService.downloadFile({
+  private getRemoteSession(): Promise<RemoteSession> {
+    return DropboxService.downloadFile<RemoteSession>({
       fileName: CONFIG.SESSION_FILE_NAME,
       token: this.authToken,
     });
@@ -323,17 +348,25 @@ export class AppService {
     return remoteState.sessionId === this.sessionId;
   }
 
-  private uploadSessionToRemote() {
+  private async uploadSessionToRemote(): Promise<void> {
     const session: RemoteSession = { sessionId: this.sessionId };
     const file = new Blob([JSON.stringify(session)], {
       type: "application/json",
     });
 
-    return DropboxService.uploadFile({
-      fileName: CONFIG.SESSION_FILE_NAME,
-      token: this.authToken,
-      file,
-      makePublic: false,
-    });
+    try {
+      await DropboxService.uploadFile({
+        fileName: CONFIG.SESSION_FILE_NAME,
+        token: this.authToken,
+        file,
+        makePublic: false,
+      });
+    } catch (error) {
+      Logger.error(
+        "[AppService::uploadSessionToRemote] Failed to upload session",
+        error
+      );
+      throw error;
+    }
   }
 }

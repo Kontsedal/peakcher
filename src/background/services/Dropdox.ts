@@ -72,13 +72,13 @@ export class DropboxService {
       });
   }
 
-  public static async downloadFile({
+  public static async downloadFile<T>({
     fileName,
     token,
   }: {
     fileName: string;
     token: string;
-  }) {
+  }): Promise<T> {
     return axios
       .get("https://content.dropboxapi.com/2/files/download", {
         headers: {
