@@ -82,6 +82,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.19.2",
+    "classnames": "^2.2.6",
     "lodash": "^4.17.20",
     "mime": "^2.4.6",
     "prop-types": "^15.7.2",
