@@ -4,6 +4,7 @@ import { CONFIG } from "../config";
 import { initEventListeners } from "./listeners/initEventListeners";
 import { initStoreListeners } from "./listeners/initStoreListeners";
 import { initContextMenu } from "./listeners/initContextMenu";
+import { Logger } from "../common/services/Logger";
 
 export const main = async (): Promise<void> => {
   const store = getStore(true);
@@ -20,7 +21,7 @@ async function tryToLoadState(appService) {
   try {
     await appService.loadRemoteState();
   } catch (e) {
-    console.info("Failed to load remote state on start");
+    Logger.info("Failed to load remote state on start");
     setTimeout(() => {
       if (appService.canAuthorize()) {
         tryToLoadState(appService);
@@ -33,7 +34,7 @@ async function tryToLoadUsedSpace(appService) {
   try {
     await appService.refreshUsedSpace();
   } catch (e) {
-    console.info("Failed to load free space info on start");
+    Logger.info("Failed to load free space info on start");
     setTimeout(() => {
       if (appService.canAuthorize()) {
         tryToLoadUsedSpace(appService);
