@@ -34,6 +34,7 @@ module.exports = {
     "linebreak-style": "off",
     "import/prefer-default-export": 0,
     "react/jsx-filename-extension": 0,
+    "class-methods-use-this": 0,
     "import/no-absolute-path": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "prettier/prettier": [
