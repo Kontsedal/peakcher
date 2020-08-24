@@ -1,6 +1,6 @@
 import { PayloadAction, Action } from "@reduxjs/toolkit";
 import { RootState } from "common/store";
-import { EventsService } from "./Events";
+import { EventCallback, EventsService } from "./Events";
 import { FileToUpload } from "../interfaces";
 
 const EVENTS = {
@@ -55,11 +55,11 @@ export class CommunicationService {
    * If user enabled data loss protection, we need to synchronize state before
    * every action
    */
-  public static safeDispatch(action: PayloadAction) {
+  public static safeDispatch(action: PayloadAction): void {
     EventsService.emit({ type: EVENTS.SAFE_DISPATCH, payload: { action } });
   }
 
-  public static onSaveDispatch(handler: (action: PayloadAction) => void) {
+  public static onSaveDispatch(handler: (action: PayloadAction) => void): void {
     EventsService.on(EVENTS.SAFE_DISPATCH, ({ action }) => {
       handler(action);
     });
@@ -103,7 +103,9 @@ export class CommunicationService {
     );
   }
 
-  public static onDeleteFile(handler): void {
+  public static onDeleteFile(
+    handler: EventCallback<{ fileId: string; force?: boolean }>
+  ): void {
     EventsService.on(EVENTS.DELETE_FILE, handler);
   }
 

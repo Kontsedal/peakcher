@@ -1,29 +1,31 @@
+import { Logger } from "./Logger";
 import MessageSender = chrome.runtime.MessageSender;
 
-export type Event<T = object> = {
+export type Event<T> = {
   type: string;
   payload?: T;
 };
 
+export type EventCallback<T> = (
+  message: T,
+  sender: MessageSender,
+  respond: (...args: unknown[]) => void
+) => void;
+
 export class EventsService {
-  static on<T>(
-    eventName: string,
-    callback: (
-      message: T,
-      sender: MessageSender,
-      respond: (...args: any[]) => void
-    ) => void
-  ): () => void {
+  static on<T>(eventName: string, callback: EventCallback<T>): () => void {
     const handler = (
       message: Event<T>,
       sender: MessageSender,
-      respond: (...args: any[]) => void
+      respond: (...args: unknown[]) => void
     ): boolean => {
       if (message && message.type === eventName) {
         callback(message.payload, sender, respond);
       }
-      // eslint-disable-next-line no-unused-expressions,@typescript-eslint/no-unused-expressions
-      chrome.runtime.lastError;
+      Logger.error(
+        `EventsService::on event "${eventName} error": `,
+        chrome.runtime.lastError
+      );
       return true;
     };
     chrome.runtime.onMessage.addListener(handler);
@@ -34,7 +36,11 @@ export class EventsService {
    * emits event to internal extension scripts (background, popup etc.) but
    * not to the content scripts
    */
-  static emit<T>(message: Event, callback?: (T) => void, tabId?: number): void {
+  static emit<T>(
+    message: Event<T>,
+    callback?: (T) => void,
+    tabId?: number
+  ): void {
     if (tabId) {
       chrome.tabs.sendMessage(tabId, message, callback);
       return;

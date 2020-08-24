@@ -1,10 +1,10 @@
-export interface UploadFileInfo {
+export interface UploadStatus {
   id: string;
   uploading: boolean;
   error: boolean;
   progress: number;
 }
 
-export interface UploadStatus {
-  [key: string]: UploadFileInfo;
+export interface UploadStatusMap {
+  [key: string]: UploadStatus;
 }

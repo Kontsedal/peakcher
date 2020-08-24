@@ -6,7 +6,7 @@ import {
   ImageData,
   RemoteSpaceInfo,
   Settings,
-  UploadStatus,
+  UploadStatusMap,
 } from "common/interfaces";
 
 export interface RootStateV1 {
@@ -18,7 +18,7 @@ export interface RootStateV1 {
     [key: string]: { name: string; files: string[] };
   };
   remoteSpaceInfo: RemoteSpaceInfo;
-  uploadStatus: UploadStatus;
+  uploadStatus: UploadStatusMap;
   settings: Settings;
 }
 

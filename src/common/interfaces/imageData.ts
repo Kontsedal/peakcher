@@ -1,4 +1,4 @@
-export interface ImageData {
+export type ImageData = {
   width: number;
   height: number;
   tags: string[];
@@ -10,4 +10,8 @@ export interface ImageData {
   size: number;
   createdAt: number;
   usedTimes: number;
-}
+};
+
+export type ImageDataMap = {
+  [key: string]: ImageData;
+};

@@ -1,4 +1,4 @@
-import { configureStore, PayloadAction } from "@reduxjs/toolkit";
+import { configureStore, Store } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import compact from "lodash/compact";
 import { slice } from "./slice";
@@ -9,7 +9,7 @@ const populateActionsMiddleware = () => (next) => (action) => {
   next(action);
 };
 
-export const getStore = (isBackground: boolean) => {
+export const getStore = (isBackground: boolean): Store<RootState> => {
   const middleware = compact([
     isBackground && populateActionsMiddleware,
     IS_DEV && createLogger({ diff: true }),

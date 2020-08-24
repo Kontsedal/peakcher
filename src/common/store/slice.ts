@@ -4,8 +4,8 @@ import {
   ImageData,
   Settings,
   RemoteSpaceInfo,
+  UploadStatusMap,
   UploadStatus,
-  UploadFileInfo,
 } from "common/interfaces";
 import merge from "lodash/merge";
 import { CONFIG } from "../../config";
@@ -20,7 +20,7 @@ export interface RootState {
     [key: string]: string[];
   };
   remoteSpaceInfo: RemoteSpaceInfo;
-  uploadStatus: UploadStatus;
+  uploadStatus: UploadStatusMap;
   settings: Settings;
 }
 
@@ -60,7 +60,8 @@ export const slice = createSlice({
         settingValue: string | boolean | number;
       }>
     ) => {
-      let { settingName, settingValue } = action.payload;
+      const { settingName } = action.payload;
+      let { settingValue } = action.payload;
       if (
         typeof state.settings[settingName] === "undefined" ||
         typeof settingValue === "undefined"
@@ -94,6 +95,7 @@ export const slice = createSlice({
         settingValue = allowedRanges[settingName].max;
       }
       state.settings[settingName] = settingValue;
+      return state;
     },
     deleteFile: (state, action: PayloadAction<string>) => {
       const fileId = action.payload;
@@ -162,7 +164,7 @@ export const slice = createSlice({
     setRemoteState: (state, action) => {
       return merge(state, action.payload);
     },
-    setUploadFileStatus: (state, action: PayloadAction<UploadFileInfo>) => {
+    setUploadFileStatus: (state, action: PayloadAction<UploadStatus>) => {
       const fileInfo = action.payload;
       state.uploadStatus[fileInfo.id] = fileInfo;
     },
@@ -182,6 +184,7 @@ export const slice = createSlice({
         return state;
       }
       state.files[fileId].usedTimes += 1;
+      return state;
     },
   },
 });
