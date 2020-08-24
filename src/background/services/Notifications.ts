@@ -1,7 +1,7 @@
-import { I18n } from "../../common/services/I18n";
+import { I18n } from "common/services/I18n";
 
 export class NotificationsService {
-  static authSuccess() {
+  static authSuccess(): void {
     chrome.notifications.create({
       message: I18n.t("authSuccessMessage"),
       title: I18n.t("authSuccessTitle"),
@@ -10,7 +10,7 @@ export class NotificationsService {
     });
   }
 
-  static uploadFailed() {
+  static uploadFailed(): void {
     chrome.notifications.create({
       message: I18n.t("uploadFailedMessage"),
       title: I18n.t("uploadFailedTitle"),
@@ -19,7 +19,7 @@ export class NotificationsService {
     });
   }
 
-  static uploadSuccess(imgUrl) {
+  static uploadSuccess(imgUrl: string): void {
     chrome.notifications.create({
       message: I18n.t("uploadSuccessMessage"),
       title: I18n.t("uploadSuccessTitle"),
