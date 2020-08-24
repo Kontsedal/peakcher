@@ -3,20 +3,21 @@ import { DatabaseAdapter } from "./interfaces";
 export class SyncExtensionStorageAdapter implements DatabaseAdapter {
   constructor(public tableName: string) {}
 
-  async getTable() {
-    let tableData = await getData(this.tableName);
-    if (tableData && typeof tableData === "string") {
-      tableData = JSON.parse(tableData);
+  async getTable<T>(): Promise<T | void> {
+    const tableData = await getData(this.tableName);
+    try {
+      return JSON.parse(tableData);
+    } catch (error) {
+      return undefined;
     }
-    return tableData;
   }
 
-  async saveTable(tableData: object) {
-    return setData(this.tableName, JSON.stringify(tableData));
+  async saveTable<T>(tableData: T): Promise<void> {
+    await setData(this.tableName, JSON.stringify(tableData));
   }
 }
 
-function getData(key) {
+function getData(key): Promise<string> {
   return new Promise((resolve) => {
     chrome.storage.sync.get([key], (result) => {
       resolve(result[key]);
@@ -24,7 +25,7 @@ function getData(key) {
   });
 }
 
-function setData(key: string, value: any) {
+function setData(key: string, value: string | number | boolean | void) {
   const mutator = { [key]: value };
   return new Promise((resolve) => {
     chrome.storage.sync.set(mutator, () => {

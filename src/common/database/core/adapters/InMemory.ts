@@ -8,11 +8,11 @@ if (!window[IN_MEMORY_SYMBOL]) {
 export class InMemoryAdapter implements DatabaseAdapter {
   constructor(public tableName: string) {}
 
-  async getTable() {
+  async getTable<T>(): Promise<T | void> {
     return window[IN_MEMORY_SYMBOL][this.tableName];
   }
 
-  async saveTable(tableData) {
+  async saveTable<T>(tableData: T): Promise<void> {
     window[IN_MEMORY_SYMBOL][this.tableName] = tableData;
   }
 }
