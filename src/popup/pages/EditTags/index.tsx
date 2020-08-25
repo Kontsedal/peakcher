@@ -10,18 +10,24 @@ import { TagsSelect } from "../../components/TagsSelect";
 import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
 
-export const EditTagsPage = () => {
+export const EditTagsPage: React.FC = () => {
   const dispatch = useDispatch();
   const { editImageId, showMainView } = useContext(CurrentViewContext);
   const files = useSelector(getFiles);
   const tagsArray = useSelector(getTagsArray);
   const currentFile = files[editImageId];
-  const handleSelect = useCallback((tag) => {
-    dispatch(actions.addFileTag({ fileId: editImageId, tag }));
-  }, []);
-  const handleRemove = useCallback((tag) => {
-    dispatch(actions.removeFileTag({ fileId: editImageId, tag }));
-  }, []);
+  const handleSelect = useCallback(
+    (tag) => {
+      dispatch(actions.addFileTag({ fileId: editImageId, tag }));
+    },
+    [dispatch, editImageId]
+  );
+  const handleRemove = useCallback(
+    (tag) => {
+      dispatch(actions.removeFileTag({ fileId: editImageId, tag }));
+    },
+    [dispatch, editImageId]
+  );
   return (
     <div className={styles.root}>
       <div className={styles.toolbar}>

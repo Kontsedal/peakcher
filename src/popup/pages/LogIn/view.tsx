@@ -1,10 +1,17 @@
+/* eslint-disable react/no-danger */
 import React from "react";
-import styles from "./styles.module.scss";
-import Logo from "../../../assets/logo.svg";
+import { I18n } from "common/services/I18n";
+import { repeatMap } from "utils/array";
+import Logo from "assets/logo.svg";
+import PropTypes from "prop-types";
 import { Button } from "../../components/Button";
-import { I18n } from "../../../common/services/I18n";
+import styles from "./styles.module.scss";
 
-export const LogInPageView = ({ onLogIn }: { onLogIn: () => void }) => {
+const BUBBLES_COUNT = 43;
+
+export const LogInPageView: React.FC<{
+  onLogIn: () => void;
+}> = ({ onLogIn }) => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
@@ -20,109 +27,19 @@ export const LogInPageView = ({ onLogIn }: { onLogIn: () => void }) => {
         </Button>
         <div className={styles.bublesContainer}>
           <div className={styles.bubleWrap}>
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
-            <div className={styles.buble} />
+            {repeatMap(BUBBLES_COUNT, (index) => (
+              <div key={index} className={styles.buble} />
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+LogInPageView.propTypes = {
+  onLogIn: PropTypes.func,
+};
+LogInPageView.defaultProps = {
+  onLogIn: () => {},
 };

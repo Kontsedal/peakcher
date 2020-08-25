@@ -3,4 +3,4 @@ import { LogInPageView } from "./view";
 
 export default { title: "Log in page" };
 
-export const common = () => <LogInPageView onLogIn={() => {}} />;
+export const common: React.FC = () => <LogInPageView onLogIn={() => {}} />;

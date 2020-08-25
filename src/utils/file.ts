@@ -23,7 +23,7 @@ export const getImageSizes = (
     };
     elem.onerror = (err) => {
       wrapper.remove();
-      reject({ width: 0, height: 0 });
+      reject(err);
     };
     elem.setAttribute("src", url);
   });

@@ -7,7 +7,7 @@ import { CurrentViewProvider } from "./context/CurrentView";
 import cssVars from "./styles/vars.module.scss";
 import { ToastProvider } from "./components/Toast/context";
 
-export const Root = () => {
+export const Root: React.FC = () => {
   return (
     <Provider store={getStore(false)}>
       <CurrentViewProvider>

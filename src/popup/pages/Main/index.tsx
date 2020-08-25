@@ -36,7 +36,7 @@ const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
   }
 };
 
-export const MainPage = () => {
+export const MainPage: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortType, setSortType] = useState(SORT_OPTIONS.NEW_FIRST);
   const tags = useSelector(getTags);
@@ -69,7 +69,7 @@ export const MainPage = () => {
       });
     });
     return Object.values(result);
-  }, [selectedTags, files]);
+  }, [selectedTags, files, tags]);
   filesArray = useMemo(() => {
     return sortImages(filesArray, sortType);
   }, [filesArray, sortType]);
