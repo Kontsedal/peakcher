@@ -3,27 +3,22 @@ import cn from "classnames";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "../../styles.module.scss";
 
-export const Action = ({
-  text,
-  isLoading,
-  onClick,
-  textToCopy,
-  onCopy,
-}: {
+export const Action: React.FC<{
   text: string;
   textToCopy?: string;
   isLoading?: boolean;
   onClick: () => void;
   onCopy?: () => void;
-}) => {
+}> = ({ text, isLoading, onClick, textToCopy, onCopy }) => {
   const element = (
-    <div
+    <button
+      type="button"
       onClick={!isLoading ? onClick : undefined}
       className={cn(styles.moreActionsItem, isLoading && styles.loading)}
     >
       {isLoading && <div className={styles.loader} />}
       {!isLoading && <div className={styles.moreActionsItemText}>{text}</div>}
-    </div>
+    </button>
   );
   if (textToCopy) {
     return (

@@ -1,5 +1,6 @@
 import { CommunicationService } from "../common/services/Communication";
 import { blobToBase64, getImageSizes } from "../utils/file";
+import { Logger } from "../common/services/Logger";
 
 declare global {
   interface Window {
@@ -27,7 +28,7 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.warn("Peakcher: Failed to upload image", error);
+  Logger.warn("Peakcher: Failed to upload image", error);
 });
 
 async function corsRequest(url) {

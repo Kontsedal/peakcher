@@ -3,17 +3,18 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ImageData } from "common/interfaces";
 import cn from "classnames";
 import { MdWarning } from "react-icons/all";
+import { I18n } from "common/services/I18n";
+import PropTypes from "prop-types";
 import { Action } from "./components/Action";
 import MoreIcon from "./assets/actions.svg";
 import LinkIcon from "./assets/link.svg";
 import styles from "./styles.module.scss";
 import { Button } from "../../../Button";
-import { I18n } from "../../../../../common/services/I18n";
 
 export type Props = {
   file: ImageData;
   setActionsVisible: (visible: boolean) => void;
-  actionsPopupRef?: MutableRefObject<any>;
+  actionsPopupRef?: MutableRefObject<HTMLDivElement>;
   actionsVisible: boolean;
   base64IsLoading: boolean;
   isRemoving: boolean;
@@ -30,7 +31,7 @@ export type Props = {
   loading: boolean;
 };
 
-export const ImageItemView = ({
+export const ImageItemView: React.FC<Props> = ({
   file,
   setActionsVisible,
   actionsPopupRef,
@@ -48,7 +49,7 @@ export const ImageItemView = ({
   hasLoadingError,
   onImageLoad,
   loading,
-}: Props) => (
+}) => (
   <div className={styles.imageItem}>
     {hasLoadingError && (
       <div className={styles.loadingError}>
@@ -75,12 +76,16 @@ export const ImageItemView = ({
       <div className={styles.hoverContainer}>
         <div className={styles.hoverActions}>
           <CopyToClipboard text={file.publicUrl} onCopy={onCopy}>
-            <button className={cn(styles.actionButton, styles.linkButton)}>
+            <button
+              type="button"
+              className={cn(styles.actionButton, styles.linkButton)}
+            >
               <LinkIcon className={styles.linkButtonIcon} />
               Link
             </button>
           </CopyToClipboard>
           <button
+            type="button"
             onClick={() => setActionsVisible(true)}
             className={cn(styles.actionButton, styles.moreActionsButton)}
           >
@@ -116,3 +121,36 @@ export const ImageItemView = ({
     )}
   </div>
 );
+
+ImageItemView.propTypes = {
+  file: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.symbol),
+    name: PropTypes.number.isRequired,
+    publicUrl: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    path: PropTypes.number.isRequired,
+    type: PropTypes.number.isRequired,
+    size: PropTypes.number.isRequired,
+    createdAt: PropTypes.number.isRequired,
+    usedTimes: PropTypes.number.isRequired,
+  }).isRequired,
+  setActionsVisible: PropTypes.func.isRequired,
+  actionsPopupRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
+  actionsVisible: PropTypes.bool.isRequired,
+  base64IsLoading: PropTypes.bool.isRequired,
+  isRemoving: PropTypes.bool.isRequired,
+  base64Link: PropTypes.string.isRequired,
+  showEditImageTagsView: PropTypes.func.isRequired,
+  loadBase64: PropTypes.func.isRequired,
+  deleteFile: PropTypes.func.isRequired,
+  onCopy: PropTypes.func.isRequired,
+  onImageLoadError: PropTypes.func.isRequired,
+  forceDelete: PropTypes.func.isRequired,
+  onReload: PropTypes.func.isRequired,
+  hasLoadingError: PropTypes.bool.isRequired,
+  onImageLoad: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};

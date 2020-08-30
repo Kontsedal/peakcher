@@ -3,20 +3,21 @@ import { ImageData } from "common/interfaces";
 import { linkToBase64 } from "utils/file";
 import { CommunicationService } from "common/services/Communication";
 import { useDispatch } from "react-redux";
+import { useOutsideClick } from "popup/hooks/useOutsideClick";
+import { CurrentViewContext } from "popup/context/CurrentView";
+import { actions } from "common/store";
+import { I18n } from "common/services/I18n";
+import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
-import { useOutsideClick } from "../../../../hooks/useOutsideClick";
-import { CurrentViewContext } from "../../../../context/CurrentView";
 import { ImageItemView } from "./view";
-import { actions } from "../../../../../common/store";
 import { ToastContext } from "../../../Toast/context";
 import { ToastTypes } from "../../../Toast";
-import { I18n } from "../../../../../common/services/I18n";
 
 type Props = {
   file: ImageData;
 };
 
-export const ImageItem = ({ file }: Props) => {
+export const ImageItem: React.FC<Props> = ({ file }) => {
   const actionsPopupRef = useRef();
   const dispatch = useDispatch();
   const { showToast } = useContext(ToastContext);
@@ -34,7 +35,7 @@ export const ImageItem = ({ file }: Props) => {
       setBase64IsLoading(false);
       setBase64Link(link);
     });
-  }, [file.publicUrl, setBase64Link, setBase64IsLoading]);
+  }, [file.publicUrl, file.type, setBase64Link, setBase64IsLoading]);
   const hideActions = useCallback(() => {
     setActionsVisible(false);
   }, [setActionsVisible]);
@@ -55,25 +56,25 @@ export const ImageItem = ({ file }: Props) => {
         });
       }
     });
-  }, [file.id, setIsRemoving]);
+  }, [file.id, setIsRemoving, showToast]);
   const onCopy = useCallback(() => {
     dispatch(actions.incrementUsedTimes({ fileId: file.id }));
     showToast({
       text: I18n.t("urlCopySuccessMessage"),
       type: ToastTypes.SUCCESS,
     });
-  }, [file, dispatch]);
+  }, [file, dispatch, showToast]);
   const forceDelete = useCallback(() => {
     dispatch(actions.deleteFile(file.id));
     showToast({
       text: I18n.t("fileDeleteSuccessMessage"),
       type: ToastTypes.SUCCESS,
     });
-  }, [file]);
+  }, [file, showToast, dispatch]);
   const reload = useCallback(() => {
     setLoading(true);
     setLoadError(false);
-    setVersion((version) => version + 1);
+    setVersion((oldVersion) => oldVersion + 1);
   }, [setVersion, setLoadError]);
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
     excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
@@ -101,4 +102,20 @@ export const ImageItem = ({ file }: Props) => {
       onCopy={onCopy}
     />
   );
+};
+
+ImageItem.propTypes = {
+  file: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.symbol),
+    name: PropTypes.number.isRequired,
+    publicUrl: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    path: PropTypes.number.isRequired,
+    type: PropTypes.number.isRequired,
+    size: PropTypes.number.isRequired,
+    createdAt: PropTypes.number.isRequired,
+    usedTimes: PropTypes.number.isRequired,
+  }).isRequired,
 };

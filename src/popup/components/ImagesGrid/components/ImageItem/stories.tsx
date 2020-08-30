@@ -1,15 +1,17 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 import { ImageItemView } from "./view";
 import { mockImageData } from "../../../../../../.storybook/mockData";
 
 export default { title: "ImageItem" };
 
-const Component = ({
-  base64IsLoading,
-  actionsVisible,
-  base64Link,
-  ...rest
-}) => {
+const Component: React.FC<{
+  base64IsLoading: boolean;
+  actionsVisible: boolean;
+  hasLoadingError?: boolean;
+  base64Link: string;
+  // eslint-disable-next-line react/prop-types
+}> = ({ base64IsLoading, actionsVisible, base64Link, ...rest }) => {
   const width = 300;
   const height = (mockImageData.height / mockImageData.width) * width;
   return (
@@ -35,18 +37,19 @@ const Component = ({
     </div>
   );
 };
-export const basic = () => (
+export const basic: React.FC = () => (
   <Component base64Link="" actionsVisible={false} base64IsLoading={false} />
 );
-export const visibleActions = () => (
+export const visibleActions: React.FC = () => (
   <Component base64Link="" actionsVisible base64IsLoading={false} />
 );
-export const base64IsLoading = () => (
+export const base64IsLoading: React.FC = () => (
   <Component base64Link="" actionsVisible base64IsLoading />
 );
-export const base64Loaded = () => (
+export const base64Loaded: React.FC = () => (
   <Component base64Link="some link" actionsVisible base64IsLoading={false} />
 );
 
-// @ts-ignore
-export const loadingError = () => <Component hasLoadingError />;
+export const loadingError: React.FC = () => (
+  <Component hasLoadingError actionsVisible base64IsLoading base64Link="" />
+);

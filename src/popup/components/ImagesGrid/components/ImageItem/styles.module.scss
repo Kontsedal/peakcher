@@ -110,6 +110,9 @@
     white-space: nowrap;
     word-break: keep-all;
     cursor: pointer;
+    display: block;
+    background-color: transparent;
+    border: none;
     &:hover {
       background: #2d9cdb;
       color: #f2f2f2;

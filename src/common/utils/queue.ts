@@ -1,10 +1,10 @@
-type anyFunc = (...args: any[]) => any;
-type task = () => Promise<any | void>;
+type AnyFunc = (...args: unknown[]) => unknown;
+type Task = () => Promise<unknown | void>;
 interface Options {
   concurrentTasksCount: number;
 }
 export class Queue {
-  private queue: anyFunc[] = [];
+  private queue: AnyFunc[] = [];
 
   private options: Options;
 
@@ -15,7 +15,7 @@ export class Queue {
     this.options = options;
   }
 
-  public push(fn: task) {
+  public push(fn: Task): Promise<ReturnType<typeof fn>> {
     return new Promise((resolve, reject) => {
       this.queue.push(() => {
         fn()
