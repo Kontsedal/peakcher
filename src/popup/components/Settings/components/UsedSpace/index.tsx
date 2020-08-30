@@ -1,5 +1,6 @@
 import * as React from "react";
-import { I18n } from "../../../../../common/services/I18n";
+import { I18n } from "common/services/I18n";
+import PropTypes from "prop-types";
 import * as classes from "./styles.scss";
 
 interface Props {
@@ -16,7 +17,7 @@ const getBarColor = (percentUsed: number): string => {
   }
   return "rgb(241,202,202)";
 };
-export const UsedSpace = ({ total, used }: Props) => {
+export const UsedSpace: React.FC<Props> = ({ total, used }) => {
   const totalMb = bytesToMegabytes(total).toFixed(0);
   const usedMb = bytesToMegabytes(used).toFixed(0);
   const percent = (used * 100) / total;
@@ -34,4 +35,9 @@ export const UsedSpace = ({ total, used }: Props) => {
       </span>
     </div>
   );
+};
+
+UsedSpace.propTypes = {
+  total: PropTypes.number.isRequired,
+  used: PropTypes.number.isRequired,
 };

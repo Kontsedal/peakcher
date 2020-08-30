@@ -10,7 +10,7 @@ import { CommunicationService } from "../../../common/services/Communication";
 const defaultValueAccessor = (event: ChangeEvent<HTMLInputElement>) =>
   Number(event.target.value);
 
-export const Settings = () => {
+export const Settings: React.FC = () => {
   const { settingsIsShown, showSettings } = useContext(CurrentViewContext);
   const dispatch = useDispatch();
   const settings = useSelector(getSettings);
@@ -35,7 +35,7 @@ export const Settings = () => {
   const onLogOut = useCallback(() => {
     CommunicationService.logOut();
     showSettings(false);
-  }, []);
+  }, [showSettings]);
   if (!settingsIsShown) {
     return null;
   }

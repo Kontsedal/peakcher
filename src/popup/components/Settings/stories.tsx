@@ -1,10 +1,8 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { RemoteSpaceInfo, Settings } from "common/interfaces";
 import { SettingsView } from "./view";
 
 export default { title: "Settings block" };
-const defaultValueAccessor = (event: ChangeEvent<HTMLInputElement>) =>
-  Number(event.target.value);
 
 const Component = ({
   settings,
@@ -13,14 +11,9 @@ const Component = ({
   settings: Settings;
   remoteSpaceInfo: RemoteSpaceInfo;
 }) => {
-  const getInputProps = (
-    settingName,
-    valueAccessor: (
-      event: ChangeEvent<HTMLInputElement>
-    ) => number | string | boolean = defaultValueAccessor
-  ) => ({
+  const getInputProps = (settingName) => ({
     value: settings[settingName],
-    onChange: (event: ChangeEvent<HTMLInputElement>) => {},
+    onChange: () => {},
   });
   return (
     <div
@@ -41,7 +34,7 @@ const Component = ({
     </div>
   );
 };
-export const common = () => (
+export const common: React.FC = () => (
   <Component
     settings={{
       popupHeight: 500,
@@ -56,7 +49,7 @@ export const common = () => (
   />
 );
 
-export const mediumSpaceLeft = () => (
+export const mediumSpaceLeft: React.FC = () => (
   <Component
     settings={{
       popupHeight: 500,
@@ -71,7 +64,7 @@ export const mediumSpaceLeft = () => (
   />
 );
 
-export const fewSpaceLeft = () => (
+export const fewSpaceLeft: React.FC = () => (
   <Component
     settings={{
       popupHeight: 500,

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { getSearchColumnsCount } from "common/store/selectors";
 import { CONFIG } from "config";
 import { ImageData } from "common/interfaces";
+import PropTypes from "prop-types";
 import * as utils from "./utils";
 import styles from "./styles.module.scss";
 import { ImageItem } from "./components/ImageItem";
@@ -17,7 +18,7 @@ const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
 const DEFAULT_VISIBLE_ROWS = 6;
 const MORE_ROWS_COUNT = 3;
 
-export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
+export const ImagesGrid: React.FC<{ files: ImageData[] }> = ({ files }) => {
   const containerRef = useRef<HTMLDivElement>();
   const [gridWidth, setGridWidth] = useState(0);
   const [visibleImageRows, setVisibleImageRows] = useState(
@@ -41,11 +42,14 @@ export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
       return;
     }
     setGridWidth(containerRef.current.clientWidth);
-  }, [containerRef.current]);
-  const setContainerRef = useCallback((elem) => {
-    containerRef.current = elem;
-    calculateGridWidth();
-  }, []);
+  }, [setGridWidth]);
+  const setContainerRef = useCallback(
+    (elem) => {
+      containerRef.current = elem;
+      calculateGridWidth();
+    },
+    [calculateGridWidth]
+  );
   const visibleImages = useMemo(
     () => files.slice(0, visibleImageRows * columnsCount),
     [visibleImageRows, columnsCount, files]
@@ -59,14 +63,14 @@ export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
     if (percent >= SCROLL_PERCENT_TO_SHOW_MORE_IMAGES) {
       setVisibleImageRows(visibleImageRows + MORE_ROWS_COUNT);
     }
-  }, [containerRef.current, visibleImageRows, setVisibleImageRows]);
+  }, [visibleImageRows, setVisibleImageRows]);
   useEffect(() => {
     const handler = () => {
       calculateGridWidth();
     };
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
-  }, []);
+  }, [calculateGridWidth]);
   return (
     <div className={styles.root} ref={setContainerRef} onScroll={handleScroll}>
       {filesPositions &&
@@ -84,4 +88,26 @@ export const ImagesGrid = ({ files }: { files: ImageData[] }) => {
         })}
     </div>
   );
+};
+
+ImagesGrid.propTypes = {
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+      tags: PropTypes.arrayOf(PropTypes.symbol),
+      name: PropTypes.number.isRequired,
+      publicUrl: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
+      path: PropTypes.number.isRequired,
+      type: PropTypes.number.isRequired,
+      size: PropTypes.number.isRequired,
+      createdAt: PropTypes.number.isRequired,
+      usedTimes: PropTypes.number.isRequired,
+    })
+  ),
+};
+
+ImagesGrid.defaultProps = {
+  files: [],
 };
