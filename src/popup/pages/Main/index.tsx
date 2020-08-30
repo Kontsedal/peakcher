@@ -16,20 +16,20 @@ import { Button } from "../../components/Button";
 import { CurrentViewContext } from "../../context/CurrentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
 import { UploadIndicator } from "../../components/UploadIndicator";
-import { SORT_OPTIONS, SortSelect } from "../../components/SortSelect";
+import { SortOptions, SortSelect } from "../../components/SortSelect";
 import { NoFiles } from "./components/NoFiles";
 
 const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
   switch (sortType) {
-    case SORT_OPTIONS.NEW_FIRST:
+    case SortOptions.NEW_FIRST:
       return orderBy(files, ["createdAt"], ["desc"]);
-    case SORT_OPTIONS.OLD_FIRST:
+    case SortOptions.OLD_FIRST:
       return orderBy(files, ["createdAt"], ["asc"]);
-    case SORT_OPTIONS.POPULAR_FIRST:
+    case SortOptions.POPULAR_FIRST:
       return orderBy(files, ["usedTimes"], ["desc"]);
-    case SORT_OPTIONS.UNPOPULAR_FIRST:
+    case SortOptions.UNPOPULAR_FIRST:
       return orderBy(files, ["usedTimes"], ["asc"]);
-    case SORT_OPTIONS.WITHOUT_TAGS:
+    case SortOptions.WITHOUT_TAGS:
       return files.filter((file) => file.tags.length === 0);
     default:
       return files;
@@ -38,7 +38,7 @@ const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
 
 export const MainPage: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [sortType, setSortType] = useState(SORT_OPTIONS.NEW_FIRST);
+  const [sortType, setSortType] = useState(SortOptions.NEW_FIRST);
   const tags = useSelector(getTags);
   const tagsArray = useSelector(getTagsArray);
   let filesArray = useSelector(getFilesArray);

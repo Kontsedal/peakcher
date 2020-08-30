@@ -1,10 +1,11 @@
 import React, { ChangeEvent } from "react";
 import { MdChevronLeft } from "react-icons/all";
+import PropTypes from "prop-types";
+import { I18n } from "common/services/I18n";
+import { RemoteSpaceInfo } from "common/interfaces";
 import style from "./styles.module.scss";
 import { Button } from "../Button";
-import { I18n } from "../../../common/services/I18n";
 import { Toggle } from "../Toggle";
-import { RemoteSpaceInfo } from "../../../common/interfaces";
 import { UsedSpace } from "./components/UsedSpace";
 
 type Props = {
@@ -16,15 +17,15 @@ type Props = {
     valueExtractor?: (event) => boolean | string | number
   ) => {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    value: any;
+    value: number | boolean;
   };
 };
-export const SettingsView = ({
+export const SettingsView: React.FC<Props> = ({
   closeSettings,
   getInputProps,
   remoteSpaceInfo,
   onLogOut,
-}: Props) => (
+}) => (
   <div className={style.root}>
     <div className={style.header}>
       <Button flat onClick={closeSettings}>
@@ -39,7 +40,8 @@ export const SettingsView = ({
         <input
           name="popupHeight"
           type="number"
-          {...getInputProps("popupHeight")}
+          onChange={getInputProps("popupHeight").onChange}
+          value={getInputProps("popupHeight").value as number}
         />
       </div>
       <div className={style.field}>
@@ -47,7 +49,8 @@ export const SettingsView = ({
         <input
           name="popupWidth"
           type="number"
-          {...getInputProps("popupWidth")}
+          onChange={getInputProps("popupWidth").onChange}
+          value={getInputProps("popupWidth").value as number}
         />
       </div>
       <div className={style.field}>
@@ -57,7 +60,8 @@ export const SettingsView = ({
         <input
           name="searchColumnsCount"
           type="number"
-          {...getInputProps("searchColumnsCount")}
+          onChange={getInputProps("searchColumnsCount").onChange}
+          value={getInputProps("searchColumnsCount").value as number}
         />
       </div>
       <div className={style.field}>
@@ -67,10 +71,18 @@ export const SettingsView = ({
         <Toggle
           title={I18n.t("dataLossProtectDetails")}
           name="protectFromDataConflicts"
-          {...getInputProps(
-            "protectFromDataConflicts",
-            (event) => event.target.checked
-          )}
+          onChange={
+            getInputProps(
+              "protectFromDataConflicts",
+              (event) => event.target.checked
+            ).onChange
+          }
+          value={
+            getInputProps(
+              "protectFromDataConflicts",
+              (event) => event.target.checked
+            ).value as boolean
+          }
         />
       </div>
       <div className={style.logOut}>
@@ -81,3 +93,13 @@ export const SettingsView = ({
     </div>
   </div>
 );
+
+SettingsView.propTypes = {
+  closeSettings: PropTypes.func.isRequired,
+  getInputProps: PropTypes.func.isRequired,
+  remoteSpaceInfo: PropTypes.shape({
+    total: PropTypes.number,
+    used: PropTypes.number,
+  }).isRequired,
+  onLogOut: PropTypes.func.isRequired,
+};
