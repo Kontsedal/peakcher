@@ -6,29 +6,27 @@ import React, {
   useState,
 } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { Toast, TOAST_TYPES } from ".";
+import { Logger } from "common/services/Logger";
+import PropTypes from "prop-types";
+import { Toast, ToastTypes } from ".";
 import styles from "./styles.module.scss";
 
 export const ToastContext = createContext({
-  showToast: (params: {
-    text: string;
-    type: TOAST_TYPES;
-    timeout?: number;
-  }) => {
-    console.log("showToast", params);
+  showToast: (params: { text: string; type: ToastTypes; timeout?: number }) => {
+    Logger.log("showToast", params);
   },
 });
 
-export const ToastProvider = ({ children }) => {
+export const ToastProvider: React.FC = ({ children }) => {
   const toastId = useRef(0);
   const timeouts = useRef([]);
   const [toasts, setToasts] = useState<
-    { text: string; type: TOAST_TYPES; id: number; onClose: () => void }[]
+    { text: string; type: ToastTypes; id: number; onClose: () => void }[]
   >([]);
 
   const hideToast = useCallback(
     (id) => {
-      setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
+      setToasts((oldToasts) => oldToasts.filter((toast) => toast.id !== id));
     },
     [setToasts]
   );
@@ -38,13 +36,13 @@ export const ToastProvider = ({ children }) => {
       toastId.current += 1;
       const id = toastId.current;
       const toast = { text, type, id, onClose: () => hideToast(id) };
-      setToasts((toasts) => [...toasts, toast]);
+      setToasts((oldToasts) => [...oldToasts, toast]);
       const timeoutId = setTimeout(() => {
         hideToast(id);
       }, timeout);
       timeouts.current.push(timeoutId);
     },
-    [setToasts, toasts]
+    [setToasts, hideToast]
   );
 
   useEffect(() => () => timeouts.current.forEach(clearTimeout), []);
@@ -77,4 +75,12 @@ export const ToastProvider = ({ children }) => {
       </TransitionGroup>
     </ToastContext.Provider>
   );
+};
+
+ToastProvider.propTypes = {
+  children: PropTypes.element,
+};
+
+ToastProvider.defaultProps = {
+  children: null,
 };

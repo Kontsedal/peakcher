@@ -1,19 +1,19 @@
 import React from "react";
-import { Toast, TOAST_TYPES } from ".";
+import { Toast, ToastTypes } from ".";
 
 export default { title: "Toast" };
 
-export const success = () => (
+export const success: React.FC = () => (
   <Toast
-    type={TOAST_TYPES.SUCCESS}
+    type={ToastTypes.SUCCESS}
     text="Operation was successful"
     onClose={() => {}}
   />
 );
 
-export const error = () => (
+export const error: React.FC = () => (
   <Toast
-    type={TOAST_TYPES.ERROR}
+    type={ToastTypes.ERROR}
     text="Operation was unsuccessful"
     onClose={() => {}}
   />

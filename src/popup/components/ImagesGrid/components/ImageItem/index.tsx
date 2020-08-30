@@ -9,7 +9,7 @@ import { CurrentViewContext } from "../../../../context/CurrentView";
 import { ImageItemView } from "./view";
 import { actions } from "../../../../../common/store";
 import { ToastContext } from "../../../Toast/context";
-import { TOAST_TYPES } from "../../../Toast";
+import { ToastTypes } from "../../../Toast";
 import { I18n } from "../../../../../common/services/I18n";
 
 type Props = {
@@ -45,13 +45,13 @@ export const ImageItem = ({ file }: Props) => {
       if (response.success) {
         showToast({
           text: I18n.t("fileDeleteSuccessMessage"),
-          type: TOAST_TYPES.SUCCESS,
+          type: ToastTypes.SUCCESS,
         });
       }
       if (response.error) {
         showToast({
           text: I18n.t("fileDeleteErrorMessage"),
-          type: TOAST_TYPES.ERROR,
+          type: ToastTypes.ERROR,
         });
       }
     });
@@ -60,14 +60,14 @@ export const ImageItem = ({ file }: Props) => {
     dispatch(actions.incrementUsedTimes({ fileId: file.id }));
     showToast({
       text: I18n.t("urlCopySuccessMessage"),
-      type: TOAST_TYPES.SUCCESS,
+      type: ToastTypes.SUCCESS,
     });
   }, [file, dispatch]);
   const forceDelete = useCallback(() => {
     dispatch(actions.deleteFile(file.id));
     showToast({
       text: I18n.t("fileDeleteSuccessMessage"),
-      type: TOAST_TYPES.SUCCESS,
+      type: ToastTypes.SUCCESS,
     });
   }, [file]);
   const reload = useCallback(() => {

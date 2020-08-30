@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import { TagsSelectView } from "./view";
 
 type Props = {
@@ -6,13 +7,13 @@ type Props = {
   selectedOptions: string[];
   onSelect: (tag: string) => void;
   onRemove: (tag: string) => void;
-  optionTextGetter?: (option: string) => string | object;
+  optionTextGetter?: (option: string) => string | Record<string, unknown>;
   placeholder?: string;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
   className?: string;
 };
-export const TagsSelect = ({
+export const TagsSelect: React.FC<Props> = ({
   options = [],
   selectedOptions,
   onSelect,
@@ -22,7 +23,7 @@ export const TagsSelect = ({
   allowCreate = false,
   onCreate = () => {},
   className,
-}: Props) => {
+}) => {
   const [currentText, setCurrentText] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
   const filteredOptions: string[] = useMemo(() => {
@@ -38,7 +39,7 @@ export const TagsSelect = ({
       setCurrentText("");
       setInputIsActive(false);
     },
-    [selectedOptions]
+    [setCurrentText, setInputIsActive, onSelect]
   );
 
   const createOption = useCallback(
@@ -46,7 +47,7 @@ export const TagsSelect = ({
       onCreate(newOption);
       selectOption(newOption);
     },
-    [options, onCreate]
+    [onCreate, selectOption]
   );
   const handleSetCurrentText = useCallback(
     (text) => {
@@ -72,4 +73,25 @@ export const TagsSelect = ({
       className={className}
     />
   );
+};
+
+TagsSelect.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onRemove: PropTypes.func,
+  optionTextGetter: PropTypes.func,
+  placeholder: PropTypes.string,
+  allowCreate: PropTypes.bool,
+  onCreate: PropTypes.func,
+  className: PropTypes.string,
+};
+
+TagsSelect.defaultProps = {
+  onRemove: undefined,
+  optionTextGetter: (item) => item,
+  placeholder: undefined,
+  allowCreate: false,
+  onCreate: undefined,
+  className: undefined,
 };

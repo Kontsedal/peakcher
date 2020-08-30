@@ -3,17 +3,13 @@ import { TagsSelect } from "./index";
 
 export default { title: "TagsSelect" };
 
-const Wrapper = ({
-  options = [],
-  selected = [],
-  optionTextGetter,
-  allowCreate,
-}: {
+const Wrapper: React.FC<{
   options: string[];
   selected: string[];
   allowCreate?: boolean;
   optionTextGetter?: (opt: string) => string;
-}) => {
+  // eslint-disable-next-line react/prop-types
+}> = ({ options = [], selected = [], optionTextGetter, allowCreate }) => {
   const [optionsList, setOptionsList] = useState(options);
   const [selectedOptions, setSelectedOptions] = useState(selected);
   const onSelect = useCallback(
@@ -83,11 +79,11 @@ const predefinedOptions = [
   "jooojooo",
   "wakawaka",
 ];
-export const basic = () => (
+export const basic: React.FC = () => (
   <Wrapper options={predefinedOptions} selected={[]} />
 );
 
-export const customOptionsText = () => (
+export const customOptionsText: React.FC = () => (
   <Wrapper
     options={predefinedOptions}
     selected={[]}
@@ -97,6 +93,6 @@ export const customOptionsText = () => (
   />
 );
 
-export const withCreateAbility = () => (
+export const withCreateAbility: React.FC = () => (
   <Wrapper options={predefinedOptions} selected={[]} allowCreate />
 );

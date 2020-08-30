@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import cn from "classnames";
+import { I18n } from "common/services/I18n";
+import { useOutsideClick } from "popup/hooks/useOutsideClick";
+import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
-import { I18n } from "../../../common/services/I18n";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { Button } from "../Button";
 
 type Props = {
   options: string[];
@@ -15,12 +15,12 @@ type Props = {
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
   removeOption: (option: string) => void;
-  optionTextGetter?: (option: string) => string | object;
+  optionTextGetter?: (option: string) => string | Record<string, unknown>;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
   className?: string;
 };
-export const TagsSelectView = ({
+export const TagsSelectView: React.FC<Props> = ({
   setCurrentText,
   currentText,
   setInputIsActive,
@@ -34,11 +34,11 @@ export const TagsSelectView = ({
   allowCreate,
   onCreate,
   className,
-}: Props) => {
+}) => {
   const rootRef = useRef();
   const outsideClickHandler = useCallback(() => {
     setInputIsActive(false);
-  }, []);
+  }, [setInputIsActive]);
   const canCreateOption = useMemo(() => {
     if (!allowCreate || !currentText) {
       return false;
@@ -81,6 +81,7 @@ export const TagsSelectView = ({
             {options.map((option) => (
               <button
                 tabIndex={0}
+                type="button"
                 role="option"
                 aria-selected="false"
                 key={option}
@@ -98,6 +99,7 @@ export const TagsSelectView = ({
           </div>
           {canCreateOption && (
             <button
+              type="button"
               className={cn(styles.autocompleteItem, styles.createNewTagButton)}
               onClick={() => onCreate(currentText)}
             >
@@ -110,4 +112,28 @@ export const TagsSelectView = ({
       )}
     </div>
   );
+};
+
+TagsSelectView.defaultProps = {
+  placeholder: undefined,
+  optionTextGetter: (item) => item,
+  allowCreate: false,
+  onCreate: () => {},
+  className: undefined,
+};
+
+TagsSelectView.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrentText: PropTypes.func.isRequired,
+  currentText: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  showAutocomplete: PropTypes.bool.isRequired,
+  setInputIsActive: PropTypes.func.isRequired,
+  selectOption: PropTypes.func.isRequired,
+  removeOption: PropTypes.func.isRequired,
+  optionTextGetter: PropTypes.func,
+  allowCreate: PropTypes.bool,
+  onCreate: PropTypes.func,
+  className: PropTypes.string,
 };
