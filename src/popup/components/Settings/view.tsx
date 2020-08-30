@@ -97,7 +97,7 @@ export const SettingsView: React.FC<Props> = ({
 SettingsView.propTypes = {
   closeSettings: PropTypes.func.isRequired,
   getInputProps: PropTypes.func.isRequired,
-  remoteSpaceInfo: PropTypes.shape({
+  remoteSpaceInfo: PropTypes.exact({
     total: PropTypes.number,
     used: PropTypes.number,
   }).isRequired,

@@ -15,7 +15,7 @@ type Props = {
   setInputIsActive: (active: boolean) => void;
   selectOption: (option: string) => void;
   removeOption: (option: string) => void;
-  optionTextGetter?: (option: string) => string | Record<string, unknown>;
+  optionTextGetter?: (option: string) => string | React.ReactNode;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;
   className?: string;

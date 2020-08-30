@@ -31,8 +31,16 @@ const processSvg = {
 
 const lintJavaScript = {
   test: /\.(js|tsx?)$/,
+  enforce: 'pre',
+  use: [
+    {
+      options: {
+        eslintPath: require.resolve('eslint'),
+      },
+      loader: require.resolve('eslint-loader'),
+    },
+  ],
   exclude: /node_modules/,
-  use: ['babel-loader', 'eslint-loader'],
 }
 
 module.exports = {

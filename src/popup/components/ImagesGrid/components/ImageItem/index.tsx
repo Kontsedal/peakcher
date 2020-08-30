@@ -105,15 +105,15 @@ export const ImageItem: React.FC<Props> = ({ file }) => {
 };
 
 ImageItem.propTypes = {
-  file: PropTypes.shape({
+  file: PropTypes.exact({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.symbol),
-    name: PropTypes.number.isRequired,
-    publicUrl: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    path: PropTypes.number.isRequired,
-    type: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string.isRequired,
+    publicUrl: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     createdAt: PropTypes.number.isRequired,
     usedTimes: PropTypes.number.isRequired,

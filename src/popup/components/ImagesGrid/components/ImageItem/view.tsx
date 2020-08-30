@@ -123,22 +123,22 @@ export const ImageItemView: React.FC<Props> = ({
 );
 
 ImageItemView.propTypes = {
-  file: PropTypes.shape({
+  file: PropTypes.exact({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.symbol),
-    name: PropTypes.number.isRequired,
-    publicUrl: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    path: PropTypes.number.isRequired,
-    type: PropTypes.number.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string.isRequired,
+    publicUrl: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     createdAt: PropTypes.number.isRequired,
     usedTimes: PropTypes.number.isRequired,
   }).isRequired,
   setActionsVisible: PropTypes.func.isRequired,
-  actionsPopupRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  actionsPopupRef: PropTypes.any,
   actionsVisible: PropTypes.bool.isRequired,
   base64IsLoading: PropTypes.bool.isRequired,
   isRemoving: PropTypes.bool.isRequired,
@@ -153,4 +153,8 @@ ImageItemView.propTypes = {
   hasLoadingError: PropTypes.bool.isRequired,
   onImageLoad: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+};
+
+ImageItemView.defaultProps = {
+  actionsPopupRef: undefined,
 };

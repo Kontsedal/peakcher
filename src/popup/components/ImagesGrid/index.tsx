@@ -92,15 +92,15 @@ export const ImagesGrid: React.FC<{ files: ImageData[] }> = ({ files }) => {
 
 ImagesGrid.propTypes = {
   files: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
-      tags: PropTypes.arrayOf(PropTypes.symbol),
-      name: PropTypes.number.isRequired,
-      publicUrl: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      path: PropTypes.number.isRequired,
-      type: PropTypes.number.isRequired,
+      tags: PropTypes.arrayOf(PropTypes.string),
+      name: PropTypes.string.isRequired,
+      publicUrl: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
       size: PropTypes.number.isRequired,
       createdAt: PropTypes.number.isRequired,
       usedTimes: PropTypes.number.isRequired,

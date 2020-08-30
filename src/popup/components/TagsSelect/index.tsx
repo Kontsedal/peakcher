@@ -7,7 +7,7 @@ type Props = {
   selectedOptions: string[];
   onSelect: (tag: string) => void;
   onRemove: (tag: string) => void;
-  optionTextGetter?: (option: string) => string | Record<string, unknown>;
+  optionTextGetter?: (option: string) => string | React.ReactNode;
   placeholder?: string;
   allowCreate?: boolean;
   onCreate?: (option: string) => void;

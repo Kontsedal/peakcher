@@ -32,7 +32,7 @@ module.exports = {
       loaders.processSassFiles,
       loaders.processImages,
       loaders.processSvg,
-      // loaders.lintJavaScript,
+      loaders.lintJavaScript,
     ],
   },
   plugins: [

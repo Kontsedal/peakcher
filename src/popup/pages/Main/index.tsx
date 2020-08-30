@@ -38,7 +38,7 @@ const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
 
 export const MainPage: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [sortType, setSortType] = useState(SortOptions.NEW_FIRST);
+  const [sortType, setSortType] = useState<SortOptions>(SortOptions.NEW_FIRST);
   const tags = useSelector(getTags);
   const tagsArray = useSelector(getTagsArray);
   let filesArray = useSelector(getFilesArray);
@@ -101,7 +101,10 @@ export const MainPage: React.FC = () => {
         </div>
       </div>
       <div className={styles.sortWrapper}>
-        <SortSelect onChange={setSortType} value={sortType} />
+        <SortSelect
+          onChange={(value) => setSortType(value as SortOptions)}
+          value={sortType}
+        />
       </div>
       <div className={styles.gridWrapper}>
         {hasFiles && <ImagesGrid files={filesToRender} />}

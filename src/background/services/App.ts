@@ -32,7 +32,7 @@ export class AppService {
 
   private uploadQueue: Queue;
 
-  private authToken: string;
+  private authToken: string | void;
 
   private sessionId: string;
 
@@ -130,6 +130,9 @@ export class AppService {
       response.blob()
     );
     const fileData = { ...fileToUpload };
+    if (!this.authToken) {
+      throw new Error("Unauthorized");
+    }
     try {
       const uploadResult = await DropboxService.uploadFile({
         file: fileBlob,
@@ -200,6 +203,9 @@ export class AppService {
     { fileId, force = false }: { fileId: string; force?: boolean },
     callback: (result: { error: Error | boolean; success: boolean }) => void
   ): Promise<void> {
+    if (!this.authToken) {
+      throw new Error("Unauthorized");
+    }
     const state = this.store.getState();
     const file = state.files[fileId];
     if (!fileId) {
@@ -320,12 +326,15 @@ export class AppService {
     let sessionId = await this.authTable.getSessionId();
     if (!sessionId) {
       sessionId = uuid();
-      await this.authTable.setSessionId(sessionId);
+      await this.authTable.setSessionId(sessionId as string);
     }
-    return sessionId;
+    return sessionId as string;
   }
 
   private doesAnySessionExist(): Promise<boolean> {
+    if (!this.authToken) {
+      throw new Error("Unauthorized");
+    }
     return DropboxService.doesPathExist({
       path: CONFIG.SESSION_FILE_NAME,
       token: this.authToken,
@@ -333,6 +342,9 @@ export class AppService {
   }
 
   private getRemoteSession(): Promise<RemoteSession> {
+    if (!this.authToken) {
+      throw new Error("Unauthorized");
+    }
     return DropboxService.downloadFile<RemoteSession>({
       fileName: CONFIG.SESSION_FILE_NAME,
       token: this.authToken,
@@ -349,6 +361,9 @@ export class AppService {
   }
 
   private async uploadSessionToRemote(): Promise<void> {
+    if (!this.authToken) {
+      throw new Error("Unauthorized");
+    }
     const session: RemoteSession = { sessionId: this.sessionId };
     const file = new Blob([JSON.stringify(session)], {
       type: "application/json",

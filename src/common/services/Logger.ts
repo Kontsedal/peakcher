@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-import LastError = chrome.runtime.LastError;
 
 type Argument =
   | string
   | number
   | boolean
   | Record<string, unknown>
-  | LastError
+  | chrome.runtime.LastError
   | Error;
 
 export class Logger {

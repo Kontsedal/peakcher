@@ -1,5 +1,4 @@
 import { Logger } from "./Logger";
-import MessageSender = chrome.runtime.MessageSender;
 
 export type Event<T> = {
   type: string;
@@ -8,7 +7,7 @@ export type Event<T> = {
 
 export type EventCallback<T> = (
   message: T,
-  sender: MessageSender,
+  sender: chrome.runtime.MessageSender,
   respond: (...args: unknown[]) => void
 ) => void;
 
@@ -16,7 +15,7 @@ export class EventsService {
   static on<T>(eventName: string, callback: EventCallback<T>): () => void {
     const handler = (
       message: Event<T>,
-      sender: MessageSender,
+      sender: chrome.runtime.MessageSender,
       respond: (...args: unknown[]) => void
     ): boolean => {
       if (message && message.type === eventName) {
