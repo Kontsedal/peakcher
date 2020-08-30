@@ -6,7 +6,7 @@ import { CommunicationService } from "common/services/Communication";
 import s from "./styles.module.scss";
 import { Button } from "../Button";
 
-export const UploadFilesButton = () => {
+export const UploadFilesButton: React.FC = () => {
   const [inputVersion, setInputVersion] = useState(0);
   const inputRef = useRef<HTMLInputElement>();
   const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +42,7 @@ export const UploadFilesButton = () => {
     <>
       <Button
         primary
-        onClick={() => {
-          inputRef.current && inputRef.current.click();
-        }}
+        onClick={() => inputRef.current && inputRef.current.click()}
       >
         {I18n.t("addFile")}
       </Button>

@@ -3,7 +3,7 @@ import { Toggle } from "./index";
 
 export default { title: "Toggle" };
 
-export const common = () => {
+export const Common: React.FC = () => {
   const [value, setValue] = useState(false);
   return (
     <Toggle

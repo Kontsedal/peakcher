@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import { Logger } from "../../../common/services/Logger";
 
 export const VIEWS = {
   MAIN: "main",
@@ -9,13 +11,13 @@ export const CurrentViewContext = React.createContext({
   currentView: VIEWS.LOGIN,
   editImageId: null,
   settingsIsShown: false,
-  showSettings: (show: boolean) => {},
+  showSettings: (show: boolean) => Logger.log(show),
   showMainView: () => {},
   showLoginView: () => {},
-  showEditImageTagsView: (imageId: string) => {},
+  showEditImageTagsView: (imageId: string) => Logger.log(imageId),
 });
 
-export const CurrentViewProvider = ({ children }) => {
+export const CurrentViewProvider: React.FC = ({ children }) => {
   const [currentView, setCurrentView] = useState(VIEWS.MAIN);
   const [editImageId, setEditImageId] = useState(null);
   const [settingsIsShown, setSettingsIsShown] = useState(false);
@@ -54,4 +56,12 @@ export const CurrentViewProvider = ({ children }) => {
       {children}
     </CurrentViewContext.Provider>
   );
+};
+
+CurrentViewProvider.defaultProps = {
+  children: null,
+};
+
+CurrentViewProvider.propTypes = {
+  children: PropTypes.element,
 };

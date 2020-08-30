@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useSelector, useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../common/store";
 import { CurrentViewContext, VIEWS } from "./context/CurrentView";
 import styles from "./styles.module.scss";
@@ -8,7 +8,7 @@ import { MainPage } from "./pages/Main";
 import { EditTagsPage } from "./pages/EditTags";
 import { Settings } from "./components/Settings";
 
-export const App = () => {
+export const App: React.FC = () => {
   const state = useSelector((currentState: RootState) => currentState);
   const { currentView, showMainView, showLoginView } = useContext(
     CurrentViewContext
@@ -29,7 +29,7 @@ export const App = () => {
     if (!state.isAuthorized) {
       showLoginView();
     }
-  }, [state.isAuthorized]);
+  }, [state.isAuthorized, showLoginView, showMainView]);
   return (
     <div className={styles.root}>
       {currentView === VIEWS.LOGIN && <LogInPage />}
