@@ -1,4 +1,4 @@
-@import "../../styles/vars.module";
+@import '../../styles/vars.module';
 
 $input-height: 22px;
 $input-width: 40px;
@@ -7,45 +7,48 @@ $ball-distance: ($input-height - $ball-size) / 2;
 $animation-speed: 0.15s;
 
 .wrapper {
-  display: inline-block;
-  position: relative;
-  height: $input-height;
-  width: $input-width;
   cursor: pointer;
+  display: inline-block;
+  height: $input-height;
+  position: relative;
+  width: $input-width;
+
   .originalInput {
     display: none;
   }
+
   .background {
+    background-color: #a9a9a9;
     height: $input-height;
-    background-color: darkgray;
     position: relative;
     transition: all $animation-speed;
 
     .ball {
-      position: absolute;
-      width: $ball-size;
+      background-color: #fff;
       height: $ball-size;
-      background-color: white;
       left: $ball-distance;
+      position: absolute;
       top: $ball-distance;
       transition: all $animation-speed;
+      width: $ball-size;
     }
 
     &:hover {
-      background-color: darken(darkgray, 10);
+      background-color: darken(#a9a9a9, 10);
     }
   }
 
   .originalInput:checked {
-    &+.background {
+    .background {
       background: $primary-color;
+
       .ball {
         left: $input-width - $ball-size - $ball-distance;
       }
-      &:hover  {
+
+      &:hover {
         background-color: darken($primary-color, 10);
       }
     }
   }
-
 }

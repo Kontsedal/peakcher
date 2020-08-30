@@ -1,8 +1,8 @@
-@import "styles/vars.module";
+@import 'styles/vars.module';
 
 ::-webkit-scrollbar {
-  width: 3px;
   height: 3px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -10,18 +10,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: mix($primary-color, white, 20%);
+  background: mix($primary-color, #fff, 20%);
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  font-family: "Open Sans", sans-serif;
-  font-size: 10px;
-  min-height: 100vh;
+  background-color: #fff;
   color: $text-color;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
 }
 
 * {

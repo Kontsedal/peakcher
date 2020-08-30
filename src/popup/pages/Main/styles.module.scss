@@ -1,48 +1,53 @@
-@import "../../styles/vars.module";
+@import '../../styles/vars.module';
 
 .root {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
+
 .toolbar {
-  padding: 23px 26px 21px 26px;
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 23px 26px 21px;
 }
+
 .sortWrapper {
   background-color: #f1f3f4;
-  padding: 22px 0 22px 36px;
   flex-shrink: 0;
+  padding: 22px 0 22px 36px;
 }
+
 .gridWrapper {
+  background-color: #f1f3f4;
   display: flex;
   flex-grow: 1;
-  padding: 0 25px 25px 25px;
-  background-color: #f1f3f4;
+  padding: 0 25px 25px;
 }
+
 .tagsSelect {
   flex-grow: 1;
   margin-right: 10px;
 }
 
 .actions {
-  display: flex;
-  flex-wrap: nowrap;
   align-items: center;
+  display: flex;
   flex-shrink: 0;
+  flex-wrap: nowrap;
+
   button:first-child {
     margin-right: 6px;
   }
 }
 
 .tagBadge {
-  padding: 1px 4px;
-  display: inline-block;
-  color: white;
-  font-weight: bold;
   background-color: $primary-color;
-  margin-right: 4px;
   border-radius: 2px;
+  color: #fff;
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 4px;
+  padding: 1px 4px;
 }

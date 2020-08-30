@@ -6,8 +6,12 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack --config webpack/dev.js --watch",
     "build": "cross-env NODE_ENV=production  webpack --config webpack/prod.js",
-    "lint": "tsc --noEmit && eslint './src/**/*.?(tsx|ts)'",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:js": "tsc --noEmit && eslint './src/**/*.?(tsx|ts)'",
+    "lint:js:fix": "npm run lint -- --fix",
+    "lint:style": "stylelint \"**/*.scss\"",
+    "lint:style:fix": "stylelint \"**/*.scss\" --fix",
+    "lint": "npm run lint:js && npm run lint:style",
+    "lint:fix": "npm run lint:js:fix && npm run lint:style:fix",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "i18n:find-unused": "node scripts/findUnusedTranslations.js"
@@ -69,6 +73,9 @@
     "shelljs": "0.8.4",
     "signale": "1.4.0",
     "style-loader": "1.2.1",
+    "stylelint": "13.6.1",
+    "stylelint-config-standard": "20.0.0",
+    "stylelint-config-sass-guidelines": "7.0.0",
     "ts-loader": "8.0.3",
     "typescript": "4.0.2",
     "webpack": "4.44.1",
@@ -92,9 +99,9 @@
     "react-redux": "7.2.1",
     "react-transition-group": "4.4.1",
     "redux": "4.0.5",
+    "redux-logger": "3.0.6",
     "reselect": "4.0.0",
-    "uuid": "8.3.0",
-    "redux-logger": "3.0.6"
+    "uuid": "8.3.0"
   },
   "husky": {
     "hooks": {

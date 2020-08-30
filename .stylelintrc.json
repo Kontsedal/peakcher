@@ -1,0 +1,8 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-sass-guidelines", "stylelint-order"],
+  "rules": {
+    "selector-class-pattern": null,
+    "max-nesting-depth": 4,
+    "selector-max-compound-selectors": 4
+  }
+}

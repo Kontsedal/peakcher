@@ -1,20 +1,20 @@
-@import "../../styles/vars.module";
+@import '../../styles/vars.module';
 
 .button {
-  border: 0.5px solid #dddfe1;
-  box-sizing: border-box;
-  background-color: white;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 11px;
-  line-height: 15px;
-  letter-spacing: 0.01em;
-  color: #1e2736;
-  padding: 4px 12px 5px 12px;
-  cursor: pointer;
-  outline: none;
-  display: inline-flex;
   align-items: center;
+  background-color: #fff;
+  border: 0.5px solid #dddfe1;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #1e2736;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 15px;
+  outline: none;
+  padding: 4px 12px 5px;
 
   svg:first-child {
     margin-right: 5px;
@@ -23,31 +23,34 @@
   &:hover {
     background-color: lighten(#dddfe1, 10);
   }
+
   &:active {
     background-color: lighten(#dddfe1, 5);
   }
 }
 
 .primary {
-  color: #ffffff;
   background: $primary-color;
-  border: none;
+  border: 0;
+  color: #fff;
 
   &:hover {
     background-color: darken($primary-color, 10);
   }
+
   &:active {
     background-color: darken($primary-color, 5);
   }
 }
 
 .flat {
-  border: none;
   background-color: transparent;
+  border: 0;
 
   &:hover {
     background-color: rgb(239, 239, 239);
   }
+
   &:active {
     background-color: darken(rgb(239, 239, 239), 10);
   }
@@ -58,12 +61,12 @@
   color: $text-color;
 
   &:hover {
-    color: white;
     background-color: lighten($primary-color, 10);
+    color: #fff;
   }
 
   &:active {
-    color: white;
     background-color: lighten($primary-color, 20);
+    color: #fff;
   }
 }

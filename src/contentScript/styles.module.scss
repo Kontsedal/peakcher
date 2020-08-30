@@ -1,10 +1,10 @@
 .window {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 999999;
   border: 1px solid #dddfe1;
-  box-sizing: border-box;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999999;
 }

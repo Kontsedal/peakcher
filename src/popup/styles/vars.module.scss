@@ -1,6 +1,7 @@
+/* stylelint-disable */
 $primary-color: #2d9cdb;
 $text-color: #727780;
 
-:export  {
-  textColor: $text-color
+:export {
+  textcolor: $text-color;
 }

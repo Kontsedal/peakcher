@@ -1,32 +1,32 @@
 $bar-height: 25px;
 
 .root {
-  height: $bar-height;
-  width: 100%;
-  position: relative;
   border-bottom: 1px solid #bec0c1;
+  height: $bar-height;
   margin-bottom: 10px;
+  position: relative;
+  width: 100%;
 }
 
 .bar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  transition: all 0.3s;
+  display: flex;
   height: 100%;
+  justify-content: flex-start;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
 }
 
 .text {
-  position: absolute;
-  left: 0;
   display: block;
-  width: 100%;
+  font-size: 1.2rem;
+  left: 0;
+  letter-spacing: 1px;
+  line-height: $bar-height;
+  position: absolute;
   text-align: center;
   top: -1px;
-  line-height: $bar-height;
-  letter-spacing: 1px;
-  font-size: 1.2rem;
+  width: 100%;
 }

@@ -1,14 +1,14 @@
 .root {
-  position: relative;
-  overflow-y: scroll;
   flex-grow: 1;
+  overflow-y: scroll;
+  position: relative;
 }
 
 .item {
   position: absolute;
 
   img {
-    width: 100%;
     height: auto;
+    width: 100%;
   }
 }

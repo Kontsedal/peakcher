@@ -1,20 +1,19 @@
-@import "../../styles/vars.module";
-
+@import '../../styles/vars.module';
 
 .root {
+  background-color: #e8e8e8;
+  height: 3px;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
-  height: 3px;
   width: 100%;
-  background-color: #e8e8e8;
 }
 
 .bar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
   background-color: $primary-color;
-  transition: width .3s linear;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: width 0.3s linear;
 }
