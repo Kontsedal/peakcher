@@ -17,5 +17,4 @@ function getToken() {
     CommunicationService.authenticate(code);
   }
 }
-
-window.onload = init;
+init();
