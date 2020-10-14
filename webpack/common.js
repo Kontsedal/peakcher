@@ -20,12 +20,6 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     modules: ["node_modules", PATHS.SRC_DIR],
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      automaticNameDelimiter: "_",
-    },
-  },
   module: {
     rules: [
       loaders.processTypescriptFiles,

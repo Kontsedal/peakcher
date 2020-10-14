@@ -48,7 +48,7 @@ export class DataTable<U> {
     return this.adapter.getTable<U>();
   }
 
-  public async saveTable<U>(data: U): Promise<void> {
+  public async saveTable(data: U): Promise<void> {
     await this.adapter.saveTable(data);
   }
 }

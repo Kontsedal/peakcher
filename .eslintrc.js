@@ -36,6 +36,7 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "class-methods-use-this": 0,
     "import/no-absolute-path": 0,
+    "react/no-unused-prop-types": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "prettier/prettier": [
       "error",

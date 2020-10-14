@@ -2,12 +2,10 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const ExtensionReloader = require("webpack-extension-reloader");
-const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
-const getManifest = require("../../src/manifest");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const pkg = require('../../package.json')
 
 const PATHS = require("./paths");
 
@@ -40,18 +38,24 @@ const copyStaticFiles = new CopyPlugin({
   ],
 });
 
-const enableHotReload = new ExtensionReloader({
-  entries: {
-    contentScript: "contentScript",
-    background: "background",
-    extensionPage: "popup",
-  },
-});
-
-const createManifestFile = new WebpackExtensionManifestPlugin({
-  config: {
-    base: getManifest({ authProxyUrl: process.env.DROPBOX_AUTH_PROXY_URL }),
-  },
+const manifestVars = {
+  version: pkg.version + '.0',
+  authProxyUrl: process.env.DROPBOX_AUTH_PROXY_URL
+}
+const createManifestFile = new CopyPlugin({
+  patterns: [
+    {
+      from: path.join(PATHS.SRC_DIR, "manifest.json"),
+      to: "./",
+      transform: (content) => {
+        let manifest = content.toString();
+        Object.entries(manifestVars).forEach(([variable, value]) => {
+          manifest = manifest.replace(new RegExp(`{{\\s*${variable}\\s*}}`, 'g'), value)
+        })
+        return new Buffer.from(manifest, 'utf8')
+      },
+    },
+  ],
 });
 
 const cleanDistFolder = new CleanWebpackPlugin();
@@ -65,7 +69,6 @@ module.exports = {
   processBackgroundHtmlFile,
   defineGlobalVariables,
   copyStaticFiles,
-  enableHotReload,
   createManifestFile,
   cleanDistFolder,
   analyzeBundleSize,
