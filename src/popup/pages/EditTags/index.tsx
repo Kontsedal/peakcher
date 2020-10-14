@@ -8,7 +8,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import styles from "./styles.module.scss";
 import { TagsSelect } from "../../components/TagsSelect";
 import { Button } from "../../components/Button";
-import { CurrentViewContext } from "../../context/CurrentView";
+import { CurrentViewContext } from "../../context/currentView";
 
 export const EditTagsPage: React.FC = () => {
   const dispatch = useDispatch();

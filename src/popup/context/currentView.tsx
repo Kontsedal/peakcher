@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Logger } from "../../../common/services/Logger";
+import { useSelector } from "react-redux";
+import { Logger } from "../../common/services/Logger";
+import { RootState } from "../../common/store";
 
 export const VIEWS = {
   MAIN: "main",
@@ -18,6 +20,8 @@ export const CurrentViewContext = React.createContext({
 });
 
 export const CurrentViewProvider: React.FC = ({ children }) => {
+  const state = useSelector((currentState: RootState) => currentState);
+
   const [currentView, setCurrentView] = useState(VIEWS.MAIN);
   const [editImageId, setEditImageId] = useState(null);
   const [settingsIsShown, setSettingsIsShown] = useState(false);
@@ -41,6 +45,14 @@ export const CurrentViewProvider: React.FC = ({ children }) => {
     },
     [setCurrentView]
   );
+  useEffect(() => {
+    if (state.isAuthorized) {
+      showMainView();
+    }
+    if (!state.isAuthorized) {
+      showLoginView();
+    }
+  }, [state.isAuthorized, showLoginView, showMainView]);
   return (
     <CurrentViewContext.Provider
       value={{

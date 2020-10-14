@@ -4,7 +4,7 @@ import { linkToBase64 } from "utils/file";
 import { CommunicationService } from "common/services/Communication";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "popup/hooks/useOutsideClick";
-import { CurrentViewContext } from "popup/context/CurrentView";
+import { CurrentViewContext } from "popup/context/currentView";
 import { actions } from "common/store";
 import { I18n } from "common/services/I18n";
 import PropTypes from "prop-types";

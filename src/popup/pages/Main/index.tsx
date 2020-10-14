@@ -13,7 +13,7 @@ import { ImagesGrid } from "../../components/ImagesGrid";
 import { TagsSelect } from "../../components/TagsSelect";
 import { I18n } from "../../../common/services/I18n";
 import { Button } from "../../components/Button";
-import { CurrentViewContext } from "../../context/CurrentView";
+import { CurrentViewContext } from "../../context/currentView";
 import { UploadFilesButton } from "../../components/UploadFilesButton";
 import { UploadIndicator } from "../../components/UploadIndicator";
 import { SortOptions, SortSelect } from "../../components/SortSelect";

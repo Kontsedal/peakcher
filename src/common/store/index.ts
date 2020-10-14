@@ -39,6 +39,16 @@ export const getStore = (isBackground: boolean): Store<RootState> => {
   CommunicationService.getState((newState) =>
     originalDispatch(slice.actions.setState(newState))
   );
+  if (!isBackground) {
+    if (window.parent) {
+      store.subscribe(() => {
+        window.parent.postMessage(
+          { type: "peakcherSettings", payload: store.getState().settings },
+          "*"
+        );
+      });
+    }
+  }
   return store;
 };
 

@@ -3,7 +3,7 @@ import { ChangeEvent, useCallback, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRemoteSpaceInfo, getSettings } from "common/store/selectors";
 import { actions } from "common/store";
-import { CurrentViewContext } from "../../context/CurrentView";
+import { CurrentViewContext } from "../../context/currentView";
 import { SettingsView } from "./view";
 import { CommunicationService } from "../../../common/services/Communication";
 
