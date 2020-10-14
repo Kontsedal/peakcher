@@ -4,7 +4,7 @@ const loaders = require("./shared/loaders");
 const plugins = require("./shared/plugins");
 
 const ENTRY_POINTS = {
-  popup: path.join(PATHS.SRC_DIR, "popup/index.tsx"),
+  popup: path.join(PATHS.SRC_DIR, "popup/root.tsx"),
   background: path.join(PATHS.SRC_DIR, "background/index.ts"),
   dropboxCodeExtractor: path.join(
     PATHS.SRC_DIR,
@@ -19,6 +19,9 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     modules: ["node_modules", PATHS.SRC_DIR],
+    alias: {
+      "@popup": path.resolve(PATHS.SRC_DIR, 'popup'),
+    }
   },
   module: {
     rules: [
