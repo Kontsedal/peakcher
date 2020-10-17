@@ -14,11 +14,37 @@ import * as utils from "./utils";
 import styles from "./styles.module.scss";
 import { ImageItem } from "./components/ImageItem";
 
-const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
-const DEFAULT_VISIBLE_ROWS = 6;
-const MORE_ROWS_COUNT = 3;
-
 export const ImagesGrid: React.FC<{ files: ImageData[] }> = ({ files }) => {
+  const {
+    filesPositions,
+    setContainerRef,
+    handleScroll,
+    visibleImages,
+  } = useGrid(files);
+  return (
+    <div className={styles.root} ref={setContainerRef} onScroll={handleScroll}>
+      {filesPositions &&
+        visibleImages.map((file) => {
+          const { x, y, width, height } = filesPositions[file.id];
+          return (
+            <div
+              key={file.id}
+              style={{ width, height, left: x, top: y }}
+              className={styles.item}
+            >
+              <ImageItem file={file} />
+            </div>
+          );
+        })}
+    </div>
+  );
+};
+
+function useGrid(files: ImageData[]) {
+  const SCROLL_PERCENT_TO_SHOW_MORE_IMAGES = 99;
+  const DEFAULT_VISIBLE_ROWS = 6;
+  const MORE_ROWS_COUNT = 3;
+
   const containerRef = useRef<HTMLDivElement>();
   const [gridWidth, setGridWidth] = useState(0);
   const [visibleImageRows, setVisibleImageRows] = useState(
@@ -71,24 +97,14 @@ export const ImagesGrid: React.FC<{ files: ImageData[] }> = ({ files }) => {
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
   }, [calculateGridWidth]);
-  return (
-    <div className={styles.root} ref={setContainerRef} onScroll={handleScroll}>
-      {filesPositions &&
-        visibleImages.map((file) => {
-          const { x, y, width, height } = filesPositions[file.id];
-          return (
-            <div
-              key={file.id}
-              style={{ width, height, left: x, top: y }}
-              className={styles.item}
-            >
-              <ImageItem file={file} />
-            </div>
-          );
-        })}
-    </div>
-  );
-};
+
+  return {
+    filesPositions,
+    setContainerRef,
+    handleScroll,
+    visibleImages,
+  };
+}
 
 ImagesGrid.propTypes = {
   files: PropTypes.arrayOf(

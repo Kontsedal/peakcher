@@ -19,6 +19,53 @@ type Props = {
 
 export const ImageItem: React.FC<Props> = ({ file }) => {
   const actionsPopupRef = useRef();
+  const {
+    actionsVisible,
+    hideActions,
+    version,
+    base64IsLoading,
+    base64Link,
+    deleteFile,
+    loadError,
+    setLoadError,
+    setLoading,
+    reload,
+    forceDelete,
+    loading,
+    isRemoving,
+    loadBase64,
+    setActionsVisible,
+    onCopy,
+  } = useImageActions(file);
+  useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
+    excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
+  });
+  const { showEditImageTagsView } = useContext(CurrentViewContext);
+  return (
+    <ImageItemView
+      key={version}
+      actionsPopupRef={actionsPopupRef}
+      actionsVisible={actionsVisible}
+      base64IsLoading={base64IsLoading}
+      base64Link={base64Link}
+      deleteFile={deleteFile}
+      hasLoadingError={loadError}
+      onImageLoadError={() => setLoadError(true)}
+      onImageLoad={() => setLoading(false)}
+      onReload={reload}
+      forceDelete={forceDelete}
+      loading={loading}
+      file={file}
+      isRemoving={isRemoving}
+      loadBase64={loadBase64}
+      setActionsVisible={setActionsVisible}
+      showEditImageTagsView={showEditImageTagsView}
+      onCopy={onCopy}
+    />
+  );
+};
+
+function useImageActions(file: ImageData) {
   const dispatch = useDispatch();
   const { showToast } = useContext(ToastContext);
   const [actionsVisible, setActionsVisible] = useState(false);
@@ -76,33 +123,26 @@ export const ImageItem: React.FC<Props> = ({ file }) => {
     setLoadError(false);
     setVersion((oldVersion) => oldVersion + 1);
   }, [setVersion, setLoadError]);
-  useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
-    excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
-  });
-  const { showEditImageTagsView } = useContext(CurrentViewContext);
-  return (
-    <ImageItemView
-      key={version}
-      actionsPopupRef={actionsPopupRef}
-      actionsVisible={actionsVisible}
-      base64IsLoading={base64IsLoading}
-      base64Link={base64Link}
-      deleteFile={deleteFile}
-      hasLoadingError={loadError}
-      onImageLoadError={() => setLoadError(true)}
-      onImageLoad={() => setLoading(false)}
-      onReload={reload}
-      forceDelete={forceDelete}
-      loading={loading}
-      file={file}
-      isRemoving={isRemoving}
-      loadBase64={loadBase64}
-      setActionsVisible={setActionsVisible}
-      showEditImageTagsView={showEditImageTagsView}
-      onCopy={onCopy}
-    />
-  );
-};
+
+  return {
+    actionsVisible,
+    hideActions,
+    version,
+    base64IsLoading,
+    base64Link,
+    deleteFile,
+    loadError,
+    setLoadError,
+    setLoading,
+    reload,
+    forceDelete,
+    loading,
+    isRemoving,
+    loadBase64,
+    setActionsVisible,
+    onCopy,
+  };
+}
 
 ImageItem.propTypes = {
   file: PropTypes.exact({
