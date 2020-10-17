@@ -36,6 +36,16 @@ function getTranslationsToFilesMap(translationsKeys) {
   });
 }
 
+function getTranslationsList(defaultLocale = "en") {
+  let translations = require(`../../src/_locales/${defaultLocale}/messages.json`);
+  let result = [];
+  Object.entries(translations).forEach(([key, value]) => {
+    result.push({ name: key, params: Object.keys(value.placeholders || {}) });
+  });
+  return result;
+}
+
 module.exports = {
   getUnusedTranslations,
+  getTranslationsList,
 };

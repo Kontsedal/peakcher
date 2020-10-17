@@ -14,7 +14,8 @@
     "lint:fix": "npm run lint:js:fix && npm run lint:style:fix",
     "storybook": "start-storybook -p 6006",
     "test": "jest",
-    "i18n:find-unused": "node scripts/findUnusedTranslations.js"
+    "i18n:find-unused": "node scripts/findUnusedTranslations.js",
+    "i18n:generate-typings": "node scripts/generateTranslationsTypings.js"
   },
   "repository": {
     "type": "git",
@@ -87,6 +88,7 @@
     "@reduxjs/toolkit": "1.4.0",
     "axios": "0.20.0",
     "classnames": "2.2.6",
+    "fs-extra": "^9.0.1",
     "lodash": "4.17.20",
     "mime": "2.4.6",
     "prop-types": "15.7.2",
