@@ -23,6 +23,7 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    createDefaultProgram: true,
     ecmaFeatures: {
       jsx: true,
     },
