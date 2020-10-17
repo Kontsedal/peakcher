@@ -1,6 +1,7 @@
 const signale = require("signale");
 const { getTranslationsList } = require("./utils/translations");
 const fs = require("fs");
+const path = require("path");
 const prettier = require("prettier");
 const prettierConfig = require("../.prettierrc.json");
 
@@ -21,7 +22,7 @@ const prettierConfig = require("../.prettierrc.json");
     }
   });
   fs.writeFileSync(
-    "../src/_locales/types.ts",
+    path.resolve("src/_locales/types.ts"),
     prettier.format(translationParamsType, prettierConfig)
   );
 
