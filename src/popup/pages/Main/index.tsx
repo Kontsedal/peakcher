@@ -8,73 +8,34 @@ import {
 } from "common/store/selectors";
 import { ImageData } from "common/interfaces";
 import orderBy from "lodash/orderBy";
+import {
+  ImagesGrid,
+  TagsSelect,
+  Button,
+  UploadFilesButton,
+  UploadIndicator,
+  SortOptions,
+  SortSelect,
+} from "popup/components";
+import { I18n } from "common/services/I18n";
+import { CurrentViewContext } from "popup/context/currentView";
 import styles from "./styles.module.scss";
-import { ImagesGrid } from "../../components/ImagesGrid";
-import { TagsSelect } from "../../components/TagsSelect";
-import { I18n } from "../../../common/services/I18n";
-import { Button } from "../../components/Button";
-import { CurrentViewContext } from "../../context/currentView";
-import { UploadFilesButton } from "../../components/UploadFilesButton";
-import { UploadIndicator } from "../../components/UploadIndicator";
-import { SortOptions, SortSelect } from "../../components/SortSelect";
 import { NoFiles } from "./components/NoFiles";
 
-const sortImages = (files: ImageData[], sortType: string): ImageData[] => {
-  switch (sortType) {
-    case SortOptions.NEW_FIRST:
-      return orderBy(files, ["createdAt"], ["desc"]);
-    case SortOptions.OLD_FIRST:
-      return orderBy(files, ["createdAt"], ["asc"]);
-    case SortOptions.POPULAR_FIRST:
-      return orderBy(files, ["usedTimes"], ["desc"]);
-    case SortOptions.UNPOPULAR_FIRST:
-      return orderBy(files, ["usedTimes"], ["asc"]);
-    case SortOptions.WITHOUT_TAGS:
-      return files.filter((file) => file.tags.length === 0);
-    default:
-      return files;
-  }
-};
-
 export const MainPage: React.FC = () => {
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [sortType, setSortType] = useState<SortOptions>(SortOptions.NEW_FIRST);
-  const tags = useSelector(getTags);
-  const tagsArray = useSelector(getTagsArray);
-  let filesArray = useSelector(getFilesArray);
-  const files = useSelector(getFiles);
   const { showSettings } = useContext(CurrentViewContext);
+  const [sortType, setSortType] = useState<SortOptions>(SortOptions.NEW_FIRST);
+  const {
+    selectedTags,
+    tags,
+    tagsArray,
+    handleSelectTag,
+    handleRemoveTag,
+  } = useTags();
 
-  const handleSelectTag = useCallback(
-    (tag) => {
-      setSelectedTags([...selectedTags, tag]);
-    },
-    [selectedTags, setSelectedTags]
-  );
-  const handleRemoveTag = useCallback(
-    (tag) => {
-      setSelectedTags(selectedTags.filter((item) => item !== tag));
-    },
-    [selectedTags, setSelectedTags]
-  );
-  const filteredFiles: ImageData[] = useMemo(() => {
-    const result = {};
-    selectedTags.forEach((tag) => {
-      const tagFiles = tags[tag];
-      tagFiles.forEach((fileId) => {
-        if (!files[fileId]) {
-          return;
-        }
-        result[fileId] = files[fileId];
-      });
-    });
-    return Object.values(result);
-  }, [selectedTags, files, tags]);
-  filesArray = useMemo(() => {
-    return sortImages(filesArray, sortType);
-  }, [filesArray, sortType]);
-  const filesToRender = selectedTags.length ? filteredFiles : filesArray;
-  const hasFiles = !!filesToRender.length;
+  const files = useImages({ selectedTags, tags, sortType });
+  const hasFiles = !!files.length;
+
   return (
     <div className={styles.root}>
       <UploadIndicator />
@@ -107,9 +68,75 @@ export const MainPage: React.FC = () => {
         />
       </div>
       <div className={styles.gridWrapper}>
-        {hasFiles && <ImagesGrid files={filesToRender} />}
+        {hasFiles && <ImagesGrid files={files} />}
         {!hasFiles && <NoFiles />}
       </div>
     </div>
   );
 };
+
+function useTags() {
+  const [selectedTags, setSelectedTags] = useState([]);
+  const tags = useSelector(getTags);
+  const tagsArray = useSelector(getTagsArray);
+
+  const handleSelectTag = useCallback(
+    (tag) => {
+      setSelectedTags([...selectedTags, tag]);
+    },
+    [selectedTags, setSelectedTags]
+  );
+  const handleRemoveTag = useCallback(
+    (tag) => {
+      setSelectedTags(selectedTags.filter((item) => item !== tag));
+    },
+    [selectedTags, setSelectedTags]
+  );
+
+  return {
+    selectedTags,
+    tags,
+    tagsArray,
+    handleSelectTag,
+    handleRemoveTag,
+  };
+}
+
+function useImages({ selectedTags, tags, sortType }) {
+  const filesArray = useSelector(getFilesArray);
+  const files = useSelector(getFiles);
+  const filteredFiles: ImageData[] = useMemo(() => {
+    const result = {};
+    selectedTags.forEach((tag) => {
+      const tagFiles = tags[tag];
+      tagFiles.forEach((fileId) => {
+        if (!files[fileId]) {
+          return;
+        }
+        result[fileId] = files[fileId];
+      });
+    });
+    return Object.values(result);
+  }, [selectedTags, files, tags]);
+  const sortedFiles = useMemo(() => {
+    return sortImages(filesArray, sortType);
+  }, [filesArray, sortType]);
+  return selectedTags.length ? filteredFiles : sortedFiles;
+}
+
+function sortImages(files: ImageData[], sortType: string): ImageData[] {
+  switch (sortType) {
+    case SortOptions.NEW_FIRST:
+      return orderBy(files, ["createdAt"], ["desc"]);
+    case SortOptions.OLD_FIRST:
+      return orderBy(files, ["createdAt"], ["asc"]);
+    case SortOptions.POPULAR_FIRST:
+      return orderBy(files, ["usedTimes"], ["desc"]);
+    case SortOptions.UNPOPULAR_FIRST:
+      return orderBy(files, ["usedTimes"], ["asc"]);
+    case SortOptions.WITHOUT_TAGS:
+      return files.filter((file) => file.tags.length === 0);
+    default:
+      return files;
+  }
+}

@@ -12,10 +12,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": true,
-    "lib": ["dom", "es5", "scripthost", "es2015"],
-    "paths": {
-      "@popup": ["src/popup"]
-    }
+    "lib": ["dom", "es5", "scripthost", "es2015"]
   },
   "exclude": ["../node_modules"],
   "include": ["src"]

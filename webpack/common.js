@@ -19,9 +19,6 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     modules: ["node_modules", PATHS.SRC_DIR],
-    alias: {
-      "@popup": path.resolve(PATHS.SRC_DIR, 'popup'),
-    }
   },
   module: {
     rules: [
