@@ -26,8 +26,10 @@ $input-height: $row-height;
   font-weight: 300;
   height: $input-height;
   line-height: $input-height;
+  min-width: 50px;
   outline: none;
   padding-left: 3px;
+  width: auto;
 }
 
 .autocompleteBox {
