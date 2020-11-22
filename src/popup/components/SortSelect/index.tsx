@@ -3,6 +3,7 @@ import { I18n } from "common/services/I18n";
 import PropTypes from "prop-types";
 import { useOutsideClick } from "popup/hooks/useOutsideClick";
 import styles from "./styles.module.scss";
+import { handleEnter } from "../../../utils/keyHandler";
 
 export enum SortOptions {
   NEW_FIRST = "NEW_FIRST",
@@ -46,23 +47,26 @@ export const SortSelect: React.FC<{
       <p className={styles.label}>{I18n.t("sortTitle")}</p>
       <button
         type="button"
-        tabIndex={0}
+        aria-haspopup="true"
+        aria-expanded={expanded ? "true" : "false"}
         className={styles.value}
         onClick={toggleDropdown}
       >
         {OPTIONS_TEXTS[value]}
         {expanded && (
-          <div className={styles.dropdown} ref={dropdownRef}>
+          <div className={styles.dropdown} ref={dropdownRef} role="menu">
             {optionsArr.map(([option, optionText]) =>
               option !== value ? (
-                <button
-                  type="button"
+                <div
+                  tabIndex={0}
+                  role="menuitem"
                   className={styles.option}
                   key={option}
                   onClick={() => handleChange(option)}
+                  onKeyPress={handleEnter(() => handleChange(option))}
                 >
                   {optionText}
-                </button>
+                </div>
               ) : null
             )}
           </div>

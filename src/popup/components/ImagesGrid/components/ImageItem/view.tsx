@@ -53,7 +53,7 @@ export const ImageItemView: React.FC<Props> = ({
   <div className={styles.imageItem}>
     {hasLoadingError && (
       <div className={styles.loadingError}>
-        <MdWarning size={20} className={styles.icon} />
+        <MdWarning size={20} />
         <p>{I18n.t("imageLoadErrorText")}</p>
         <div className={styles.errorActions}>
           <Button onClick={onReload} primary>
@@ -88,10 +88,13 @@ export const ImageItemView: React.FC<Props> = ({
             type="button"
             onClick={() => setActionsVisible(true)}
             className={cn(styles.actionButton, styles.moreActionsButton)}
+            aria-haspopup="true"
+            aria-expanded={actionsVisible ? "true" : "false"}
           >
             <div
               className={styles.moreActionsPopup}
               ref={actionsPopupRef}
+              role="menu"
               style={{ display: actionsVisible ? "block" : "none" }}
             >
               <Action
