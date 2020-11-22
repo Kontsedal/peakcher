@@ -1,7 +1,7 @@
 import * as React from "react";
 import { I18n } from "common/services/I18n";
 import PropTypes from "prop-types";
-import * as classes from "./styles.scss";
+import classes from "./styles.module.scss";
 
 interface Props {
   total: number;

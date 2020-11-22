@@ -25,7 +25,10 @@ function getData(key): Promise<string> {
   });
 }
 
-function setData(key: string, value: string | number | boolean | void) {
+function setData(
+  key: string,
+  value: string | number | boolean | void
+): Promise<void> {
   const mutator = { [key]: value };
   return new Promise((resolve) => {
     chrome.storage.sync.set(mutator, () => {
