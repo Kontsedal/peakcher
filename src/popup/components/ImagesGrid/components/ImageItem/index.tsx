@@ -40,7 +40,9 @@ export const ImageItem: React.FC<Props> = ({ file }) => {
   useOutsideClick(actionsVisible && actionsPopupRef.current, hideActions, {
     excludedClasses: [styles.moreActionsItem, styles.moreActionsItemText],
   });
-  const { showEditImageTagsView } = useContext(CurrentViewContext);
+  const { showEditImageTagsView, showEditImageView } = useContext(
+    CurrentViewContext
+  );
   return (
     <ImageItemView
       key={version}
@@ -60,6 +62,7 @@ export const ImageItem: React.FC<Props> = ({ file }) => {
       loadBase64={loadBase64}
       setActionsVisible={setActionsVisible}
       showEditImageTagsView={showEditImageTagsView}
+      showEditImageView={showEditImageView}
       onCopy={onCopy}
     />
   );

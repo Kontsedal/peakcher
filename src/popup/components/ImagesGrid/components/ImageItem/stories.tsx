@@ -28,6 +28,7 @@ const Component: React.FC<{
         loading={false}
         base64IsLoading={false}
         onImageLoadError={() => {}}
+        showEditImageView={() => {}}
         onImageLoad={() => {}}
         onReload={() => {}}
         forceDelete={() => {}}

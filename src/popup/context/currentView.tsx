@@ -8,6 +8,7 @@ export const VIEWS = {
   MAIN: "main",
   LOGIN: "login",
   EDIT_TAG: "edit_tag",
+  EDIT_IMAGE: "edit_image",
 };
 export const CurrentViewContext = React.createContext({
   currentView: VIEWS.LOGIN,
@@ -17,6 +18,7 @@ export const CurrentViewContext = React.createContext({
   showMainView: () => {},
   showLoginView: () => {},
   showEditImageTagsView: (imageId: string) => Logger.log(imageId),
+  showEditImageView: (imageId: string) => Logger.log(imageId),
 });
 
 export const CurrentViewProvider: React.FC = ({ children }) => {
@@ -45,6 +47,14 @@ export const CurrentViewProvider: React.FC = ({ children }) => {
     },
     [setCurrentView]
   );
+
+  const showEditImageView = useCallback(
+    (imageId) => {
+      setEditImageId(imageId);
+      setCurrentView(VIEWS.EDIT_IMAGE);
+    },
+    [setCurrentView]
+  );
   useEffect(() => {
     if (state.isAuthorized) {
       showMainView();
@@ -63,6 +73,7 @@ export const CurrentViewProvider: React.FC = ({ children }) => {
         showLoginView,
         showSettings,
         settingsIsShown,
+        showEditImageView,
       }}
     >
       {children}

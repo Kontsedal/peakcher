@@ -5,6 +5,7 @@ import { LogInPage } from "./pages/LogIn";
 import { MainPage } from "./pages/Main";
 import { EditTagsPage } from "./pages/EditTags";
 import { Settings } from "./components/Settings";
+import { EditImagePage } from "./pages/EditImage";
 
 export const AppView: React.FC = () => {
   const { currentView } = useContext(CurrentViewContext);
@@ -13,6 +14,7 @@ export const AppView: React.FC = () => {
       {currentView === VIEWS.LOGIN && <LogInPage />}
       {currentView === VIEWS.MAIN && <MainPage />}
       {currentView === VIEWS.EDIT_TAG && <EditTagsPage />}
+      {currentView === VIEWS.EDIT_IMAGE && <EditImagePage />}
       <Settings />
     </div>
   );

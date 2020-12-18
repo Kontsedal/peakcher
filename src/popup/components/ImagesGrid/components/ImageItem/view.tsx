@@ -20,6 +20,7 @@ export type Props = {
   isRemoving: boolean;
   base64Link?: string;
   showEditImageTagsView: (id: string) => void;
+  showEditImageView: (id: string) => void;
   loadBase64: () => void;
   deleteFile: () => void;
   onCopy?: () => void;
@@ -37,6 +38,7 @@ export const ImageItemView: React.FC<Props> = ({
   actionsPopupRef,
   actionsVisible,
   showEditImageTagsView,
+  showEditImageView,
   base64IsLoading,
   base64Link,
   loadBase64,
@@ -101,7 +103,10 @@ export const ImageItemView: React.FC<Props> = ({
                 text="Edit tags"
                 onClick={() => showEditImageTagsView(file.id)}
               />
-              {/* <Action text="Edit image" onClick={() => {}} /> */}
+              <Action
+                text="Edit image"
+                onClick={() => showEditImageView(file.id)}
+              />
               <Action
                 text={base64Link ? "Copy Base64" : "Get Base64"}
                 isLoading={base64IsLoading}
@@ -147,6 +152,7 @@ ImageItemView.propTypes = {
   isRemoving: PropTypes.bool.isRequired,
   base64Link: PropTypes.string.isRequired,
   showEditImageTagsView: PropTypes.func.isRequired,
+  showEditImageView: PropTypes.func.isRequired,
   loadBase64: PropTypes.func.isRequired,
   deleteFile: PropTypes.func.isRequired,
   onCopy: PropTypes.func.isRequired,
