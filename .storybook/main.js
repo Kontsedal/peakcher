@@ -1,4 +1,5 @@
 let loaders = require("../webpack/shared/loaders");
+let commonConfig = require("../webpack/common");
 module.exports = {
   stories: ["../src/**/stories.tsx"],
   addons: ["@storybook/addon-actions", "@storybook/addon-links"],
@@ -11,6 +12,7 @@ module.exports = {
     config.module.rules.push(loaders.processSvg);
     config.module.rules.push(loaders.processImages);
     config.resolve.extensions.push(".ts", ".tsx");
+    config.resolve.modules = [...config.resolve.modules, ...commonConfig.resolve.modules]
     return config;
   },
 };
