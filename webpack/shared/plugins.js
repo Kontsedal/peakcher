@@ -5,6 +5,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const DashboardPlugin = require("webpack-dashboard/plugin");
+
 const pkg = require('../../package.json')
 
 const PATHS = require("./paths");
@@ -64,6 +66,8 @@ const analyzeBundleSize = new BundleAnalyzerPlugin({
   analyzerPort: 3838,
 });
 
+const displayConsoleDashboard = new DashboardPlugin()
+
 module.exports = {
   processPopupHtmlFile,
   processBackgroundHtmlFile,
@@ -72,4 +76,5 @@ module.exports = {
   createManifestFile,
   cleanDistFolder,
   analyzeBundleSize,
+  displayConsoleDashboard
 };

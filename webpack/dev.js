@@ -13,4 +13,5 @@ module.exports = merge(commonConfig, {
     chunkFilename: "[name].bundle.js",
     filename: "[name].js",
   },
+  plugins: [plugins.displayConsoleDashboard]
 });

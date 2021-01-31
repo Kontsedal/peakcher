@@ -4,7 +4,7 @@
   "description": "Browser extension to store images in dropbox",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack --config webpack/dev.js --watch --progress",
+    "start": "cross-env NODE_ENV=development webpack-dashboard -- webpack --config webpack/dev.js --watch --progress",
     "build": "cross-env NODE_ENV=production  webpack --config webpack/prod.js --progress",
     "lint:js": "tsc --noEmit && eslint './src/**/*.?(tsx|ts)'",
     "lint:js:fix": "npm run lint -- --fix",
@@ -103,7 +103,8 @@
     "redux": "4.0.5",
     "redux-logger": "3.0.6",
     "reselect": "4.0.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "webpack-dashboard": "^3.3.1"
   },
   "husky": {
     "hooks": {
