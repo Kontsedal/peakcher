@@ -5,6 +5,8 @@ import styles from "./styles.module.scss";
 import { ToolButton } from "./components/ToolButton";
 import { Painter } from "./Painter";
 import { SHAPES } from "./Painter/enums/shapes";
+import { defaultParamsMap } from "./Painter/constants/toolsParams";
+import { ToolParams } from "./Painter/interfaces/toolParams";
 
 type Props = {
   image: ImageData;
@@ -13,14 +15,24 @@ enum Tools {
   TEXT,
   BRUSH,
 }
+
+const toolShapeMap = {
+  [Tools.BRUSH]: SHAPES.BRUSH,
+}
+
 export const EditImagePageView = ({ image }: Props) => {
   const painterRef = useRef<Painter>(new Painter());
   const [activeTool, setActiveTool] = useState<Tools>();
+  const activeShape = toolShapeMap[activeTool]
+  const [activeToolParams, setActiveToolParams] = useState<ToolParams>({});
   const handleChangeTool = (tool) => {
     if (tool === activeTool) {
       return setActiveTool(null);
     }
+    const shape = toolShapeMap[tool];
+    const defualtShapeParams = defaultParamsMap[shape]
     setActiveTool(tool);
+    setActiveToolParams(defualtShapeParams);
   };
   const [imageElement, setImageElement] = useState<HTMLImageElement>();
   useEffect(() => {
@@ -83,6 +95,18 @@ export const EditImagePageView = ({ image }: Props) => {
           >
             <MdBrush size={18} />
           </ToolButton>
+          {activeToolParams && Object.entries(activeToolParams).map(([name, value]) => {
+            if(name === "color") {
+              return <input type="color" value={value} onChange={(event => {
+                setActiveToolParams({...activeToolParams, [name]: event.target.value})
+              })}/>
+            }
+            if(name === "size") {
+              return <input type="number" min={0} step={1} value={value} onChange={(event => {
+                setActiveToolParams({...activeToolParams, [name]: event.target.value})
+              })}/>
+            }
+          })}
         </div>
         <div className={styles.canvasHolder} ref={calculateCanvasSize}>
           <div className={styles.canvas} ref={drawAreaRef}>
@@ -94,17 +118,29 @@ export const EditImagePageView = ({ image }: Props) => {
                 draw();
               }}
               onMouseDown={() => {
-                painterRef.current.create({shape: SHAPES.BRUSH, position: cursorPosition })
+                if(!activeTool) {
+                  return
+                }
+                painterRef.current.create({shape: activeShape, position: cursorPosition, params: activeToolParams })
                 draw()
               }}
               onMouseMove={() => {
+                if(!activeTool) {
+                  return
+                }
                 painterRef.current.update(cursorPosition)
                 draw()
               }}
               onMouseUp={() => {
+                if(!activeTool) {
+                  return
+                }
                 painterRef.current.finish()
               }}
               onMouseLeave={() => {
+                if(!activeTool) {
+                  return
+                }
                 painterRef.current.finish()
               }}
             />

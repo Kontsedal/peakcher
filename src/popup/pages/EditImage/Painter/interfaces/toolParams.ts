@@ -3,5 +3,5 @@ export type BrushParams = {
   size: number;
 };
 
-export type ToolParams = BrushParams
+export type ToolParams = BrushParams | {}
 

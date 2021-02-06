@@ -1,12 +1,10 @@
 import { Position } from "../interfaces/position";
 import { Drawable } from "../interfaces/drawable";
 import { BrushParams } from "../interfaces/toolParams";
+import { defaultBrushParams } from "../constants/toolsParams";
 
 export class Brush implements Drawable {
-  params: BrushParams = {
-    color: "black",
-    size: 10,
-  };
+  params: BrushParams = defaultBrushParams;
   position = { x: 0, y: 0 };
   boxControls: false;
   points: Position[] = []
@@ -15,7 +13,7 @@ export class Brush implements Drawable {
       this.position = position;
     }
     if (params) {
-      this.params = params;
+      this.params = {...this.params, ...params};
     }
   }
   update(position: Position, params: BrushParams) {
