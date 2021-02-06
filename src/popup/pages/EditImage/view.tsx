@@ -98,12 +98,16 @@ export const EditImagePageView = ({ image }: Props) => {
           {activeToolParams && Object.entries(activeToolParams).map(([name, value]) => {
             if(name === "color") {
               return <input type="color" value={value} onChange={(event => {
-                setActiveToolParams({...activeToolParams, [name]: event.target.value})
+                const newParams = {...activeToolParams, [name]: event.target.value}
+                setActiveToolParams(newParams)
+                painterRef.current.update({params: newParams})
               })}/>
             }
             if(name === "size") {
               return <input type="number" min={0} step={1} value={value} onChange={(event => {
-                setActiveToolParams({...activeToolParams, [name]: event.target.value})
+                const newParams = {...activeToolParams, [name]: event.target.value}
+                setActiveToolParams(newParams)
+                painterRef.current.update({params: newParams})
               })}/>
             }
           })}
@@ -128,7 +132,7 @@ export const EditImagePageView = ({ image }: Props) => {
                 if(!activeTool) {
                   return
                 }
-                painterRef.current.update(cursorPosition)
+                painterRef.current.update({ position: cursorPosition })
                 draw()
               }}
               onMouseUp={() => {

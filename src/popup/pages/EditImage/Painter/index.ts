@@ -49,9 +49,9 @@ export class Painter {
       payload: { position, params, shape, shapeId: this.currentShapeId },
       type: "create",
     });
-    this.updateShapes()
+    this.updateShapes();
   }
-  update(position: Position, params?: ToolParams) {
+  update({ position, params }: { position?: Position; params?: ToolParams }) {
     if (!this.currentShapeId) {
       return;
     }
@@ -59,14 +59,18 @@ export class Painter {
       payload: { position, params, shapeId: this.currentShapeId },
       type: "update",
     });
-    this.updateShapes()
+    this.updateShapes();
   }
   finish() {
-    this.currentShapeId = undefined;
-    this.history.push({
-      payload: { shapeId: this.currentShapeId },
-      type: "finish",
-    });
+    const currentShape = this.getCurrentShape();
+    debugger
+    if (currentShape.type === SHAPES.BRUSH) {
+      this.currentShapeId = undefined;
+      this.history.push({
+        payload: { shapeId: this.currentShapeId },
+        type: "finish",
+      });
+    }
   }
   updateShapes() {
     this.history.forEach((action) => {
@@ -82,12 +86,15 @@ export class Painter {
 
       if (action.type === "update") {
         const shape = this.shapesMap.get(action.payload.shapeId);
-        shape.update(action.payload.position, action.payload.params);
+        shape.update({
+          position: action.payload.position,
+          params: action.payload.params,
+        });
       }
     });
   }
   getCurrentShape() {
-    return this.shapesMap.get(this.currentShapeId)
+    return this.shapesMap.get(this.currentShapeId);
   }
   render(ctx: CanvasRenderingContext2D, sizeMultiplier: number) {
     this.shapesSet.forEach((shape) => {
