@@ -3,6 +3,8 @@ import { ImageData } from "common/interfaces";
 import { MdBrush, MdTextFields } from "react-icons/all";
 import styles from "./styles.module.scss";
 import { ToolButton } from "./components/ToolButton";
+import { Painter } from "./Painter";
+import { SHAPES } from "./Painter/enums/shapes";
 
 type Props = {
   image: ImageData;
@@ -12,6 +14,7 @@ enum Tools {
   BRUSH,
 }
 export const EditImagePageView = ({ image }: Props) => {
+  const painterRef = useRef<Painter>(new Painter());
   const [activeTool, setActiveTool] = useState<Tools>();
   const handleChangeTool = (tool) => {
     if (tool === activeTool) {
@@ -45,7 +48,12 @@ export const EditImagePageView = ({ image }: Props) => {
     }
     setCanvasSize({ width: resultWidth, height: resultHeight });
   };
-  const draw = useCallback(() => {}, [canvasRef]);
+  const draw = useCallback(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+    painterRef.current.render(canvasRef.current.getContext("2d"), 1)
+  }, [canvasRef]);
   useEffect(() => {
     if (!canvasRef.current || !imageElement) {
       return;
@@ -54,10 +62,7 @@ export const EditImagePageView = ({ image }: Props) => {
     ctx.drawImage(imageElement, 0, 0, canvasSize.width, canvasSize.height);
   }, [canvasSize, imageElement]);
 
-  const { cursorPosition } = useDrawer({
-    drawAreaRef,
-    activeTool,
-  });
+  const { cursorPosition } = useCursorPosition(drawAreaRef);
   return (
     <div className={styles.page}>
       <div className={styles.frame}>
@@ -84,6 +89,20 @@ export const EditImagePageView = ({ image }: Props) => {
                 canvasRef.current = element;
                 draw();
               }}
+              onMouseDown={() => {
+                painterRef.current.create({shape: SHAPES.BRUSH, position: cursorPosition })
+                draw()
+              }}
+              onMouseMove={() => {
+                painterRef.current.update(cursorPosition)
+                draw()
+              }}
+              onMouseUp={() => {
+                painterRef.current.finish()
+              }}
+              onMouseLeave={() => {
+                painterRef.current.finish()
+              }}
             />
           </div>
         </div>
@@ -92,7 +111,7 @@ export const EditImagePageView = ({ image }: Props) => {
   );
 };
 
-function useDrawer({ drawAreaRef, activeTool }) {
+function useCursorPosition(drawAreaRef) {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   useEffect(() => {
     if (!drawAreaRef.current) {
