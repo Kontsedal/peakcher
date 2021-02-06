@@ -1,4 +1,7 @@
 export type Position = {
   x: number,
-  y: number
+  y: number,
+  width?: number;
+  height?: number;
+  rotation?: number;
 }

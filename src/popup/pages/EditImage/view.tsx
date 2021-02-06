@@ -62,6 +62,10 @@ export const EditImagePageView = ({ image }: Props) => {
     ctx.drawImage(imageElement, 0, 0, canvasSize.width, canvasSize.height);
   }, [canvasSize, imageElement]);
 
+  const currentShape = painterRef.current.getCurrentShape();
+
+  console.log({currentShape})
+
   const { cursorPosition } = useCursorPosition(drawAreaRef);
   return (
     <div className={styles.page}>

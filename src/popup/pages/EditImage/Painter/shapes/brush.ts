@@ -1,27 +1,29 @@
 import { Position } from "../interfaces/position";
-import { Shape } from "./shape";
+import { Drawable } from "../interfaces/drawable";
+import { BrushParams } from "../interfaces/toolParams";
 
-type BrushParams = {
-  color: string;
-  size: number;
-};
-
-export class Brush extends Shape {
+export class Brush implements Drawable {
   params: BrushParams = {
     color: "black",
     size: 10,
   };
+  position = { x: 0, y: 0 };
   boxControls: false;
   points: Position[] = []
   constructor(position: Position, params: BrushParams) {
-    super(position, params)
+    if (position) {
+      this.position = position;
+    }
+    if (params) {
+      this.params = params;
+    }
   }
   update(position: Position, params: BrushParams) {
     if(params) {
       this.params = params
     }
     if(position) {
-      this.points.push(position)
+      this.points.push({ x: position.x, y: position.y })
     }
   }
   render(ctx, sizeMultiplier) {
