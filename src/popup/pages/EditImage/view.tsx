@@ -7,6 +7,8 @@ import { Painter } from "./Painter";
 import { SHAPES } from "./Painter/enums/shapes";
 import { defaultParamsMap } from "./Painter/constants/toolsParams";
 import { ToolParams } from "./Painter/interfaces/toolParams";
+import { doc } from "prettier";
+import { Button } from "../../components";
 
 type Props = {
   image: ImageData;
@@ -76,7 +78,19 @@ export const EditImagePageView = ({ image }: Props) => {
 
   const currentShape = painterRef.current.getCurrentShape();
 
-  console.log({currentShape})
+  const save = useCallback(() => {
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('width', image.width + 'px')
+    canvas.setAttribute('height', image.width + "px");
+    const sizeMultiplier = image.width / canvasSize.width;
+    canvas.getContext('2d').drawImage(imageElement, 0, 0, image.width, image.height);
+    painterRef.current.render(canvas.getContext('2d'), sizeMultiplier)
+    const downloadLink = document.createElement('a');
+    downloadLink.href = canvas.toDataURL('image/jpeg', 1);
+    downloadLink.target = '_self';
+    downloadLink.download = 'result.jpeg';
+    downloadLink.click();
+  }, [image, canvasSize, imageElement])
 
   const { cursorPosition } = useCursorPosition(drawAreaRef);
   return (
@@ -111,6 +125,9 @@ export const EditImagePageView = ({ image }: Props) => {
               })}/>
             }
           })}
+          <Button onClick={save} primary>
+            Save
+          </Button>
         </div>
         <div className={styles.canvasHolder} ref={calculateCanvasSize}>
           <div className={styles.canvas} ref={drawAreaRef}>

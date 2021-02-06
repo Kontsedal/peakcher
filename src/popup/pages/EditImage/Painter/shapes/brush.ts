@@ -37,7 +37,7 @@ export class Brush implements Drawable {
       this.position.y * sizeMultiplier
     );
     this.points.forEach((point) => {
-      ctx.lineTo(point.x, point.y);
+      ctx.lineTo(point.x * sizeMultiplier, point.y * sizeMultiplier);
     });
     ctx.stroke();
     ctx.closePath();
