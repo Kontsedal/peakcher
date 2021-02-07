@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ImageData } from "common/interfaces";
 import { MdBrush, MdTextFields } from "react-icons/all";
 import styles from "./styles.module.scss";
@@ -13,7 +7,7 @@ import { Button } from "../../components";
 import { RenderQueue } from "./renderQueue";
 import { useBrush } from "./tools/brush";
 import { ToolResult } from "./tools/interfaces";
-import { render } from "react-dom";
+import { useText } from "./tools/text";
 
 type Props = {
   image: ImageData;
@@ -34,7 +28,12 @@ export const EditImagePageView = ({ image }: Props) => {
     canvasSize,
   } = useRenderContext(image);
 
-  const { activeTool, handleChangeTool, settingsElements } = useTools({
+  const {
+    activeTool,
+    handleChangeTool,
+    settingsElements,
+    controlElements,
+  } = useTools({
     canvas,
     render,
     renderQueue,
@@ -61,7 +60,11 @@ export const EditImagePageView = ({ image }: Props) => {
           </Button>
         </div>
         <div className={styles.canvasHolder} ref={calculateCanvasSize}>
-          <div className={styles.canvas}>
+          <div
+            className={styles.canvas}
+            style={{ width: canvasSize.width, height: canvasSize.height }}
+          >
+            {controlElements}
             <canvas
               width={canvasSize.width}
               height={canvasSize.height}
@@ -95,6 +98,12 @@ function useTools({
     canvas: canvas,
     renderQueue: renderQueue,
     active: activeTool === Tools.BRUSH,
+  });
+  toolResults[Tools.TEXT] = useText({
+    render,
+    canvas: canvas,
+    renderQueue: renderQueue,
+    active: activeTool === Tools.TEXT,
   });
   return useMemo(() => {
     let result = { activeTool, handleChangeTool };
@@ -160,7 +169,7 @@ function useRenderContext(image) {
   }, [canvasSize, imageElement]);
 
   const saveResult = useCallback(() => {
-    if(!renderQueue) {
+    if (!renderQueue) {
       return;
     }
     let renderQueueClone = renderQueue.clone();

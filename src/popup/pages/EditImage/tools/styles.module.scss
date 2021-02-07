@@ -1,0 +1,16 @@
+.textBoxWrapper {
+  position: absolute;
+}
+.textBox {
+  border: 1px solid #fff;
+  outline: 1px solid #000;
+  width: 100%;
+  height: 100%;
+}
+
+.saveBtn {
+  bottom: -5px;
+  position: absolute;
+  right: 0;
+  transform: translateY(100%);
+}

@@ -10,4 +10,5 @@ export type ToolParams = {
 
 export type ToolResult = {
   settingsElements?: React.ReactNode
+  controlElements?: React.ReactNode
 }

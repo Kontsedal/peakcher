@@ -93,3 +93,8 @@ export const useToolBase = ({
     [id, params, setParams, customProps, setCustomProps, reset]
   );
 };
+
+
+export function positive(num: number) {
+  return num >= 0 ? num : 0
+}

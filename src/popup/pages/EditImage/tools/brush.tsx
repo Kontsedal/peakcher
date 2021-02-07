@@ -93,5 +93,5 @@ export function useBrush({
     </>
   );
 
-  return { settingsElements };
+  return { settingsElements, controlElements: null };
 }
