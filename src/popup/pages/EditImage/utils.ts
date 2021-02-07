@@ -35,25 +35,21 @@ type UseMouseProps = {
   element: HTMLElement;
   onDown?: (cursor: CursorPosition) => void;
   onUp?: (cursor: CursorPosition) => void;
-  onMove?: (cursor: CursorPosition, isDrawing: boolean) => void;
-  active: boolean
+  onMove?: (cursor: CursorPosition) => void;
 };
-export const useMouse = ({ element, onDown, onUp, onMove, active }: UseMouseProps) => {
-  const drawingRef = useRef(false)
+export const useMouse = ({ element, onDown, onUp, onMove }: UseMouseProps) => {
   useEffect(() => {
     if (!element) {
       return;
     }
     const handleMouseDown = (event) => {
-      drawingRef.current = true;
       onDown && onDown(getCursorPosition(event));
     };
     const handleMouseUp = (event) => {
-      drawingRef.current = false;
       onUp && onUp(getCursorPosition(event));
     };
     const handleMouseMove = (event) => {
-      onMove && onMove(getCursorPosition(event), drawingRef.current);
+      onMove && onMove(getCursorPosition(event));
     };
     element.addEventListener("mousedown", handleMouseDown);
     element.addEventListener("mouseup", handleMouseUp);
@@ -63,7 +59,7 @@ export const useMouse = ({ element, onDown, onUp, onMove, active }: UseMouseProp
       element.removeEventListener("mouseup", handleMouseUp);
       element.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [element, onUp, onMove, onDown, active]);
+  }, [element, onUp, onMove, onDown]);
 };
 
 export const useToolBase = ({

@@ -1,60 +1,45 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ImageData } from "common/interfaces";
-import { MdBrush, MdTextFields } from "react-icons/all";
+import { MdBrush } from "react-icons/all";
 import styles from "./styles.module.scss";
 import { ToolButton } from "./components/ToolButton";
 import { Button } from "../../components";
-import { RenderQueue } from "./renderQueue";
-import { useBrush } from "./tools/brush";
-import { ToolResult } from "./tools/interfaces";
-import { useText } from "./tools/text";
+import { Renderer, useEntities } from "./test/renderer";
+import { Tool } from "./test/constants";
+import { Brush } from "./test/tools/brush/component";
+import { defaultBrushParams } from "./test/tools/brush/renderer";
 
 type Props = {
   image: ImageData;
 };
-enum Tools {
-  TEXT,
-  BRUSH,
-}
 
 export const EditImagePageView = ({ image }: Props) => {
   const {
     calculateCanvasSize,
-    canvas,
     setCanvas,
-    renderQueue,
+    renderer,
     saveResult,
-    render,
+    entitiesElements,
     canvasSize,
   } = useRenderContext(image);
 
-  const {
-    activeTool,
-    handleChangeTool,
-    settingsElements,
-    controlElements,
-  } = useTools({
-    canvas,
-    render,
-    renderQueue,
-  });
+  const { activeTool, handleChangeTool, createToolInstance } = useTools(renderer);
   return (
     <div className={styles.page}>
       <div className={styles.frame}>
         <div className={styles.toolbar}>
+          {/*<ToolButton*/}
+          {/*  onClick={() => handleChangeTool(Tool.TEXT)}*/}
+          {/*  active={activeTool === Tool.TEXT}*/}
+          {/*>*/}
+          {/*  <MdTextFields size={18} />*/}
+          {/*</ToolButton>*/}
           <ToolButton
-            onClick={() => handleChangeTool(Tools.TEXT)}
-            active={activeTool === Tools.TEXT}
-          >
-            <MdTextFields size={18} />
-          </ToolButton>
-          <ToolButton
-            onClick={() => handleChangeTool(Tools.BRUSH)}
-            active={activeTool === Tools.BRUSH}
+            onClick={() => handleChangeTool(Tool.BRUSH)}
+            active={activeTool === Tool.BRUSH}
           >
             <MdBrush size={18} />
           </ToolButton>
-          {settingsElements}
           <Button onClick={saveResult} primary>
             Save
           </Button>
@@ -64,12 +49,13 @@ export const EditImagePageView = ({ image }: Props) => {
             className={styles.canvas}
             style={{ width: canvasSize.width, height: canvasSize.height }}
           >
-            {controlElements}
             <canvas
               width={canvasSize.width}
               height={canvasSize.height}
               ref={setCanvas}
+              onMouseDown={createToolInstance}
             />
+            {entitiesElements}
           </div>
         </div>
       </div>
@@ -77,47 +63,33 @@ export const EditImagePageView = ({ image }: Props) => {
   );
 };
 
-function useTools({
-  render,
-  canvas,
-  renderQueue,
-}): {
-  activeTool: Tools;
-  handleChangeTool: (tool: Tools) => void;
-} & ToolResult {
-  const [activeTool, setActiveTool] = useState<Tools>();
+function useTools(renderer: Renderer) {
+  const defaultParamsMap = {
+    [Tool.BRUSH]: defaultBrushParams
+  }
+  const [activeTool, setActiveTool] = useState<Tool>();
   const handleChangeTool = (tool) => {
     if (tool === activeTool) {
       return setActiveTool(null);
     }
     setActiveTool(tool);
   };
-  let toolResults = {};
-  toolResults[Tools.BRUSH] = useBrush({
-    render,
-    canvas: canvas,
-    renderQueue: renderQueue,
-    active: activeTool === Tools.BRUSH,
-  });
-  toolResults[Tools.TEXT] = useText({
-    render,
-    canvas: canvas,
-    renderQueue: renderQueue,
-    active: activeTool === Tools.TEXT,
-  });
-  return useMemo(() => {
-    let result = { activeTool, handleChangeTool };
-    if (toolResults[activeTool]) {
-      result = { ...result, ...toolResults[activeTool] };
-    }
-    return result;
-  }, [activeTool, handleChangeTool, toolResults[activeTool]]);
+
+  const createToolInstance = useCallback(() => {
+    renderer.add(activeTool, defaultParamsMap[activeTool]);
+  }, [activeTool]);
+
+  return useMemo(() => ({ activeTool, handleChangeTool, createToolInstance }), [
+    activeTool,
+    handleChangeTool,
+    createToolInstance,
+  ]);
 }
 
 function useRenderContext(image) {
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
   const [imageElement, setImageElement] = useState<HTMLImageElement>();
-  const [renderQueue, setRenderQueue] = useState<RenderQueue>();
+  const [renderer] = useState<Renderer>(new Renderer());
   useEffect(() => {
     const tmpImage = new Image();
     tmpImage.onload = function () {
@@ -145,56 +117,67 @@ function useRenderContext(image) {
     [setCanvasSize, image]
   );
   const render = useCallback(() => {
-    if (!canvas || !renderQueue) {
+    if (!canvas) {
       return;
     }
-    renderQueue.render(canvas, 1);
-  }, [canvas, renderQueue]);
+    renderer.render({
+      canvas,
+      multiplier: 1,
+    });
+  }, [canvas]);
   useEffect(() => {
     if (!canvas || !imageElement) {
       return;
     }
-    const renderQueue = new RenderQueue();
-    renderQueue.add("bg", (context, sizeMultiplier) => {
-      context.drawImage(
-        imageElement,
-        0,
-        0,
-        canvasSize.width,
-        canvasSize.height
-      );
-    });
-    renderQueue.render(canvas, 1);
-    setRenderQueue(renderQueue);
+    renderer.add(Tool.BACKGROUND, { imageElement });
   }, [canvasSize, imageElement]);
 
   const saveResult = useCallback(() => {
-    if (!renderQueue) {
-      return;
+    // if (!renderer) {
+    //   return;
+    // }
+    // const canvasEl = document.createElement("canvas");
+    // canvasEl.setAttribute("width", image.width + "px");
+    // canvasEl.setAttribute("height", image.height + "px");
+    // const sizeMultiplier = image.width / canvasSize.width;
+    // renderQueueClone.add("bg", (context) => {
+    //   context.drawImage(imageElement, 0, 0, image.width, image.height);
+    // });
+    // renderQueueClone.render(canvasEl, sizeMultiplier);
+    // const downloadLink = document.createElement("a");
+    // downloadLink.href = canvas.toDataURL("image/jpeg", 1);
+    // downloadLink.target = "_self";
+    // downloadLink.download = "result.jpeg";
+    // downloadLink.click();
+  }, [image, canvasSize, imageElement, renderer]);
+
+  let entities = useEntities(renderer);
+
+  useEffect(() => {
+    render()
+  }, [entities, render])
+
+  const entitiesElements = entities.map((entity) => {
+    if (entity.tool === Tool.BRUSH) {
+      return (
+        <Brush
+          key={entity.id}
+          id={entity.id}
+          canvas={canvas}
+          renderer={renderer}
+        />
+      );
     }
-    let renderQueueClone = renderQueue.clone();
-    const canvasEl = document.createElement("canvas");
-    canvasEl.setAttribute("width", image.width + "px");
-    canvasEl.setAttribute("height", image.height + "px");
-    const sizeMultiplier = image.width / canvasSize.width;
-    renderQueueClone.add("bg", (context) => {
-      context.drawImage(imageElement, 0, 0, image.width, image.height);
-    });
-    renderQueueClone.render(canvasEl, sizeMultiplier);
-    const downloadLink = document.createElement("a");
-    downloadLink.href = canvas.toDataURL("image/jpeg", 1);
-    downloadLink.target = "_self";
-    downloadLink.download = "result.jpeg";
-    downloadLink.click();
-  }, [image, canvasSize, imageElement, renderQueue]);
+  });
 
   return {
     calculateCanvasSize,
     canvas,
     setCanvas,
-    renderQueue,
+    renderer,
     saveResult,
     render,
     canvasSize,
+    entitiesElements,
   };
 }
