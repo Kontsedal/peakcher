@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from "react";
-import { useMouse, useToolParams } from "../utils";
-import { RenderQueue } from "../renderQueue";
+import { useMouse, useToolBase } from "../utils";
+import { ToolParams, ToolResult } from "./interfaces";
 
-type Props = {
-  canvas: HTMLCanvasElement;
-  render: () => void;
-  renderQueue: RenderQueue;
-};
-export function useBrush({ canvas, render, renderQueue }: Props) {
+export function useBrush({
+  canvas,
+  render,
+  renderQueue,
+  active,
+}: ToolParams): ToolResult {
   const {
     params,
     setParams,
@@ -15,7 +15,7 @@ export function useBrush({ canvas, render, renderQueue }: Props) {
     setCustomProps: setPoints,
     id,
     reset,
-  } = useToolParams({
+  } = useToolBase({
     defaultParams: {
       color: "black",
       size: 10,
@@ -43,12 +43,15 @@ export function useBrush({ canvas, render, renderQueue }: Props) {
     [points, params, id]
   );
   useEffect(() => {
+    if (!active) {
+      return;
+    }
     renderQueue.add(id, renderLine);
     render();
-  }, [renderLine]);
+  }, [renderLine, active]);
   const onMouseDown = useCallback(
     (cursor) => {
-      setPoints((points) => ([...points, cursor]));
+      setPoints((points) => [...points, cursor]);
     },
     [setPoints]
   );
@@ -57,7 +60,7 @@ export function useBrush({ canvas, render, renderQueue }: Props) {
       if (!drawing) {
         return;
       }
-      setPoints((points) => ([...points, cursor]));
+      setPoints((points) => [...points, cursor]);
     },
     [setPoints]
   );
@@ -66,6 +69,7 @@ export function useBrush({ canvas, render, renderQueue }: Props) {
     onDown: onMouseDown,
     onMove: onMouseMove,
     onUp: reset,
+    active,
   });
 
   const settingsElements = (

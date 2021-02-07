@@ -36,8 +36,9 @@ type UseMouseProps = {
   onDown?: (cursor: CursorPosition) => void;
   onUp?: (cursor: CursorPosition) => void;
   onMove?: (cursor: CursorPosition, isDrawing: boolean) => void;
+  active: boolean
 };
-export const useMouse = ({ element, onDown, onUp, onMove }: UseMouseProps) => {
+export const useMouse = ({ element, onDown, onUp, onMove, active }: UseMouseProps) => {
   const drawingRef = useRef(false)
   useEffect(() => {
     if (!element) {
@@ -62,10 +63,10 @@ export const useMouse = ({ element, onDown, onUp, onMove }: UseMouseProps) => {
       element.removeEventListener("mouseup", handleMouseUp);
       element.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [element, onUp, onMove, onDown]);
+  }, [element, onUp, onMove, onDown, active]);
 };
 
-export const useToolParams = ({
+export const useToolBase = ({
   defaultCustomProps,
   defaultParams,
 }: {
