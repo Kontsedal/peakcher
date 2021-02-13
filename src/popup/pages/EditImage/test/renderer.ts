@@ -4,13 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { BackgroundData, renderBackground } from "./tools/background/renderer";
 
-type EntityData<T extends Tool> = T extends Tool.BRUSH
+export type EntityData<T extends Tool> = T extends Tool.BRUSH
   ? BrushData
   : T extends Tool.BACKGROUND
   ? BackgroundData
   : never;
 
-type RenderEntity<T extends Tool> = {
+export type RenderEntity<T extends Tool> = {
   id: string;
   tool: T;
   data?: EntityData<T>;
@@ -23,6 +23,7 @@ export class Renderer {
   >();
   private entityChangeListeners = new Map<string, (() => void)[]>();
   private changeListeners = [];
+  private currentEntityId: string;
 
   add(tool: Tool, data?: EntityData<typeof tool>) {
     const id: string = uuid();
@@ -30,6 +31,7 @@ export class Renderer {
     this.renderMap.set(id, entity);
     this.entityChangeListeners.set(entity.id, []);
     this.emitChange(entity.id);
+    this.currentEntityId = id;
     return id;
   }
 
@@ -38,7 +40,7 @@ export class Renderer {
     const updatedEntity = { ...entity };
     updatedEntity.data = { ...updatedEntity.data, ...data };
     this.renderMap.set(id, updatedEntity);
-    this.emitChange(id)
+    this.emitChange(id);
   }
 
   onChange(listener) {
@@ -52,7 +54,7 @@ export class Renderer {
 
   onEntityChange(entityId: string, handler: () => void) {
     this.entityChangeListeners.set(entityId, [
-      ...this.entityChangeListeners.get(entityId),
+      ...(this.entityChangeListeners.get(entityId) || []),
       handler,
     ]);
     return () => {
@@ -78,6 +80,10 @@ export class Renderer {
     return Array.from(this.renderMap.values());
   }
 
+  getCurrentEntity() {
+    return this.getEntity(this.currentEntityId);
+  }
+
   render({
     canvas,
     multiplier,
@@ -101,7 +107,10 @@ export class Renderer {
 export const useEntityData = <T extends Tool>(
   renderer: Renderer,
   entityId: string
-): [EntityData<T>, (newData: (data: EntityData<T>) => EntityData<T>) => void] => {
+): [
+  EntityData<T>,
+  (newData: (data: EntityData<T>) => EntityData<T>) => void
+] => {
   const [entity, setEntity] = useState(renderer.getEntity<T>(entityId));
   useEffect(() => {
     return renderer.onEntityChange(entityId, () => {
@@ -110,14 +119,14 @@ export const useEntityData = <T extends Tool>(
   }, [renderer, entityId, setEntity]);
   const setEntityData = useCallback(
     (newData: (data: EntityData<T>) => EntityData<T>) => {
-      const entity = renderer.getEntity<T>(entityId)
+      const entity = renderer.getEntity<T>(entityId);
       if (typeof newData === "function") {
         renderer.update<T>(entityId, newData(entity.data));
       }
     },
     [entityId]
   );
-  return [entity.data, setEntityData];
+  return [entity ? entity.data: undefined, setEntityData];
 };
 
 export const useEntities = (renderer: Renderer) => {
@@ -129,4 +138,15 @@ export const useEntities = (renderer: Renderer) => {
   }, [renderer]);
 
   return entities;
+};
+
+export const useCurrentEntity = (renderer: Renderer) => {
+  const [entity, setEntity] = useState(renderer.getCurrentEntity());
+  useEffect(() => {
+    return renderer.onChange(() => {
+      setEntity(renderer.getCurrentEntity());
+    });
+  }, [renderer]);
+
+  return entity;
 };

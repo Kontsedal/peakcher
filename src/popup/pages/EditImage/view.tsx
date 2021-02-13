@@ -4,11 +4,11 @@ import { MdBrush } from "react-icons/all";
 import styles from "./styles.module.scss";
 import { ToolButton } from "./components/ToolButton";
 import { Button } from "../../components";
-import { Renderer, useEntities } from "./test/renderer";
+import { Renderer, useCurrentEntity, useEntities } from "./test/renderer";
 import { Tool } from "./test/constants";
 import { Brush } from "./test/tools/brush/component";
-import { defaultBrushParams } from "./test/tools/brush/renderer";
-
+import { ParamsControl } from "./components/ParamsControl";
+import { useToolsParamsContext } from "./test/tools/useToolsParams";
 type Props = {
   image: ImageData;
 };
@@ -20,10 +20,13 @@ export const EditImagePageView = ({ image }: Props) => {
     renderer,
     saveResult,
     entitiesElements,
+    currentEntity,
     canvasSize,
   } = useRenderContext(image);
 
-  const { activeTool, handleChangeTool, createToolInstance } = useTools(renderer);
+  const { activeTool, handleChangeTool, createToolInstance } = useTools(
+    renderer
+  );
   return (
     <div className={styles.page}>
       <div className={styles.frame}>
@@ -40,6 +43,11 @@ export const EditImagePageView = ({ image }: Props) => {
           >
             <MdBrush size={18} />
           </ToolButton>
+          <ParamsControl
+            renderer={renderer}
+            entityId={currentEntity && currentEntity.id}
+            activeTool={activeTool}
+          />
           <Button onClick={saveResult} primary>
             Save
           </Button>
@@ -64,9 +72,7 @@ export const EditImagePageView = ({ image }: Props) => {
 };
 
 function useTools(renderer: Renderer) {
-  const defaultParamsMap = {
-    [Tool.BRUSH]: defaultBrushParams
-  }
+  const [defaultParams] = useToolsParamsContext();
   const [activeTool, setActiveTool] = useState<Tool>();
   const handleChangeTool = (tool) => {
     if (tool === activeTool) {
@@ -76,8 +82,8 @@ function useTools(renderer: Renderer) {
   };
 
   const createToolInstance = useCallback(() => {
-    renderer.add(activeTool, defaultParamsMap[activeTool]);
-  }, [activeTool]);
+    renderer.add(activeTool, defaultParams[activeTool]);
+  }, [activeTool, defaultParams]);
 
   return useMemo(() => ({ activeTool, handleChangeTool, createToolInstance }), [
     activeTool,
@@ -152,10 +158,10 @@ function useRenderContext(image) {
   }, [image, canvasSize, imageElement, renderer]);
 
   let entities = useEntities(renderer);
-
+  const currentEntity = useCurrentEntity(renderer);
   useEffect(() => {
-    render()
-  }, [entities, render])
+    render();
+  }, [entities, render]);
 
   const entitiesElements = entities.map((entity) => {
     if (entity.tool === Tool.BRUSH) {
@@ -179,5 +185,6 @@ function useRenderContext(image) {
     render,
     canvasSize,
     entitiesElements,
+    currentEntity,
   };
 }
